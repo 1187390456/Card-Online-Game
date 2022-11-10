@@ -149,6 +149,24 @@
     <Compile Include="Assets\Modules\Spine\Runtime\spine-csharp\IConstraint.cs" />
     <Compile Include="Assets\Modules\Spine\Runtime\spine-unity\Modules\Timeline\SpineSkeletonFlip\SpineSkeletonFlipClip.cs" />
     <Compile Include="Assets\Modules\Spine\Runtime\spine-unity\Modules\AttachmentTools\AttachmentTools.cs" />
+    <Compile Include="Assets\Scripts\Framework\AreaCode.cs" />
+    <Compile Include="Assets\Scripts\Framework\MonoBase.cs" />
+    <Compile Include="Assets\Scripts\Audio\AudioManager.cs" />
+    <Compile Include="Assets\Scripts\Character\CharacterBase.cs" />
+    <Compile Include="Assets\Scripts\Framework\ManagerBase.cs" />
+    <Compile Include="Assets\Scripts\Character\CharacterManager.cs" />
+    <Compile Include="Assets\Scripts\Framework\MsgCenter.cs" />
+    <Compile Include="Assets\Scripts\Audio\AudioBase.cs" />
+    <Compile Include="Assets\Scripts\UI\UIManager.cs" />
+    <Compile Include="Assets\Scripts\UI\UIBase.cs" />
+    <Compile Include="Assets\Scripts\UI\PlayPanel.cs" />
+    <Compile Include="Assets\Scripts\UI\LoginPanel.cs" />
+    <Compile Include="Assets\Scripts\UI\RegistPanel.cs" />
+    <Compile Include="Assets\Scripts\UI\UIEvent.cs" />
+    <Compile Include="Assets\Scripts\Net\ClientPeer.cs" />
+    <Compile Include="Assets\Scripts\Net\EncodeTool.cs" />
+    <Compile Include="Assets\Scripts\Net\SocketMsg.cs" />
+    <Compile Include="Assets\Scripts\Net\NetManager.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Modules\Spine\version.txt" />
