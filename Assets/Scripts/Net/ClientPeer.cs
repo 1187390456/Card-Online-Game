@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Net.Sockets;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
 /// <summary>
@@ -10,6 +11,8 @@ using UnityEngine;
 public class ClientPeer
 {
     private Socket socket;
+    private string ip;
+    private int port;
 
     /// <summary>
     ///  构造连接对象
@@ -21,6 +24,19 @@ public class ClientPeer
         try
         {
             socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+            this.ip = ip;
+            this.port = port;
+        }
+        catch (Exception ex)
+        {
+            Debug.LogException(ex);
+        }
+    }
+
+    public void Connect()
+    {
+        try
+        {
             socket.Connect(ip, port);
             Debug.Log("连接服务器成功 !");
 
@@ -44,7 +60,7 @@ public class ClientPeer
     /// </summary>
     public void StartReceive()
     {
-        if (socket == null && socket.Connected)
+        if (socket == null && socket.Connected == false)
         {
             Debug.LogError("未连接成功 !");
             return;
@@ -67,6 +83,7 @@ public class ClientPeer
             // 缓存数据
             dataCache.AddRange(tmpByteArray);
             if (!isProcessReceive) ProcessReceive();
+            StartReceive(); // 重新开始接收
         }
         catch (Exception ex)
         {
@@ -94,6 +111,8 @@ public class ClientPeer
         // 存储消息 等待处理
         socketMsgQueue.Enqueue(msg);
 
+        Debug.Log(msg.Value);
+
         ProcessReceive();
     }
 
@@ -104,6 +123,11 @@ public class ClientPeer
     public void Send(int opCode, int subCode, object value)
     {
         SocketMsg msg = new SocketMsg(opCode, subCode, value); // 构造消息类
+        Send(msg);
+    }
+
+    public void Send(SocketMsg msg)
+    {
         byte[] data = EncodeTool.EncodeMsg(msg); // 将消息类转成字节数组
         byte[] packet = EncodeTool.EncodePacket(data); // 将字节数据按指定包构造
         try

@@ -1,28 +1,38 @@
-﻿using System;
+﻿using Protocol.Code;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using UnityEngine;
 
 public class NetManager : ManagerBase
 {
     public static NetManager Instance = null;
+    private ClientPeer client = new ClientPeer("127.0.0.1", 6666);
 
     private void Awake()
     {
         Instance = this;
+        Add(0, this);
+    }
+
+    public override void Execute(int eventCode, object message)
+    {
+        switch (eventCode)
+        {
+            case 0:
+                client.Send(message as SocketMsg);
+                break;
+
+            default:
+                break;
+        }
     }
 
     private void Start()
     {
-        Connected("127.0.0.1", 6666);
-    }
-
-    private ClientPeer client;
-
-    public void Connected(string ip, int port)
-    {
-        client = new ClientPeer(ip, port);
+        client.Connect();
     }
 
     private void Update()
@@ -33,4 +43,20 @@ public class NetManager : ManagerBase
             SocketMsg msg = client.socketMsgQueue.Dequeue();
         }
     }
+
+    #region 处理接收到服务器发来的消息
+
+    private void ProcessSocketMsg(SocketMsg msg)
+    {
+        switch (msg.OpCode)
+        {
+            case OpCode.ACCOUNT:
+                break;
+
+            default:
+                break;
+        }
+    }
+
+    #endregion 处理接收到服务器发来的消息
 }

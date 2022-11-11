@@ -1,4 +1,6 @@
-﻿using System.Collections;
+﻿using Protocol.Code;
+using Protocol.Dto;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -10,6 +12,7 @@ public class RegistPanel : UIBase
     private InputField usernameInput;
     private InputField passwordInput;
     private InputField passwordRepeatInput;
+    private PromptMsg promptMsg = new PromptMsg();
 
     private void Awake()
     {
@@ -56,7 +59,34 @@ public class RegistPanel : UIBase
 
     private void OnClickRegist()
     {
-        if (string.IsNullOrEmpty(usernameInput.text) || string.IsNullOrEmpty(passwordInput.text) || string.IsNullOrEmpty(passwordRepeatInput.text)) return;
-        if (passwordRepeatInput.text != passwordInput.text) return;
+        if (string.IsNullOrEmpty(usernameInput.text))
+        {
+            promptMsg.Change("账号不能为空!", Color.red);
+            Dispatch(AreaCode.UI, UIEvent.Prompt_Msg, promptMsg);
+            return;
+        }
+        if (string.IsNullOrEmpty(passwordInput.text))
+        {
+            promptMsg.Change("密码不能为空!", Color.red);
+            Dispatch(AreaCode.UI, UIEvent.Prompt_Msg, promptMsg);
+            return;
+        }
+        if (string.IsNullOrEmpty(passwordRepeatInput.text))
+        {
+            promptMsg.Change("重复不能为空!", Color.red);
+            Dispatch(AreaCode.UI, UIEvent.Prompt_Msg, promptMsg);
+            return;
+        }
+
+        if (passwordRepeatInput.text != passwordInput.text)
+        {
+            promptMsg.Change("输入的密码不一致!", Color.red);
+            Dispatch(AreaCode.UI, UIEvent.Prompt_Msg, promptMsg);
+            return;
+        }
+
+        AccountDto accountDto = new AccountDto(usernameInput.text, passwordInput.text);
+        SocketMsg socketMsg = new SocketMsg(OpCode.ACCOUNT, AccountCode.Regist_Cres, accountDto);
+        Dispatch(AreaCode.NET, 0, socketMsg);
     }
 }

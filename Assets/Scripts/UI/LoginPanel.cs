@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using Protocol.Dto;
+using Protocol.Code;
 
 public class LoginPanel : UIBase
 {
@@ -9,6 +11,7 @@ public class LoginPanel : UIBase
     private Button loginBtn;
     private InputField usernameInput;
     private InputField passwordInput;
+    private PromptMsg promptMsg = new PromptMsg();
 
     private void Awake()
     {
@@ -54,6 +57,20 @@ public class LoginPanel : UIBase
 
     private void OnClickLogin()
     {
-        if (string.IsNullOrEmpty(usernameInput.text) || string.IsNullOrEmpty(passwordInput.text)) return;
+        if (string.IsNullOrEmpty(usernameInput.text))
+        {
+            promptMsg.Change("账号不能为空!", Color.red);
+            Dispatch(AreaCode.UI, UIEvent.Prompt_Msg, promptMsg);
+            return;
+        }
+        if (string.IsNullOrEmpty(passwordInput.text))
+        {
+            promptMsg.Change("密码不能为空!", Color.red);
+            Dispatch(AreaCode.UI, UIEvent.Prompt_Msg, promptMsg);
+            return;
+        }
+        AccountDto accountDto = new AccountDto(usernameInput.text, passwordInput.text); // 构造账号模型
+        SocketMsg msg = new SocketMsg(OpCode.ACCOUNT, AccountCode.LOGIN, accountDto); // 根据账号模型生成消息类
+        Dispatch(AreaCode.NET, 0, msg); // 分发
     }
 }

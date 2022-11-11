@@ -51,7 +51,7 @@ public static class EncodeTool
         {
             using (BinaryReader br = new BinaryReader(ms)) // 二级制读取内存流对象
             {
-                // 获取读取数据的长度 即约定的传输长度
+                // 获取读取数据的长度 即约定的传输长度 一定要32位
                 var len = br.ReadInt32();
                 // 剩余长度= 总长度 - 当前读取位置
                 var dataRemainLength = (int)(ms.Length - ms.Position);
@@ -109,8 +109,8 @@ public static class EncodeTool
         MemoryStream ms = new MemoryStream(data);
         BinaryReader br = new BinaryReader(ms);
         SocketMsg msg = new SocketMsg();
-        msg.OpCode = br.ReadByte();
-        msg.SubCode = br.ReadByte();
+        msg.OpCode = br.ReadInt32();
+        msg.SubCode = br.ReadInt32();
 
         // 还有剩余字节未读取 代表value有值
         if (ms.Length > ms.Position)

@@ -9,6 +9,8 @@ using System.Threading.Tasks;
 /// </summary>
 public class UIEvent
 {
-    public const int Start_Panel_Active = 0; // 设置登录面板显示
-    public const int Regist_Panel_Active = 1; // 设置注册面包显示
+    public const int Start_Panel_Active = 0; // 登录面板显示
+    public const int Regist_Panel_Active = 1; // 注册面包显示
+
+    public const int Prompt_Msg = int.MaxValue; // 提示面板显示
 }
