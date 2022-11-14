@@ -6,10 +6,30 @@ using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
 
+/// <summary>
+/// 网络模块
+/// </summary>
 public class NetManager : ManagerBase
 {
     public static NetManager Instance = null;
     private ClientPeer client = new ClientPeer("127.0.0.1", 6666);
+
+    private void Start()
+    {
+        client.Connect();
+    }
+
+    private void Update()
+    {
+        if (client == null) return;
+        while (client.socketMsgQueue.Count > 0)
+        {
+            SocketMsg msg = client.socketMsgQueue.Dequeue();
+            ProcessSocketMsg(msg);
+        }
+    }
+
+    #region 客户端内部给服务器发消息
 
     private void Awake()
     {
@@ -30,27 +50,22 @@ public class NetManager : ManagerBase
         }
     }
 
-    private void Start()
-    {
-        client.Connect();
-    }
-
-    private void Update()
-    {
-        if (client == null) return;
-        while (client.socketMsgQueue.Count > 0)
-        {
-            SocketMsg msg = client.socketMsgQueue.Dequeue();
-        }
-    }
+    #endregion 客户端内部给服务器发消息
 
     #region 处理接收到服务器发来的消息
 
+    private HandlerBase accountHandler = new AccountHandler(); // 账号处理
+
+    /// <summary>
+    /// 处理网络消息
+    /// </summary>
+    /// <param name="msg"></param>
     private void ProcessSocketMsg(SocketMsg msg)
     {
-        switch (msg.OpCode)
+        switch (msg.opCode)
         {
             case OpCode.ACCOUNT:
+                accountHandler.OnReceive(msg.subCode, msg.value);
                 break;
 
             default:

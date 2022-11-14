@@ -12,6 +12,7 @@ public class LoginPanel : UIBase
     private InputField usernameInput;
     private InputField passwordInput;
     private PromptMsg promptMsg = new PromptMsg();
+    private SocketMsg socketMsg = new SocketMsg();
 
     private void Awake()
     {
@@ -70,7 +71,7 @@ public class LoginPanel : UIBase
             return;
         }
         AccountDto accountDto = new AccountDto(usernameInput.text, passwordInput.text); // 构造账号模型
-        SocketMsg msg = new SocketMsg(OpCode.ACCOUNT, AccountCode.LOGIN, accountDto); // 根据账号模型生成消息类
-        Dispatch(AreaCode.NET, 0, msg); // 分发
+        socketMsg.Change(OpCode.ACCOUNT, AccountCode.LOGIN, accountDto); // 根据账号模型生成消息类
+        Dispatch(AreaCode.NET, 0, socketMsg); // 分发
     }
 }

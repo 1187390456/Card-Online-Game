@@ -81,13 +81,13 @@ public static class EncodeTool
     {
         MemoryStream ms = new MemoryStream(); // 二进制流对象
         BinaryWriter bw = new BinaryWriter(ms); // 二进制写入对象
-        bw.Write(msg.OpCode);
-        bw.Write(msg.SubCode);
+        bw.Write(msg.opCode);
+        bw.Write(msg.subCode);
 
         // 参数不为空时 才可以将Object转字节数据 存起来
-        if (msg.Value != null)
+        if (msg.value != null)
         {
-            byte[] valueBytes = EncodeObj(msg.Value); // 序列化 对象转字节数组
+            byte[] valueBytes = EncodeObj(msg.value); // 序列化 对象转字节数组
             bw.Write(valueBytes);
         }
         // 克隆字节数组
@@ -109,15 +109,15 @@ public static class EncodeTool
         MemoryStream ms = new MemoryStream(data);
         BinaryReader br = new BinaryReader(ms);
         SocketMsg msg = new SocketMsg();
-        msg.OpCode = br.ReadInt32();
-        msg.SubCode = br.ReadInt32();
+        msg.opCode = br.ReadInt32();
+        msg.subCode = br.ReadInt32();
 
         // 还有剩余字节未读取 代表value有值
         if (ms.Length > ms.Position)
         {
             byte[] valueBytes = br.ReadBytes((int)(ms.Length - ms.Position));
             object value = DecodeObj(valueBytes); // 序列化 字节数组转对象
-            msg.Value = value;
+            msg.value = value;
         }
         br.Close();
         ms.Close();

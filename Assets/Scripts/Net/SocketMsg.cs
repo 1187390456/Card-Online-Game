@@ -15,12 +15,19 @@ public class SocketMsg
 
     public SocketMsg(int opCode, int subCode, object value)
     {
-        OpCode = opCode;
-        SubCode = subCode;
-        Value = value;
+        this.opCode = opCode;
+        this.subCode = subCode;
+        this.value = value;
     }
 
-    public int OpCode { get; set; }
-    public int SubCode { get; set; }
-    public object Value { get; set; }
+    public int opCode { get; set; }
+    public int subCode { get; set; }
+    public object value { get; set; }
+
+    public void Change(int opCode, int subCode, object value)
+    {
+        this.opCode = opCode;
+        this.subCode = subCode;
+        this.value = value;
+    }
 }

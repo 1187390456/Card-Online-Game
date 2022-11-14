@@ -20,6 +20,7 @@ public class MsgCenter : MonoBase
         gameObject.AddComponent<UIManager>();
         gameObject.AddComponent<NetManager>();
         gameObject.AddComponent<CharacterManager>();
+        gameObject.AddComponent<SceneMgr>();
     }
 
     /// <summary>
@@ -52,6 +53,10 @@ public class MsgCenter : MonoBase
 
             case AreaCode.UI:
                 UIManager.Instance.Execute(eventCode, message);
+                break;
+
+            case AreaCode.SCENCE:
+                SceneMgr.Instance.Execute(eventCode, message);
                 break;
 
             default:

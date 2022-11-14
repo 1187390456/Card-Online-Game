@@ -30,8 +30,8 @@ public class AreaCode
     /// </summary>
     public const int AUDIO = 4;
 
-    //....
-
+    /// <summary>
+    /// Scence模块
+    /// </summary>
+    public const int SCENCE = 5;
 }
-
-

@@ -111,8 +111,6 @@ public class ClientPeer
         // 存储消息 等待处理
         socketMsgQueue.Enqueue(msg);
 
-        Debug.Log(msg.Value);
-
         ProcessReceive();
     }
 

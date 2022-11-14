@@ -105,7 +105,9 @@
     <Compile Include="Assets\Modules\Spine\Runtime\spine-csharp\SkeletonJson.cs" />
     <Compile Include="Assets\Modules\Spine\Runtime\spine-unity\Modules\Timeline\SpineAnimationState\SpineAnimationStateMixerBehaviour.cs" />
     <Compile Include="Assets\Modules\Spine\Runtime\spine-unity\Modules\Timeline\SpineSkeletonFlip\SpineSkeletonFlipBehaviour.cs" />
+    <Compile Include="Assets\Scripts\UI\Msg\PromptMsg.cs" />
     <Compile Include="Assets\Modules\Spine\Runtime\spine-csharp\Attachments\VertexAttachment.cs" />
+    <Compile Include="Assets\Scripts\Scene\SceneEvent.cs" />
     <Compile Include="Assets\Modules\Spine\Runtime\spine-unity\SpineAttributes.cs" />
     <Compile Include="Assets\Scripts\Audio\AudioManager.cs" />
     <Compile Include="Assets\Scripts\Net\EncodeTool.cs" />
@@ -120,6 +122,7 @@
     <Compile Include="Assets\Scripts\Character\CharacterBase.cs" />
     <Compile Include="Assets\Modules\Spine\Runtime\spine-csharp\Event.cs" />
     <Compile Include="Assets\Modules\Spine\Runtime\spine-csharp\ExposedList.cs" />
+    <Compile Include="Assets\Scripts\Net\Impl\AccountHandler.cs" />
     <Compile Include="Assets\Modules\Spine\Runtime\spine-csharp\IkConstraint.cs" />
     <Compile Include="Assets\Modules\Spine\Runtime\spine-unity\Modules\SkeletonGraphic\SkeletonGraphic.cs" />
     <Compile Include="Assets\Scripts\Framework\ManagerBase.cs" />
@@ -134,6 +137,7 @@
     <Compile Include="Assets\Modules\Spine\Runtime\spine-unity\Asset Types\BlendModeMaterialsAsset.cs" />
     <Compile Include="Assets\Modules\Spine\Runtime\spine-csharp\Attachments\ClippingAttachment.cs" />
     <Compile Include="Assets\Modules\Spine\Runtime\spine-csharp\BlendMode.cs" />
+    <Compile Include="Assets\Scripts\Scene\Msg\LoadSceneMsg.cs" />
     <Compile Include="Assets\Modules\Spine\Runtime\spine-csharp\Attachments\MeshAttachment.cs" />
     <Compile Include="Assets\Modules\Spine\Runtime\spine-csharp\TransformConstraint.cs" />
     <Compile Include="Assets\Modules\Spine\Runtime\spine-unity\Asset Types\SkeletonDataModifierAsset.cs" />
@@ -153,6 +157,7 @@
     <Compile Include="Assets\Scripts\Framework\MonoBase.cs" />
     <Compile Include="Assets\Modules\Spine\Runtime\spine-csharp\Triangulator.cs" />
     <Compile Include="Assets\Modules\Spine\Runtime\spine-unity\Modules\SlotBlendModes\SlotBlendModes.cs" />
+    <Compile Include="Assets\Scripts\Scene\SceneMgr.cs" />
     <Compile Include="Assets\Modules\Spine\Runtime\spine-unity\Asset Types\EventDataReferenceAsset.cs" />
     <Compile Include="Assets\Modules\Spine\Runtime\spine-csharp\SkeletonClipping.cs" />
     <Compile Include="Assets\Modules\Spine\Runtime\spine-csharp\SkeletonBinary.cs" />
@@ -167,10 +172,8 @@
     <Compile Include="Assets\Modules\Spine\Runtime\spine-unity\ISkeletonAnimation.cs" />
     <Compile Include="Assets\Modules\Spine\Runtime\spine-csharp\IConstraint.cs" />
     <Compile Include="Assets\Modules\Spine\Runtime\spine-unity\Modules\Timeline\SpineSkeletonFlip\SpineSkeletonFlipClip.cs" />
-    <Compile Include="Assets\Modules\Spine\Runtime\spine-unity\Modules\AttachmentTools\AttachmentTools.cs" />
-    <Compile Include="Assets\Scripts\UI\Msg\PromptMsg.cs" />
-    <Compile Include="Assets\Scripts\Net\Impl\AccountHandler.cs" />
     <Compile Include="Assets\Scripts\Net\HandlerBase.cs" />
+    <Compile Include="Assets\Modules\Spine\Runtime\spine-unity\Modules\AttachmentTools\AttachmentTools.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Modules\Spine\version.txt" />

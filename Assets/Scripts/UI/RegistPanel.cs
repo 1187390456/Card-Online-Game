@@ -13,6 +13,7 @@ public class RegistPanel : UIBase
     private InputField passwordInput;
     private InputField passwordRepeatInput;
     private PromptMsg promptMsg = new PromptMsg();
+    private SocketMsg socketMsg = new SocketMsg();
 
     private void Awake()
     {
@@ -86,7 +87,7 @@ public class RegistPanel : UIBase
         }
 
         AccountDto accountDto = new AccountDto(usernameInput.text, passwordInput.text);
-        SocketMsg socketMsg = new SocketMsg(OpCode.ACCOUNT, AccountCode.Regist_Cres, accountDto);
+        socketMsg.Change(OpCode.ACCOUNT, AccountCode.Regist_Cres, accountDto);
         Dispatch(AreaCode.NET, 0, socketMsg);
     }
 }
