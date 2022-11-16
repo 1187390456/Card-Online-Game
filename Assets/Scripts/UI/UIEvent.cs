@@ -11,6 +11,7 @@ public class UIEvent
 {
     public const int Start_Panel_Active = 0; // 登录面板显示
     public const int Regist_Panel_Active = 1; // 注册面包显示
+    public const int UserInfoArea_RenderView = 2; // 角色信息面板刷新
 
     public const int Prompt_Msg = int.MaxValue; // 提示面板显示
 }
