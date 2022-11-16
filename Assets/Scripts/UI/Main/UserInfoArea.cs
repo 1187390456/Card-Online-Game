@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using DG.Tweening;
 
 public class UserInfo
 {
@@ -27,6 +28,8 @@ public class UserInfo
 
 public class UserInfoArea : UIBase
 {
+    private Button Exit;
+
     private Image Avatar;
     private Image AvatarMask;
     private Text Name;
@@ -39,6 +42,9 @@ public class UserInfoArea : UIBase
 
     private void Awake()
     {
+        Exit = transform.Find("AvatarArea/Exit").GetComponent<Button>();
+        Exit.onClick.AddListener(OnClickExit);
+
         Avatar = transform.Find("AvatarArea/Avatar").GetComponent<Image>();
         AvatarMask = Avatar.GetComponentInChildren<Image>();
 
@@ -58,6 +64,13 @@ public class UserInfoArea : UIBase
     private void Start()
     {
         Grade.gameObject.SetActive(false);
+        StartAnimation();
+    }
+
+    public override void OnDestroy()
+    {
+        base.OnDestroy();
+        Exit.onClick.RemoveAllListeners();
     }
 
     public override void Execute(int eventCode, object message)
@@ -82,5 +95,25 @@ public class UserInfoArea : UIBase
         Name.text = userInfo.Name;
         RankName.text = userInfo.RankName;
         GradeName.text = userInfo.GradeName;
+    }
+
+    /// <summary>
+    /// 起始动画
+    /// </summary>
+    private void StartAnimation()
+    {
+        transform.localScale = Vector3.zero;
+        transform.DOScale(new Vector3(1.0f, 1.0f, 1.0f), .2f);
+    }
+
+    /// <summary>
+    /// 退出登录
+    /// </summary>
+    private void OnClickExit()
+    {
+        LoadSceneMsg loadSceneMsg = new LoadSceneMsg(0, () =>
+          {
+          });
+        Dispatch(AreaCode.SCENCE, SceneEvent.Load_Scence, loadSceneMsg);
     }
 }
