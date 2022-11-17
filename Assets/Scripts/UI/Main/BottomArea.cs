@@ -20,6 +20,6 @@ public class BottomArea : UIBase
     {
         var endPos = rectTransform.anchoredPosition;
         rectTransform.anchoredPosition = new Vector3(0.0f, rectTransform.anchoredPosition.y - rectTransform.rect.height, 0.0f);
-        DOTween.To(() => rectTransform.anchoredPosition, x => rectTransform.anchoredPosition = x, endPos, .2f);
+        DOTween.To(() => rectTransform.anchoredPosition, x => rectTransform.anchoredPosition = x, endPos, .4f);
     }
 }

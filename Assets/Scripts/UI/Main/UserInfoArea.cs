@@ -103,7 +103,7 @@ public class UserInfoArea : UIBase
     private void StartAnimation()
     {
         transform.localScale = Vector3.zero;
-        transform.DOScale(new Vector3(1.0f, 1.0f, 1.0f), .2f);
+        transform.DOScale(Vector3.one, .4f);
     }
 
     /// <summary>

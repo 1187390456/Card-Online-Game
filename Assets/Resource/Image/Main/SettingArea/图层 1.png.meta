@@ -298,6 +298,48 @@ TextureImporter:
       indices: 
       edges: []
       weights: []
+    - serializedVersion: 2
+      name: "\u56FE\u5C42 1_7"
+      rect:
+        serializedVersion: 2
+        x: 101
+        y: 394
+        width: 102
+        height: 102
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c54641169457b4b4e9da1a13cfb5d6a4
+      internalID: 736477142
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "\u56FE\u5C42 1_9"
+      rect:
+        serializedVersion: 2
+        x: 170
+        y: 1
+        width: 21
+        height: 82
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 537c3d0b5ebf8aa4fa027867c4c6b145
+      internalID: 512581539
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     physicsShape: []
     bones: []
@@ -309,6 +351,7 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
+      "\u56FE\u5C42 1_9": 512581539
       "\u56FE\u5C42 1_8": 1396192221
       "\u56FE\u5C42 1_1": -1438750202
       "\u56FE\u5C42 1_0": -1392272294

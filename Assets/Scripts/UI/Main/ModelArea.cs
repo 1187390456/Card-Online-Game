@@ -50,10 +50,10 @@ public class ModelArea : UIBase
         }
         closeSequence = DOTween.Sequence();
         closeSequence
-            .Append(transform.DOLocalMove(new Vector3(-60.0f, 0.0f, 0.0f), .2f))
-            .Join(transform.DOScale(new Vector3(1.1f, 1.0f, 1.0f), .1f)).SetDelay(.2f)
-            .Append(transform.DOLocalMove(new Vector3(40.0f, 0.0f, 0.0f), .2f))
-            .Join(transform.DOScale(new Vector3(1.0f, 1.0f, 1.0f), .1f));
+            .Append(transform.DOLocalMove(new Vector3(-60.0f, 0.0f, 0.0f), .3f)).SetEase(Ease.InOutSine)
+            .Join(transform.DOScale(new Vector3(1.1f, 1.0f, 1.0f), .3f)).SetDelay(.2f)
+            .Append(transform.DOLocalMove(new Vector3(40.0f, 0.0f, 0.0f), .3f))
+            .Join(transform.DOScale(new Vector3(1.0f, 1.0f, 1.0f), .3f));
 
         closeSequence.Play();
     }

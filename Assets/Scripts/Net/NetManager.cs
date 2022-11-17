@@ -6,6 +6,11 @@ using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
 
+public static class ConnectFlag
+{
+    public static bool isConnected = false;
+}
+
 /// <summary>
 /// 网络模块
 /// </summary>
@@ -16,7 +21,9 @@ public class NetManager : ManagerBase
 
     private void Start()
     {
+        if (ConnectFlag.isConnected) return;
         client.Connect();
+        ConnectFlag.isConnected = true;
     }
 
     private void Update()
