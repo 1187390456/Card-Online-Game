@@ -25,6 +25,7 @@ public class ModelArea : UIBase
     {
         base.OnDestroy();
         classifyModel.onClick.RemoveAllListeners();
+        DOTween.KillAll();
     }
 
     /// <summary>

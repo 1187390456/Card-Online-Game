@@ -17,6 +17,7 @@ public class TableCavansArea : UIBase
     private int startTime = 30; // 起始计时
 
     private Queue<RectTransform> rectQueue = new Queue<RectTransform>(); // 动画 rectTrans队列
+    private int sequenceIndex = 1; // 系列动画索引
     public List<Sprite> imageList = new List<Sprite>(); // 0-9 的图片资源
 
     private void Awake()
@@ -36,6 +37,14 @@ public class TableCavansArea : UIBase
     private void Start()
     {
         SetMathchTipsActive(false);
+    }
+
+    public override void OnDestroy()
+    {
+        base.OnDestroy();
+        CancelInvoke(nameof(AnimationForVertical));
+        rectQueue.Clear();
+        DOTween.KillAll();
     }
 
     /// <summary>
@@ -61,7 +70,7 @@ public class TableCavansArea : UIBase
     }
 
     /// <summary>
-    /// 初始 入队 动画
+    /// 初始入队
     /// </summary>
 
     private void InitAllAnimation()
@@ -81,12 +90,31 @@ public class TableCavansArea : UIBase
     /// <param name="rectTrans"></param>
     public void AnimationForVertical()
     {
-        if (rectQueue.Count <= 0)
-        {
-            Invoke(nameof(InitAllAnimation), .5f);
-            return;
-        }
         var rectTrans = rectQueue.Dequeue();
+
+        StartSequenceAnimation(rectTrans);
+
+        rectQueue.Enqueue(rectTrans);
+
+        if (sequenceIndex == 9)
+        {
+            sequenceIndex = 1;
+            Invoke(nameof(AnimationForVertical), .5f);
+        }
+        else
+        {
+            sequenceIndex++;
+            Invoke(nameof(AnimationForVertical), .1f);
+        }
+    }
+
+    /// <summary>
+    ///  序列动画方法
+    /// </summary>
+    /// <param name="rectTrans"></param>
+
+    private void StartSequenceAnimation(RectTransform rectTrans)
+    {
         Sequence sequence = DOTween.Sequence();
         var startPos = rectTrans.anchoredPosition;
         var endPos = new Vector2(rectTrans.anchoredPosition.x, rectTrans.anchoredPosition.y + 10.0f);
@@ -95,13 +123,7 @@ public class TableCavansArea : UIBase
         sequence
             .Append(t1)
             .Append(t2);
-        sequence.Play();
-        sequence.onComplete = () =>
-        {
-            sequence.Kill();
-        };
         sequence.SetEase(Ease.Flash);
-        Invoke(nameof(AnimationForVertical), .1f);
     }
 
     /// <summary>
