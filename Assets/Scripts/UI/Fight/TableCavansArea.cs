@@ -38,6 +38,21 @@ public class TableCavansArea : UIBase
 
         shiWei = MatchTips.transform.Find("Timer/ShiWei").GetComponent<Image>();
         geWei = MatchTips.transform.Find("Timer/Gewei").GetComponent<Image>();
+
+        Bind(UIEvent.Match_Success);
+    }
+
+    public override void Execute(int eventCode, object message)
+    {
+        switch (eventCode)
+        {
+            case UIEvent.Match_Success:
+                //  匹配成功
+                break;
+
+            default:
+                break;
+        }
     }
 
     private void Start()

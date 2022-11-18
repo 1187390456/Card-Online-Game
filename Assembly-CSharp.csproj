@@ -94,6 +94,7 @@
     <Compile Include="Assets\Modules\Spine\Runtime\spine-unity\Modules\Timeline\PlayableHandle Component\SpinePlayableHandleBase.cs" />
     <Compile Include="Assets\Modules\Spine\Runtime\spine-unity\SkeletonUtility\SkeletonUtility.cs" />
     <Compile Include="Assets\Modules\Spine\Runtime\spine-unity\SkeletonExtensions.cs" />
+    <Compile Include="Assets\Scripts\UI\Fight\TableCavansArea.cs" />
     <Compile Include="Assets\Modules\Spine\Runtime\spine-unity\Modules\Timeline\SpineSkeletonFlip\SpineSkeletonFlipMixerBehaviour.cs" />
     <Compile Include="Assets\Scripts\UI\UIBase.cs" />
     <Compile Include="Assets\Modules\Spine\Runtime\spine-unity\Modules\YieldInstructions\WaitForSpineTrackEntryEnd.cs" />
@@ -115,6 +116,7 @@
     <Compile Include="Assets\Modules\Spine\Runtime\spine-unity\Modules\Timeline\SpineSkeletonFlip\SpineSkeletonFlipBehaviour.cs" />
     <Compile Include="Assets\Scripts\UI\Msg\PromptMsg.cs" />
     <Compile Include="Assets\Modules\Spine\Runtime\spine-csharp\Attachments\VertexAttachment.cs" />
+    <Compile Include="Assets\Scripts\UI\Create\CreateArea.cs" />
     <Compile Include="Assets\Scripts\Scene\SceneEvent.cs" />
     <Compile Include="Assets\Modules\Spine\Runtime\spine-unity\SpineAttributes.cs" />
     <Compile Include="Assets\Scripts\Audio\AudioManager.cs" />
@@ -190,7 +192,6 @@
     <Compile Include="Assets\Modules\Spine\Runtime\spine-unity\Modules\Timeline\SpineSkeletonFlip\SpineSkeletonFlipClip.cs" />
     <Compile Include="Assets\Scripts\Net\HandlerBase.cs" />
     <Compile Include="Assets\Modules\Spine\Runtime\spine-unity\Modules\AttachmentTools\AttachmentTools.cs" />
-    <Compile Include="Assets\Scripts\UI\Fight\TableCavansArea.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Modules\DOTween\DOTween.XML" />

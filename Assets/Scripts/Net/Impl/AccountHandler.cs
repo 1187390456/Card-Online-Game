@@ -40,7 +40,7 @@ public class AccountHandler : HandlerBase
         switch (value)
         {
             case 0:
-                LoadSceneMsg loadSceneMsg = new LoadSceneMsg(1, () =>
+                LoadSceneMsg loadSceneMsg = new LoadSceneMsg(3, () =>
                 {
                 });
                 Dispatch(AreaCode.SCENCE, SceneEvent.Load_Scence, loadSceneMsg);
