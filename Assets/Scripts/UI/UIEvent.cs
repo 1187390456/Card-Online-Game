@@ -14,5 +14,5 @@ public class UIEvent
     public const int UserInfoArea_RenderView = 2; // 角色信息面板刷新
     public const int Match_Success = 3; // 匹配成功
 
-    public const int Prompt_Msg = int.MaxValue; // 提示面板显示
+    public const int Prompt_Msg = 4; // 提示面板显示
 }

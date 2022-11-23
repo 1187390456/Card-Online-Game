@@ -6,11 +6,6 @@ using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
 
-public static class ConnectFlag
-{
-    public static bool isConnected = false;
-}
-
 /// <summary>
 /// 网络模块
 /// </summary>
@@ -21,9 +16,7 @@ public class NetManager : ManagerBase
 
     private void Start()
     {
-        if (ConnectFlag.isConnected) return;
         client.Connect();
-        ConnectFlag.isConnected = true;
     }
 
     private void Update()
@@ -49,6 +42,7 @@ public class NetManager : ManagerBase
         switch (eventCode)
         {
             case 0:
+                Debug.Log(eventCode);
                 client.Send(message as SocketMsg);
                 break;
 
@@ -62,6 +56,7 @@ public class NetManager : ManagerBase
     #region 处理接收到服务器发来的消息
 
     private HandlerBase accountHandler = new AccountHandler(); // 账号处理
+    private HandlerBase userHandler = new UserHandler(); // 角色处理
 
     /// <summary>
     /// 处理网络消息
@@ -73,6 +68,10 @@ public class NetManager : ManagerBase
         {
             case OpCode.ACCOUNT:
                 accountHandler.OnReceive(msg.subCode, msg.value);
+                break;
+
+            case OpCode.User:
+                userHandler.OnReceive(msg.subCode, msg.value);
                 break;
 
             default:

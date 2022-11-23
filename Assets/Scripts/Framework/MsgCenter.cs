@@ -21,6 +21,8 @@ public class MsgCenter : MonoBase
         gameObject.AddComponent<NetManager>();
         gameObject.AddComponent<CharacterManager>();
         gameObject.AddComponent<SceneMgr>();
+
+        DontDestroyOnLoad(gameObject);
     }
 
     /// <summary>

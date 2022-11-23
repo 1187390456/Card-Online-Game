@@ -1,4 +1,5 @@
 ﻿using Protocol.Code;
+using Protocol.Code.SubCode;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -39,11 +40,11 @@ public class AccountHandler : HandlerBase
     {
         switch (value)
         {
-            case 0:
-                LoadSceneMsg loadSceneMsg = new LoadSceneMsg(3, () =>
+            case 0: // 不存在角色
+                LoadSceneMsg loadSceneMsg0 = new LoadSceneMsg(3, () =>
                 {
                 });
-                Dispatch(AreaCode.SCENCE, SceneEvent.Load_Scence, loadSceneMsg);
+                Dispatch(AreaCode.SCENCE, SceneEvent.Load_Scence, loadSceneMsg0);
 
                 break;
 
@@ -58,6 +59,16 @@ public class AccountHandler : HandlerBase
 
             case -3:
                 PromptMsg("密码错误!", Color.red);
+                break;
+
+            case 1: // 存在角色
+                LoadSceneMsg loadSceneMsg1 = new LoadSceneMsg(1, () =>
+                {
+                    // 获取角色信息
+                    SocketMsg socketMsg = new SocketMsg(OpCode.User, UserCode.Get_Cres, null);
+                    Dispatch(AreaCode.NET, 0, socketMsg);
+                });
+                Dispatch(AreaCode.SCENCE, SceneEvent.Load_Scence, loadSceneMsg1);
                 break;
 
             default:

@@ -3,12 +3,18 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
+using Protocol.Code;
+using Protocol.Code.SubCode;
 
 public class CreateArea : UIBase
 {
+    private PromptMsg promptMsg = new PromptMsg();
+    private SocketMsg socketMsg = new SocketMsg();
+
     private RectTransform logoRect;
     private Transform panelTrans;
     private Button enterBtn;
+    private InputField nameInput;
 
     private void Awake()
     {
@@ -16,6 +22,8 @@ public class CreateArea : UIBase
         panelTrans = transform.Find("CreatePanel");
         enterBtn = transform.Find("CreatePanel/Enter").GetComponent<Button>();
         enterBtn.onClick.AddListener(OnClickEnter);
+
+        nameInput = transform.Find("CreatePanel/UserInput").GetComponent<InputField>();
     }
 
     private void Start()
@@ -26,6 +34,7 @@ public class CreateArea : UIBase
     public override void OnDestroy()
     {
         base.OnDestroy();
+        enterBtn.onClick.RemoveAllListeners();
         DOTween.KillAll();
     }
 
@@ -48,9 +57,14 @@ public class CreateArea : UIBase
     private void OnClickEnter()
     {
         // TODO 服务端效验
-        LoadSceneMsg loadSceneMsg = new LoadSceneMsg(1, () =>
+        if (string.IsNullOrEmpty(nameInput.text))
         {
-        });
-        Dispatch(AreaCode.SCENCE, SceneEvent.Load_Scence, loadSceneMsg);
+            promptMsg.Change("名称不能为空哦!", Color.red);
+            Dispatch(AreaCode.UI, UIEvent.Prompt_Msg, promptMsg);
+            return;
+        }
+        // 发起创建请求
+        socketMsg.Change(OpCode.User, UserCode.Create_Cres, nameInput.text);
+        Dispatch(AreaCode.NET, 0, socketMsg);
     }
 }

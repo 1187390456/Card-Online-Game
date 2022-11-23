@@ -192,6 +192,10 @@
     <Compile Include="Assets\Modules\Spine\Runtime\spine-unity\Modules\Timeline\SpineSkeletonFlip\SpineSkeletonFlipClip.cs" />
     <Compile Include="Assets\Scripts\Net\HandlerBase.cs" />
     <Compile Include="Assets\Modules\Spine\Runtime\spine-unity\Modules\AttachmentTools\AttachmentTools.cs" />
+    <Compile Include="Assets\Scripts\Net\Impl\UserHandler.cs" />
+    <Compile Include="Assets\Scripts\Model\GameModel.cs" />
+    <Compile Include="Assets\Scripts\Model\Models.cs" />
+    <Compile Include="Assets\Scripts\UI\Tools\DontDestory.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Modules\DOTween\DOTween.XML" />

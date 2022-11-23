@@ -3,28 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
-
-public class UserInfo
-{
-    public string Avatar;
-    public string AvatarMask;
-    public string Name;
-    public string RankLogo;
-    public string RankName;
-    public string GradeLogo;
-    public string GradeName;
-
-    public UserInfo(string avatar, string avatarMask, string name, string rankLogo, string rankName, string gradeLogo, string gradeName)
-    {
-        Avatar = avatar;
-        AvatarMask = avatarMask;
-        Name = name;
-        RankLogo = rankLogo;
-        RankName = rankName;
-        GradeLogo = gradeLogo;
-        GradeName = gradeName;
-    }
-}
+using Protocol.Dto;
 
 public class UserInfoArea : UIBase
 {
@@ -78,8 +57,8 @@ public class UserInfoArea : UIBase
         switch (eventCode)
         {
             case UIEvent.UserInfoArea_RenderView:
-                // 刷新角色信息
-                //  RenderView();
+                UserDto userDto = (UserDto)message;
+                RenderView(userDto);
                 break;
 
             default:
@@ -90,11 +69,11 @@ public class UserInfoArea : UIBase
     /// <summary>
     /// 刷新角色信息
     /// </summary>
-    private void RenderView(UserInfo userInfo)
+    private void RenderView(UserDto userDto)
     {
-        Name.text = userInfo.Name;
-        RankName.text = userInfo.RankName;
-        GradeName.text = userInfo.GradeName;
+        Name.text = userDto.Name;
+        RankName.text = userDto.RankName;
+        GradeName.text = userDto.GradeName;
     }
 
     /// <summary>
