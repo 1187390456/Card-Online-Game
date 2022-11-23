@@ -42,7 +42,6 @@ public class NetManager : ManagerBase
         switch (eventCode)
         {
             case 0:
-                Debug.Log(eventCode);
                 client.Send(message as SocketMsg);
                 break;
 

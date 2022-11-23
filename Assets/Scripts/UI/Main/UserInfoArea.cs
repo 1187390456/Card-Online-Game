@@ -4,13 +4,15 @@ using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
 using Protocol.Dto;
+using UnityEngine.Networking;
 
 public class UserInfoArea : UIBase
 {
     private Button Exit;
 
-    private Image Avatar;
-    private Image AvatarMask;
+    private RawImage Avatar;
+    private RawImage AvatarMask;
+
     private Text Name;
     private Transform Rank;
     private Image RankLogo;
@@ -24,8 +26,8 @@ public class UserInfoArea : UIBase
         Exit = transform.Find("AvatarArea/Exit").GetComponent<Button>();
         Exit.onClick.AddListener(OnClickExit);
 
-        Avatar = transform.Find("AvatarArea/Avatar").GetComponent<Image>();
-        AvatarMask = Avatar.GetComponentInChildren<Image>();
+        Avatar = transform.Find("AvatarArea/Avatar").GetComponent<RawImage>();
+        AvatarMask = Avatar.transform.GetChild(0).GetComponent<RawImage>();
 
         Name = transform.Find("InfoArea/Name").GetComponent<Text>();
 
@@ -74,6 +76,8 @@ public class UserInfoArea : UIBase
         Name.text = userDto.Name;
         RankName.text = userDto.RankName;
         GradeName.text = userDto.GradeName;
+        StartCoroutine(GetImage(userDto.Avatar, Avatar));
+        StartCoroutine(GetImage(userDto.AvatarMask, AvatarMask));
     }
 
     /// <summary>
@@ -94,5 +98,15 @@ public class UserInfoArea : UIBase
           {
           });
         Dispatch(AreaCode.SCENCE, SceneEvent.Load_Scence, loadSceneMsg);
+    }
+
+    private IEnumerator GetImage(string url, RawImage rawImage)
+    {
+        // 暂时先用
+        using (WWW www = new WWW(url))
+        {
+            yield return www;
+            if (string.IsNullOrEmpty(www.error)) rawImage.texture = www.texture;
+        }
     }
 }
