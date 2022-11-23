@@ -107,6 +107,7 @@
     <Compile Include="Assets\Modules\Spine\Runtime\spine-unity\Modules\Timeline\SpineAnimationState\SpineAnimationStateTrack.cs" />
     <Compile Include="Assets\Modules\Spine\Runtime\spine-unity\Modules\Ragdoll\SkeletonRagdoll2D.cs" />
     <Compile Include="Assets\Modules\Spine\Runtime\spine-unity\Modules\YieldInstructions\WaitForSpineAnimationComplete.cs" />
+    <Compile Include="Assets\Scripts\Net\Impl\UserHandler.cs" />
     <Compile Include="Assets\Modules\Spine\Runtime\spine-csharp\Attachments\BoundingBoxAttachment.cs" />
     <Compile Include="Assets\Scripts\UI\Login\PlayPanel.cs" />
     <Compile Include="Assets\Modules\Spine\Runtime\spine-csharp\Slot.cs" />
@@ -158,12 +159,15 @@
     <Compile Include="Assets\Modules\Spine\Runtime\spine-unity\Asset Types\SkeletonDataModifierAsset.cs" />
     <Compile Include="Assets\Modules\Spine\Runtime\spine-csharp\Attachments\Attachment.cs" />
     <Compile Include="Assets\Scripts\UI\Fight\DoubleAndCheaArea.cs" />
+    <Compile Include="Assets\Scripts\Model\GameModel.cs" />
     <Compile Include="Assets\Modules\Spine\Runtime\spine-csharp\PathConstraintData.cs" />
     <Compile Include="Assets\Scripts\Framework\AreaCode.cs" />
     <Compile Include="Assets\Scripts\Audio\AudioBase.cs" />
     <Compile Include="Assets\Scripts\UI\UIManager.cs" />
+    <Compile Include="Assets\Scripts\Tools\DontDestory.cs" />
     <Compile Include="Assets\Modules\Spine\Runtime\spine-unity\Asset Types\SkeletonDataAsset.cs" />
     <Compile Include="Assets\Modules\Spine\Runtime\spine-unity\Asset Types\AtlasAssetBase.cs" />
+    <Compile Include="Assets\Scripts\Model\Models.cs" />
     <Compile Include="Assets\Modules\Spine\Runtime\spine-csharp\Skin.cs" />
     <Compile Include="Assets\Modules\Spine\Runtime\spine-unity\SkeletonUtility\SkeletonUtilityBone.cs" />
     <Compile Include="Assets\Scripts\UI\UIEvent.cs" />
@@ -192,10 +196,6 @@
     <Compile Include="Assets\Modules\Spine\Runtime\spine-unity\Modules\Timeline\SpineSkeletonFlip\SpineSkeletonFlipClip.cs" />
     <Compile Include="Assets\Scripts\Net\HandlerBase.cs" />
     <Compile Include="Assets\Modules\Spine\Runtime\spine-unity\Modules\AttachmentTools\AttachmentTools.cs" />
-    <Compile Include="Assets\Scripts\Net\Impl\UserHandler.cs" />
-    <Compile Include="Assets\Scripts\Model\GameModel.cs" />
-    <Compile Include="Assets\Scripts\Model\Models.cs" />
-    <Compile Include="Assets\Scripts\UI\Tools\DontDestory.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Modules\DOTween\DOTween.XML" />

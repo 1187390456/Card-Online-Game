@@ -16,7 +16,7 @@ public class PromptPanel : UIBase
 
     private void Awake()
     {
-        tips = transform.Find("Tips").GetComponent<Text>();
+        tips = transform.Find("TipsBg/Tips").GetComponent<Text>();
         canvasGroup = GetComponent<CanvasGroup>();
 
         Bind(UIEvent.Prompt_Msg);
