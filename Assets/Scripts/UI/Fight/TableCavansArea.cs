@@ -4,9 +4,13 @@ using UnityEngine;
 using DG.Tweening;
 using UnityEngine.UI;
 using System.Linq.Expressions;
+using Protocol.Code;
+using Protocol.Code.SubCode;
 
 public class TableCavansArea : UIBase
 {
+    private SocketMsg socketMsg = new SocketMsg();
+
     public List<Sprite> imageList = new List<Sprite>(); // 0-9 的图片资源 非动态载入 不清除
 
     private GameObject MatchTips; // 匹配提示
@@ -80,6 +84,9 @@ public class TableCavansArea : UIBase
         SetStartBtnActive(false);
 
         StartAnimation();
+
+        socketMsg.Change(OpCode.Match, MatchCode.Enter_Cres, null);
+        Dispatch(AreaCode.NET, 0, socketMsg);
     }
 
     /// <summary>
@@ -91,6 +98,9 @@ public class TableCavansArea : UIBase
         SetStartBtnActive(false);
 
         StartAnimation();
+
+        socketMsg.Change(OpCode.Match, MatchCode.Enter_Cres, null);
+        Dispatch(AreaCode.NET, 0, socketMsg);
     }
 
     /// <summary>
@@ -102,6 +112,9 @@ public class TableCavansArea : UIBase
         SetStartBtnActive(true);
 
         ResetAnimaton();
+
+        socketMsg.Change(OpCode.Match, MatchCode.Leave_Cres, null);
+        Dispatch(AreaCode.NET, 0, socketMsg);
     }
 
     /// <summary>
