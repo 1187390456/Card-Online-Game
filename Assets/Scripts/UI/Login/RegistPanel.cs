@@ -86,7 +86,11 @@ public class RegistPanel : UIBase
             return;
         }
 
-        AccountDto accountDto = new AccountDto(usernameInput.text, passwordInput.text);
+        AccountDto accountDto = new AccountDto
+        {
+            Account = usernameInput.text,
+            Password = passwordInput.text
+        };
         socketMsg.Change(OpCode.ACCOUNT, AccountCode.Regist_Cres, accountDto);
         Dispatch(AreaCode.NET, 0, socketMsg);
     }

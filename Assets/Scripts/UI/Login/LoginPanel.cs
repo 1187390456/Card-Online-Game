@@ -70,7 +70,11 @@ public class LoginPanel : UIBase
             Dispatch(AreaCode.UI, UIEvent.Prompt_Msg, promptMsg);
             return;
         }
-        AccountDto accountDto = new AccountDto(usernameInput.text, passwordInput.text); // 构造账号模型
+        AccountDto accountDto = new AccountDto
+        {
+            Account = usernameInput.text,
+            Password = passwordInput.text
+        }; // 构造账号模型
         socketMsg.Change(OpCode.ACCOUNT, AccountCode.LOGIN, accountDto); // 根据账号模型生成消息类
         Dispatch(AreaCode.NET, 0, socketMsg); // 分发
     }

@@ -5,9 +5,14 @@ using UnityEngine.UI;
 using DG.Tweening;
 using Protocol.Dto;
 using UnityEngine.Networking;
+using Protocol.Code;
+using Protocol.Code.SubCode;
 
 public class UserInfoArea : UIBase
 {
+    public static UserInfoArea Instance = null;
+    private SocketMsg socketMsg = new SocketMsg();
+
     private Button Exit;
 
     private RawImage Avatar;
@@ -40,12 +45,18 @@ public class UserInfoArea : UIBase
         GradeName = Grade.GetComponentInChildren<Text>();
 
         Bind(UIEvent.UserInfoArea_RenderView);
+        Instance = this;
     }
 
     private void Start()
     {
         Grade.gameObject.SetActive(false);
         StartAnimation();
+
+        // 获取角色信息 刷新角色信息
+
+        SocketMsg socketMsg = new SocketMsg(OpCode.User, UserCode.Get_Cres, null);
+        Dispatch(AreaCode.NET, 0, socketMsg);
     }
 
     public override void OnDestroy()
@@ -76,8 +87,6 @@ public class UserInfoArea : UIBase
         Name.text = userDto.Name;
         RankName.text = userDto.RankName;
         GradeName.text = userDto.GradeName;
-        StartCoroutine(GetImage(userDto.Avatar, Avatar));
-        StartCoroutine(GetImage(userDto.AvatarMask, AvatarMask));
     }
 
     /// <summary>
@@ -98,15 +107,5 @@ public class UserInfoArea : UIBase
           {
           });
         Dispatch(AreaCode.SCENCE, SceneEvent.Load_Scence, loadSceneMsg);
-    }
-
-    private IEnumerator GetImage(string url, RawImage rawImage)
-    {
-        // 暂时先用
-        using (WWW www = new WWW(url))
-        {
-            yield return www;
-            if (string.IsNullOrEmpty(www.error)) rawImage.texture = www.texture;
-        }
     }
 }

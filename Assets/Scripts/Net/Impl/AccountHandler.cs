@@ -9,6 +9,7 @@ using UnityEngine;
 
 public class AccountHandler : HandlerBase
 {
+    private SocketMsg socketMsg = new SocketMsg();
     private PromptMsg promptMsg = new PromptMsg();
 
     /// <summary>
@@ -41,11 +42,8 @@ public class AccountHandler : HandlerBase
         switch (value)
         {
             case 0: // 不存在角色
-                LoadSceneMsg loadSceneMsg0 = new LoadSceneMsg(3, () =>
-                {
-                });
+                LoadSceneMsg loadSceneMsg0 = new LoadSceneMsg(3, () => PromptMsg("创建一个角色吧!", Color.green));
                 Dispatch(AreaCode.SCENCE, SceneEvent.Load_Scence, loadSceneMsg0);
-
                 break;
 
             case -1:
@@ -61,14 +59,9 @@ public class AccountHandler : HandlerBase
                 PromptMsg("密码错误!", Color.red);
                 break;
 
-            case 1: // 存在角色
-                LoadSceneMsg loadSceneMsg1 = new LoadSceneMsg(1, () =>
-                {
-                    // 获取角色信息
-                    SocketMsg socketMsg = new SocketMsg(OpCode.User, UserCode.Get_Cres, null);
-                    Dispatch(AreaCode.NET, 0, socketMsg);
-                });
-                Dispatch(AreaCode.SCENCE, SceneEvent.Load_Scence, loadSceneMsg1);
+            case 1: // 存在角色 获取角色信息 上线角色
+                socketMsg.Change(OpCode.User, UserCode.Get_Cres, null);
+                Dispatch(AreaCode.NET, 0, socketMsg);
                 break;
 
             default:

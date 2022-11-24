@@ -52,7 +52,9 @@ public class UserHandler : HandlerBase
                 break;
 
             case 0:
-                // 创建成功
+                // 创建成功 获取角色信息 上线角色
+                socketMsg.Change(OpCode.User, UserCode.Get_Cres, null);
+                Dispatch(AreaCode.NET, 0, socketMsg);
 
                 break;
 
@@ -73,6 +75,8 @@ public class UserHandler : HandlerBase
             return;
         }
         Models.GameModel.UserDto = value; // 存储角色数据
+
+        if (UserInfoArea.Instance != null) Dispatch(AreaCode.UI, UIEvent.UserInfoArea_RenderView, value); // 刷新角色信息
     }
 
     /// <summary>
@@ -96,11 +100,7 @@ public class UserHandler : HandlerBase
                 break;
 
             case 0:
-                LoadSceneMsg loadSceneMsg = new LoadSceneMsg(1, () =>
-                  {
-                      PromptMsg("登录成功!", Color.green);
-                      Dispatch(AreaCode.UI, UIEvent.UserInfoArea_RenderView, Models.GameModel.UserDto); // 刷新角色信息
-                  });
+                LoadSceneMsg loadSceneMsg = new LoadSceneMsg(1, () => PromptMsg("登录成功!", Color.green));
                 Dispatch(AreaCode.SCENCE, SceneEvent.Load_Scence, loadSceneMsg);
                 break;
 
