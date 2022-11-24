@@ -91,7 +91,7 @@ public class RegistPanel : UIBase
             Account = usernameInput.text,
             Password = passwordInput.text
         };
-        socketMsg.Change(OpCode.ACCOUNT, AccountCode.Regist_Cres, accountDto);
+        socketMsg.Change(OpCode.Account, AccountCode.Regist_Cres, accountDto);
         Dispatch(AreaCode.NET, 0, socketMsg);
     }
 }

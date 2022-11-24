@@ -65,7 +65,7 @@ public class NetManager : ManagerBase
     {
         switch (msg.opCode)
         {
-            case OpCode.ACCOUNT:
+            case OpCode.Account:
                 accountHandler.OnReceive(msg.subCode, msg.value);
                 break;
 

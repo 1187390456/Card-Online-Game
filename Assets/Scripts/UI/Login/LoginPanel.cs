@@ -75,7 +75,7 @@ public class LoginPanel : UIBase
             Account = usernameInput.text,
             Password = passwordInput.text
         }; // 构造账号模型
-        socketMsg.Change(OpCode.ACCOUNT, AccountCode.LOGIN, accountDto); // 根据账号模型生成消息类
+        socketMsg.Change(OpCode.Account, AccountCode.Login, accountDto); // 根据账号模型生成消息类
         Dispatch(AreaCode.NET, 0, socketMsg); // 分发
     }
 }

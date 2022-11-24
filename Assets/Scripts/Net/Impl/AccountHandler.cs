@@ -25,7 +25,7 @@ public class AccountHandler : HandlerBase
                 RegistRes((int)value);
                 break;
 
-            case AccountCode.LOGIN:
+            case AccountCode.Login:
                 LoginRes((int)value);
                 break;
 
