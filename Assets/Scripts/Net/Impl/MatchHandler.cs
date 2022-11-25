@@ -16,17 +16,15 @@ public class MatchHandler : HandlerBase
         switch (subCode)
         {
             case MatchCode.Enter_Sres: // 自己进入
-                MatchRoomDto matchRoomDto = (MatchRoomDto)value;
-                SelfEnter(matchRoomDto);
+                SelfEnter((MatchRoomDto)value);
 
                 break;
             case MatchCode.Enter_Bro: // 其他人进入
-                UserDto userDto = (UserDto)value;
-                OtherEnter(userDto);
+                OtherEnter((UserDto)value);
                 break;
 
-            case MatchCode.Leave_Bro: // 离开房间 有人离开就会触发 广播所有
-                Leave((int)value);
+            case MatchCode.Leave_Bro: // 有人离开
+                Leave((UserDto)value);
                 break;
 
             case MatchCode.Ready_Bro: // 准备 广播所有
@@ -46,15 +44,21 @@ public class MatchHandler : HandlerBase
     // 其他人进入
     private void OtherEnter(UserDto userDto)
     {
-        Debug.Log($"玩家{userDto.Name}加入了！");
         Models.GameModel.MatchRoomDto.Add(userDto);  //更新本地房间数据 添加该角色
         promptMsg.Change($"玩家{userDto.Name}加入了！", Color.green);
         Dispatch(AreaCode.UI, UIEvent.Prompt_Msg, promptMsg);
+        Debug.Log($"玩家{userDto.Name}加入了！");
     }
-
-    private void Leave(int userId)
+    //  有人离开
+    private void Leave(UserDto userDto)
     {
-        Debug.Log("离开的玩家id是" + userId);
-
+        Models.GameModel.MatchRoomDto.Remove(userDto.Id);  //更新本地房间数据 移除该角色
+        // 其他人离开
+        if (userDto.Id != Models.GameModel.UserDto.Id)
+        {
+            promptMsg.Change($"玩家{userDto.Name}离开了！", Color.green);
+            Dispatch(AreaCode.UI, UIEvent.Prompt_Msg, promptMsg);
+            Debug.Log($"玩家{userDto.Name}离开了！");
+        }
     }
 }
