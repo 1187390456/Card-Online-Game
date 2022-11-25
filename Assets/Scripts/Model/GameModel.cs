@@ -11,4 +11,6 @@ using System.Threading.Tasks;
 public class GameModel
 {
     public UserDto UserDto { get; set; } // 角色数据
+
+    public MatchRoomDto MatchRoomDto { get; set; } // 匹配房价数据
 }

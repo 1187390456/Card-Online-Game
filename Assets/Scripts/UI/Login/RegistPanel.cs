@@ -7,7 +7,6 @@ using UnityEngine.UI;
 
 public class RegistPanel : UIBase
 {
-    private Button closeBtn;
     private Button registBtn;
     private InputField usernameInput;
     private InputField passwordInput;
@@ -17,7 +16,6 @@ public class RegistPanel : UIBase
 
     private void Awake()
     {
-        closeBtn = transform.Find("Bg/Close").GetComponent<Button>();
         registBtn = transform.Find("Account/RegistBtn").GetComponent<Button>();
         usernameInput = transform.Find("Account/Username/Input").GetComponent<InputField>();
         passwordInput = transform.Find("Account/Password/Input").GetComponent<InputField>();
@@ -26,7 +24,6 @@ public class RegistPanel : UIBase
 
     private void Start()
     {
-        closeBtn.onClick.AddListener(OnClickClose);
         registBtn.onClick.AddListener(OnClickRegist);
 
         Bind(UIEvent.Regist_Panel_Active);
@@ -36,7 +33,6 @@ public class RegistPanel : UIBase
     public override void OnDestroy()
     {
         base.OnDestroy();
-        closeBtn.onClick.RemoveAllListeners();
         registBtn.onClick.RemoveAllListeners();
     }
 

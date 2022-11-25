@@ -7,7 +7,6 @@ using Protocol.Code;
 
 public class LoginPanel : UIBase
 {
-    private Button closeBtn;
     private Button loginBtn;
     private InputField usernameInput;
     private InputField passwordInput;
@@ -16,7 +15,6 @@ public class LoginPanel : UIBase
 
     private void Awake()
     {
-        closeBtn = transform.Find("Bg/Close").GetComponent<Button>();
         loginBtn = transform.Find("Account/LoginBtn").GetComponent<Button>();
         usernameInput = transform.Find("Account/Username/Input").GetComponent<InputField>();
         passwordInput = transform.Find("Account/Password/Input").GetComponent<InputField>();
@@ -24,9 +22,7 @@ public class LoginPanel : UIBase
 
     private void Start()
     {
-        closeBtn.onClick.AddListener(OnClickClose);
         loginBtn.onClick.AddListener(OnClickLogin);
-
         Bind(UIEvent.Start_Panel_Active);
         SetPanelActive(false);
     }
@@ -34,7 +30,6 @@ public class LoginPanel : UIBase
     public override void OnDestroy()
     {
         base.OnDestroy();
-        closeBtn.onClick.RemoveAllListeners();
         loginBtn.onClick.RemoveAllListeners();
     }
 
@@ -51,10 +46,6 @@ public class LoginPanel : UIBase
         }
     }
 
-    private void OnClickClose()
-    {
-        SetPanelActive(false);
-    }
 
     private void OnClickLogin()
     {
