@@ -51,11 +51,8 @@ public class UserHandler : HandlerBase
                 PromptMsg("重复创建!", Color.red);
                 break;
 
-            case 0:
-                // 创建成功 获取角色信息 上线角色
-                socketMsg.Change(OpCode.User, UserCode.Get_Cres, null);
-                Dispatch(AreaCode.NET, 0, socketMsg);
-
+            case 0:    // 创建成功 获取角色信息 上线角色
+                DispatchTools.User_Get_Cres(Dispatch);
                 break;
 
             default:
@@ -100,8 +97,7 @@ public class UserHandler : HandlerBase
                 break;
 
             case 0:
-                LoadSceneMsg loadSceneMsg = new LoadSceneMsg(1, () => PromptMsg("登录成功!", Color.green));
-                Dispatch(AreaCode.SCENCE, SceneEvent.Load_Scence, loadSceneMsg);
+                DispatchTools.Load_Scence(Dispatch, 1, () => PromptMsg("登录成功!", Color.green));
                 break;
 
             default:

@@ -37,17 +37,21 @@ public class MatchHandler : HandlerBase
     // 自己进入 
     private void SelfEnter(MatchRoomDto matchRoomDto)
     {
-        Models.GameModel.MatchRoomDto = matchRoomDto; // 存储当前房间数据
-        Debug.Log("进入匹配房间成功");
+        Models.GameModel.MatchRoomDto = matchRoomDto; // 存储当前房间数据 自己的已经在里面了
+
+        foreach (var id in matchRoomDto.uidUserDic.Keys)
+        {
+            if (id == Models.GameModel.UserDto.Id) continue; // 排除自己
+            Dispatch(AreaCode.UI, UIEvent.User_Enter_Room, id);  // 更新存在人的UI
+        }
     }
 
     // 其他人进入
     private void OtherEnter(UserDto userDto)
     {
         Models.GameModel.MatchRoomDto.Add(userDto);  //更新本地房间数据 添加该角色
-        promptMsg.Change($"玩家{userDto.Name}加入了！", Color.green);
-        Dispatch(AreaCode.UI, UIEvent.Prompt_Msg, promptMsg);
-        Debug.Log($"玩家{userDto.Name}加入了！");
+        Dispatch(AreaCode.UI, UIEvent.User_Enter_Room, userDto.Id); // 更新UI
+        DispatchTools.Prompt_Msg(Dispatch, $"玩家{userDto.Name}加入了！", Color.green); // 提示进入
     }
     //  有人离开
     private void Leave(UserDto userDto)
@@ -56,9 +60,9 @@ public class MatchHandler : HandlerBase
         // 其他人离开
         if (userDto.Id != Models.GameModel.UserDto.Id)
         {
-            promptMsg.Change($"玩家{userDto.Name}离开了！", Color.green);
-            Dispatch(AreaCode.UI, UIEvent.Prompt_Msg, promptMsg);
-            Debug.Log($"玩家{userDto.Name}离开了！");
+            Dispatch(AreaCode.UI, UIEvent.User_Leave_Room, userDto.Id); // 更新UI
+            DispatchTools.Prompt_Msg(Dispatch, $"玩家{userDto.Name}离开了！", Color.green); // 提示离开
         }
     }
+
 }

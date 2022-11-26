@@ -97,7 +97,7 @@
     <Compile Include="Assets\Modules\Spine\Runtime\spine-unity\Modules\Timeline\PlayableHandle Component\SpinePlayableHandleBase.cs" />
     <Compile Include="Assets\Modules\Spine\Runtime\spine-unity\SkeletonUtility\SkeletonUtility.cs" />
     <Compile Include="Assets\Modules\Spine\Runtime\spine-unity\SkeletonExtensions.cs" />
-    <Compile Include="Assets\Scripts\UI\Fight\TableCavansArea.cs" />
+    <Compile Include="Assets\Scripts\UI\Fight\FightMainArea.cs" />
     <Compile Include="Assets\Modules\Spine\Runtime\spine-unity\Modules\Timeline\SpineSkeletonFlip\SpineSkeletonFlipMixerBehaviour.cs" />
     <Compile Include="Assets\Scripts\UI\UIBase.cs" />
     <Compile Include="Assets\Modules\Spine\Runtime\spine-unity\Modules\YieldInstructions\WaitForSpineTrackEntryEnd.cs" />
@@ -133,7 +133,6 @@
     <Compile Include="Assets\Modules\Spine\Runtime\spine-csharp\IkConstraintData.cs" />
     <Compile Include="Assets\Modules\Spine\Runtime\spine-unity\Modules\SkeletonUtility Modules\SkeletonUtilityEyeConstraint.cs" />
     <Compile Include="Assets\Modules\Spine\Runtime\spine-csharp\Attachments\AtlasAttachmentLoader.cs" />
-    <Compile Include="Assets\Scripts\UI\Fight\FightMainArea.cs" />
     <Compile Include="Assets\Modules\DOTween\Modules\DOTweenModuleSprite.cs" />
     <Compile Include="Assets\Modules\Spine\Runtime\spine-unity\SkeletonUtility\SkeletonUtilityConstraint.cs" />
     <Compile Include="Assets\Scripts\Character\CharacterBase.cs" />
@@ -161,7 +160,7 @@
     <Compile Include="Assets\Modules\Spine\Runtime\spine-csharp\TransformConstraint.cs" />
     <Compile Include="Assets\Modules\Spine\Runtime\spine-unity\Asset Types\SkeletonDataModifierAsset.cs" />
     <Compile Include="Assets\Modules\Spine\Runtime\spine-csharp\Attachments\Attachment.cs" />
-    <Compile Include="Assets\Scripts\UI\Fight\DoubleAndCheaArea.cs" />
+    <Compile Include="Assets\Scripts\UI\Fight\FightBottomArea.cs" />
     <Compile Include="Assets\Scripts\Model\GameModel.cs" />
     <Compile Include="Assets\Modules\Spine\Runtime\spine-csharp\PathConstraintData.cs" />
     <Compile Include="Assets\Scripts\Framework\AreaCode.cs" />
@@ -199,6 +198,8 @@
     <Compile Include="Assets\Modules\Spine\Runtime\spine-unity\Modules\Timeline\SpineSkeletonFlip\SpineSkeletonFlipClip.cs" />
     <Compile Include="Assets\Scripts\Net\HandlerBase.cs" />
     <Compile Include="Assets\Modules\Spine\Runtime\spine-unity\Modules\AttachmentTools\AttachmentTools.cs" />
+    <Compile Include="Assets\Scripts\Tools\DispatchTools.cs" />
+    <Compile Include="Assets\Scripts\UI\Fight\FightPlayer.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Modules\DOTween\DOTween.XML" />

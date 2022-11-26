@@ -8,8 +8,6 @@ using Protocol.Code.SubCode;
 
 public class CreateArea : UIBase
 {
-    private PromptMsg promptMsg = new PromptMsg();
-    private SocketMsg socketMsg = new SocketMsg();
 
     private RectTransform logoRect;
     private Transform panelTrans;
@@ -43,12 +41,8 @@ public class CreateArea : UIBase
     /// </summary>
     private void StartAnimation()
     {
-        var endPos = logoRect.anchoredPosition;
-        logoRect.anchoredPosition = new Vector2(-900.0f, logoRect.anchoredPosition.y);
-        DOTween.To(() => logoRect.anchoredPosition, x => logoRect.anchoredPosition = x, endPos, .4f);
-
-        panelTrans.localScale = Vector3.zero;
-        panelTrans.DOScale(Vector3.one, .4f);
+        DotweenTools.DoRectMove(logoRect, new Vector2(-900.0f, logoRect.anchoredPosition.y), logoRect.anchoredPosition, .4f);
+        DotweenTools.DoTransScale(panelTrans, Vector3.zero, Vector3.one, .4f);
     }
 
     /// <summary>
@@ -56,15 +50,12 @@ public class CreateArea : UIBase
     /// </summary>
     private void OnClickEnter()
     {
-        // TODO 服务端效验
         if (string.IsNullOrEmpty(nameInput.text))
         {
-            promptMsg.Change("名称不能为空哦!", Color.red);
-            Dispatch(AreaCode.UI, UIEvent.Prompt_Msg, promptMsg);
+            DispatchTools.Prompt_Msg(Dispatch, "名称不能为空哦!", Color.red);
             return;
         }
-        // 发起创建请求
-        socketMsg.Change(OpCode.User, UserCode.Create_Cres, nameInput.text);
-        Dispatch(AreaCode.NET, 0, socketMsg);
+        // 发起创建角色请求
+        DispatchTools.User_Create_Cres(Dispatch, nameInput.text);
     }
 }

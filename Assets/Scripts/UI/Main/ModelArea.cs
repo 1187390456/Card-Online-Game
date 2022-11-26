@@ -31,13 +31,7 @@ public class ModelArea : UIBase
     /// <summary>
     /// 经典模式按钮点击
     /// </summary>
-    private void OnClickClassifyModel()
-    {
-        LoadSceneMsg loadSceneMsg = new LoadSceneMsg(2, () =>
-          {
-          });
-        Dispatch(AreaCode.SCENCE, SceneEvent.Load_Scence, loadSceneMsg);
-    }
+    private void OnClickClassifyModel() => DispatchTools.Load_Scence(Dispatch, 2);
 
     /// <summary>
     /// 起始动画

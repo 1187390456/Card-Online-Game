@@ -51,12 +51,9 @@ public class UserInfoArea : UIBase
     private void Start()
     {
         Grade.gameObject.SetActive(false);
-        StartAnimation();
 
-        // 获取角色信息 刷新角色信息
-
-        SocketMsg socketMsg = new SocketMsg(OpCode.User, UserCode.Get_Cres, null);
-        Dispatch(AreaCode.NET, 0, socketMsg);
+        DotweenTools.DoTransScale(transform, Vector3.zero, Vector3.one, .4f); // 起始动画
+        DispatchTools.User_Get_Cres(Dispatch);     // 获取角色信息 刷新角色信息
     }
 
     public override void OnDestroy()
@@ -90,22 +87,7 @@ public class UserInfoArea : UIBase
     }
 
     /// <summary>
-    /// 起始动画
-    /// </summary>
-    private void StartAnimation()
-    {
-        transform.localScale = Vector3.zero;
-        transform.DOScale(Vector3.one, .4f);
-    }
-
-    /// <summary>
     /// 退出登录
     /// </summary>
-    private void OnClickExit()
-    {
-        LoadSceneMsg loadSceneMsg = new LoadSceneMsg(0, () =>
-          {
-          });
-        Dispatch(AreaCode.SCENCE, SceneEvent.Load_Scence, loadSceneMsg);
-    }
+    private void OnClickExit() => DispatchTools.Load_Scence(Dispatch, 0);
 }

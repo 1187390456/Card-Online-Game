@@ -49,36 +49,27 @@ public class RegistPanel : UIBase
         }
     }
 
-    private void OnClickClose()
-    {
-        SetPanelActive(false);
-    }
-
     private void OnClickRegist()
     {
         if (string.IsNullOrEmpty(usernameInput.text))
         {
-            promptMsg.Change("账号不能为空!", Color.red);
-            Dispatch(AreaCode.UI, UIEvent.Prompt_Msg, promptMsg);
+            DispatchTools.Prompt_Msg(Dispatch, "账号不能为空!", Color.red);
             return;
         }
         if (string.IsNullOrEmpty(passwordInput.text))
         {
-            promptMsg.Change("密码不能为空!", Color.red);
-            Dispatch(AreaCode.UI, UIEvent.Prompt_Msg, promptMsg);
+            DispatchTools.Prompt_Msg(Dispatch, "密码不能为空!", Color.red);
             return;
         }
         if (string.IsNullOrEmpty(passwordRepeatInput.text))
         {
-            promptMsg.Change("重复不能为空!", Color.red);
-            Dispatch(AreaCode.UI, UIEvent.Prompt_Msg, promptMsg);
+            DispatchTools.Prompt_Msg(Dispatch, "重复不能为空!", Color.red);
             return;
         }
 
         if (passwordRepeatInput.text != passwordInput.text)
         {
-            promptMsg.Change("输入的密码不一致!", Color.red);
-            Dispatch(AreaCode.UI, UIEvent.Prompt_Msg, promptMsg);
+            DispatchTools.Prompt_Msg(Dispatch, "输入的密码不一致!", Color.red);
             return;
         }
 
@@ -87,7 +78,7 @@ public class RegistPanel : UIBase
             Account = usernameInput.text,
             Password = passwordInput.text
         };
-        socketMsg.Change(OpCode.Account, AccountCode.Regist_Cres, accountDto);
-        Dispatch(AreaCode.NET, 0, socketMsg);
+
+        DispatchTools.Account_Regist_Cres(Dispatch, accountDto);
     }
 }

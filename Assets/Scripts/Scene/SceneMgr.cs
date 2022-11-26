@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using UnityEngine;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -50,7 +51,7 @@ public class SceneMgr : ManagerBase
             SceneManager.LoadScene(loadSceneMsg.sceneIndex);
         if (loadSceneMsg.sceneName != null)
             SceneManager.LoadScene(loadSceneMsg.sceneName);
-        if (loadSceneMsg.loadedCallBack != null)
-            Temp_LoadedCallBack = loadSceneMsg.loadedCallBack;
+        Temp_LoadedCallBack = loadSceneMsg.loadedCallBack;
+
     }
 }

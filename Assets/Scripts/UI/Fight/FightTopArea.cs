@@ -35,21 +35,12 @@ public class FightTopArea : UIBase
     /// </summary>
     private void StartAnimation()
     {
-        Left.localScale = Vector3.zero;
-        Right.localScale = Vector3.zero;
-
-        Left.DOScale(Vector3.one, .4f);
-        Right.DOScale(new Vector3(-1, 1, 1), .4f);
+        DotweenTools.DoTransScale(Left, Vector3.zero, Vector3.one, .4f);
+        DotweenTools.DoTransScale(Right, Vector3.zero, new Vector3(-1, 1, 1), .4f);
     }
 
     /// <summary>
     /// 点击退出
     /// </summary>
-    private void OnClickExit()
-    {
-        LoadSceneMsg loadSceneMsg = new LoadSceneMsg(1, () =>
-          {
-          });
-        Dispatch(AreaCode.SCENCE, SceneEvent.Load_Scence, loadSceneMsg);
-    }
+    private void OnClickExit() => DispatchTools.Load_Scence(Dispatch, 1);
 }

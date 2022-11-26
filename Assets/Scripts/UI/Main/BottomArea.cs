@@ -10,16 +10,6 @@ public class BottomArea : UIBase
     private void Start()
     {
         rectTransform = GetComponent<RectTransform>();
-        StartAnimation();
-    }
-
-    /// <summary>
-    /// 起始动画
-    /// </summary>
-    private void StartAnimation()
-    {
-        var endPos = rectTransform.anchoredPosition;
-        rectTransform.anchoredPosition = new Vector3(0.0f, rectTransform.anchoredPosition.y - rectTransform.rect.height, 0.0f);
-        DOTween.To(() => rectTransform.anchoredPosition, x => rectTransform.anchoredPosition = x, endPos, .4f);
+        DotweenTools.DoRectMove(rectTransform, new Vector3(0.0f, -100.0f, 0.0f), rectTransform.anchoredPosition, .4f);
     }
 }

@@ -10,8 +10,6 @@ public class LoginPanel : UIBase
     private Button loginBtn;
     private InputField usernameInput;
     private InputField passwordInput;
-    private PromptMsg promptMsg = new PromptMsg();
-    private SocketMsg socketMsg = new SocketMsg();
 
     private void Awake()
     {
@@ -51,14 +49,12 @@ public class LoginPanel : UIBase
     {
         if (string.IsNullOrEmpty(usernameInput.text))
         {
-            promptMsg.Change("账号不能为空!", Color.red);
-            Dispatch(AreaCode.UI, UIEvent.Prompt_Msg, promptMsg);
+            DispatchTools.Prompt_Msg(Dispatch, "账号不能为空!", Color.red);
             return;
         }
         if (string.IsNullOrEmpty(passwordInput.text))
         {
-            promptMsg.Change("密码不能为空!", Color.red);
-            Dispatch(AreaCode.UI, UIEvent.Prompt_Msg, promptMsg);
+            DispatchTools.Prompt_Msg(Dispatch, "密码不能为空!", Color.red);
             return;
         }
         AccountDto accountDto = new AccountDto
@@ -66,7 +62,6 @@ public class LoginPanel : UIBase
             Account = usernameInput.text,
             Password = passwordInput.text
         }; // 构造账号模型
-        socketMsg.Change(OpCode.Account, AccountCode.Login, accountDto); // 根据账号模型生成消息类
-        Dispatch(AreaCode.NET, 0, socketMsg); // 分发
+        DispatchTools.Account_Login(Dispatch, accountDto);
     }
 }

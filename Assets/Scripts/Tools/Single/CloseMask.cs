@@ -5,8 +5,5 @@ using UnityEngine.EventSystems;
 
 public class CloseMask : MonoBehaviour, IPointerClickHandler
 {
-    public void OnPointerClick(PointerEventData eventData)
-    {
-        transform.parent.gameObject.SetActive(false);
-    }
+    public void OnPointerClick(PointerEventData eventData) => transform.parent.gameObject.SetActive(false);
 }

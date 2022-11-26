@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using UnityEngine;
 
 public class LoadSceneMsg
 {
@@ -10,17 +11,18 @@ public class LoadSceneMsg
     public int sceneIndex { get; private set; }
     public Action loadedCallBack { get; private set; }
 
-    public LoadSceneMsg(int sceneIndex, Action loadedCallBack)
+    public LoadSceneMsg()
+    {
+
+    }
+    public void Change(int sceneIndex = -1, Action loadedCallBack = null)
     {
         this.sceneIndex = sceneIndex;
         this.loadedCallBack = loadedCallBack;
-        sceneName = null;
     }
-
-    public LoadSceneMsg(string sceneName, Action loadedCallBack)
+    public void Change(string sceneName = null, Action loadedCallBack = null)
     {
         this.sceneName = sceneName;
         this.loadedCallBack = loadedCallBack;
-        sceneIndex = -1;
     }
 }
