@@ -12,7 +12,7 @@ using UnityEngine;
 public class NetManager : ManagerBase
 {
     public static NetManager Instance = null;
-    private ClientPeer client = new ClientPeer("127.0.0.1", 6666);
+    private ClientPeer client = new ClientPeer("xuchenming.cn", 6666);
 
     private void Start()
     {
