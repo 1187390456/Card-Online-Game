@@ -4,26 +4,28 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using UnityEngine;
 
 public class MatchHandler : HandlerBase
 {
     PromptMsg promptMsg = new PromptMsg();
+    private bool isMatchSuccess; // 是否匹配成功
 
     public override void OnReceive(int subCode, object value)
     {
         switch (subCode)
         {
-            case MatchCode.Enter_Sres: // 自己进入
+            case MatchCode.Enter_Sres:
                 SelfEnter((MatchRoomDto)value);
 
                 break;
-            case MatchCode.Enter_Bro: // 其他人进入
+            case MatchCode.Enter_Bro:
                 OtherEnter((UserDto)value);
                 break;
 
-            case MatchCode.Leave_Bro: // 有人离开
+            case MatchCode.Leave_Bro:
                 Leave((UserDto)value);
                 break;
 
@@ -37,32 +39,40 @@ public class MatchHandler : HandlerBase
     // 自己进入 
     private void SelfEnter(MatchRoomDto matchRoomDto)
     {
-        Models.GameModel.MatchRoomDto = matchRoomDto; // 存储当前房间数据 自己的已经在里面了
-
-        foreach (var id in matchRoomDto.uidUserDic.Keys)
-        {
-            if (id == Models.GameModel.UserDto.Id) continue; // 排除自己
-            Dispatch(AreaCode.UI, UIEvent.User_Enter_Room, id);  // 更新存在人的UI
-        }
+        isMatchSuccess = false;
+        Models.GameModel.MatchRoomDto = matchRoomDto; // 存储当前房间数据 
+        RerenderUser();
+        // 人数大于1 则匹配成功
+        if (matchRoomDto.uidUserDic.Count > 1 && !isMatchSuccess) MatchSuccess();
     }
 
-    // 其他人进入
+    // 其他人进入 注:判断不要用userDto 用id
     private void OtherEnter(UserDto userDto)
     {
         Models.GameModel.MatchRoomDto.Add(userDto);  //更新本地房间数据 添加该角色
-        Dispatch(AreaCode.UI, UIEvent.User_Enter_Room, userDto.Id); // 更新UI
-        DispatchTools.Prompt_Msg(Dispatch, $"玩家{userDto.Name}加入了！", Color.green); // 提示进入
+        RerenderUser(); //先渲染数据
+        Dispatch(AreaCode.UI, UIEvent.Other_User_Enter_Room, userDto.Id);
+        if (!isMatchSuccess) MatchSuccess();
     }
     //  有人离开
     private void Leave(UserDto userDto)
     {
         Models.GameModel.MatchRoomDto.Remove(userDto.Id);  //更新本地房间数据 移除该角色
-        // 其他人离开
-        if (userDto.Id != Models.GameModel.UserDto.Id)
-        {
-            Dispatch(AreaCode.UI, UIEvent.User_Leave_Room, userDto.Id); // 更新UI
-            DispatchTools.Prompt_Msg(Dispatch, $"玩家{userDto.Name}离开了！", Color.green); // 提示离开
-        }
+        Dispatch(AreaCode.UI, UIEvent.User_Leave_Room, userDto.Id); // 先更新UI
+        RerenderUser();
+    }
+
+    private void RerenderUser() // 重新渲染用户
+    {
+        var matchDto = Models.GameModel.MatchRoomDto;
+        matchDto.RefreshOrderList(Models.GameModel.UserDto.Id);
+        if (matchDto.leftUserDto != null) Dispatch(AreaCode.UI, UIEvent.Left_User_Render_Data, matchDto.leftUserDto);
+        if (matchDto.rightUserDto != null) Dispatch(AreaCode.UI, UIEvent.Right_User_Render_Data, matchDto.rightUserDto);
+    }
+    private void MatchSuccess() // 匹配成功
+    {
+        isMatchSuccess = true;
+        Dispatch(AreaCode.UI, UIEvent.Match_Success, null);
     }
 
 }

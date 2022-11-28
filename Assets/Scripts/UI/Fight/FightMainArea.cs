@@ -15,6 +15,7 @@ public class FightMainArea : UIBase
 
     private GameObject MatchTips; // 匹配提示
     private GameObject StartBtn; // 开始按钮
+    private GameObject ReadyArea; // 准备区域
 
     private Button mingPaiStart; // 明牌开始
     private Button defaultStart; // 默认开始
@@ -26,6 +27,13 @@ public class FightMainArea : UIBase
 
     private Queue<RectTransform> rectQueue = new Queue<RectTransform>(); // 动画 rectTrans队列
     private int sequenceIndex = 1; // 系列动画索引
+
+    private Button readyBtn; // 准备按钮
+    private Button cancelBtn; // 取消按钮
+    private Text myPlayerReady; // 自己准备
+    private Text leftPlayerReady; // 左边玩家准备
+    private Text rightPlayerReady; // 右边玩家准备
+
 
     private void Awake()
     {
@@ -43,6 +51,15 @@ public class FightMainArea : UIBase
         shiWei = MatchTips.transform.Find("Timer/ShiWei").GetComponent<Image>();
         geWei = MatchTips.transform.Find("Timer/Gewei").GetComponent<Image>();
 
+        ReadyArea = transform.Find("ReadyArea").gameObject;
+        readyBtn = transform.Find("ReadyArea/Ready").GetComponentInChildren<Button>();
+        cancelBtn = transform.Find("ReadyArea/Cancle").GetComponentInChildren<Button>();
+        readyBtn.onClick.AddListener(OnClickReady);
+        cancelBtn.onClick.AddListener(OnClickCancel);
+        myPlayerReady = transform.Find("ReadyArea/MyPlayerReady").GetComponent<Text>();
+        leftPlayerReady = transform.Find("ReadyArea/LeftPlayerReady").GetComponent<Text>();
+        rightPlayerReady = transform.Find("ReadyArea/RightPlayerReady").GetComponent<Text>();
+
         Bind(UIEvent.Match_Success);
     }
 
@@ -51,7 +68,7 @@ public class FightMainArea : UIBase
         switch (eventCode)
         {
             case UIEvent.Match_Success:
-                //  匹配成功
+                Invoke(nameof(MatchSuccess), 2.0f);
                 break;
 
             default:
@@ -62,6 +79,15 @@ public class FightMainArea : UIBase
     private void Start()
     {
         SetMathchTipsActive(false);
+        InitReadyText();
+        SetReadyAreaActive(false);
+    }
+    // 初始化准备文字
+    private void InitReadyText()
+    {
+        myPlayerReady.gameObject.SetActive(false);
+        leftPlayerReady.gameObject.SetActive(false);
+        rightPlayerReady.gameObject.SetActive(false);
     }
 
     public override void OnDestroy()
@@ -114,8 +140,38 @@ public class FightMainArea : UIBase
         ResetAnimaton();
 
         DispatchTools.Match_Leave_Cres(Dispatch);
+    }
+    /// <summary>
+    /// 匹配成功
+    /// </summary>
+    private void MatchSuccess()
+    {
+        DispatchTools.Prompt_Msg(Dispatch, "匹配成功!", Color.green);
 
-        Dispatch(AreaCode.UI, UIEvent.User_Cancle_Match, null);
+        SetMathchTipsActive(false);
+        SetReadyAreaActive(true);
+        ResetAnimaton();
+
+        cancelBtn.gameObject.SetActive(false);
+        readyBtn.gameObject.SetActive(true);
+    }
+    /// <summary>
+    /// 自己准备
+    /// </summary>
+    private void OnClickReady()
+    {
+        myPlayerReady.gameObject.SetActive(true);
+        readyBtn.gameObject.SetActive(false);
+        cancelBtn.gameObject.SetActive(true);
+    }
+    /// <summary>
+    /// 自己取消准备
+    /// </summary>
+    private void OnClickCancel()
+    {
+        myPlayerReady.gameObject.SetActive(false);
+        readyBtn.gameObject.SetActive(true);
+        cancelBtn.gameObject.SetActive(false);
     }
 
     /// <summary>
@@ -259,16 +315,10 @@ public class FightMainArea : UIBase
         targerImage.SetNativeSize();
     }
 
-    /// <summary>
-    /// 设置匹配提示显示
-    /// </summary>
-    /// <param name="value"></param>
     private void SetMathchTipsActive(bool value) => MatchTips.SetActive(value);
 
-    /// <summary>
-    /// 设置起始按钮显示
-    /// </summary>
-    /// <param name="value"></param>
+    private void SetReadyAreaActive(bool value) => ReadyArea.SetActive(value);
+
     private void SetStartBtnActive(bool value) => StartBtn.SetActive(value);
 
     /// <summary>

@@ -3,6 +3,7 @@ using Protocol.Dto;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 public class RegistPanel : UIBase
@@ -28,6 +29,32 @@ public class RegistPanel : UIBase
 
         Bind(UIEvent.Regist_Panel_Active);
         SetPanelActive(false);
+
+        // 测试账号
+        TestCount();
+    }
+
+    private void TestCount()
+    {
+        AccountDto accountDto1 = new AccountDto
+        {
+            Account = "1111",
+            Password = "1111"
+        };
+        AccountDto accountDto2 = new AccountDto
+        {
+            Account = "2222",
+            Password = "2222"
+        };
+        AccountDto accountDto3 = new AccountDto
+        {
+            Account = "3333",
+            Password = "3333"
+        };
+
+        DispatchTools.Account_Regist_Cres(Dispatch, accountDto1);
+        DispatchTools.Account_Regist_Cres(Dispatch, accountDto2);
+        DispatchTools.Account_Regist_Cres(Dispatch, accountDto3);
     }
 
     public override void OnDestroy()

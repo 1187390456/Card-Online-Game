@@ -7,22 +7,22 @@ using UnityEngine;
 
 public class LoadSceneMsg
 {
-    public string sceneName { get; private set; }
-    public int sceneIndex { get; private set; }
+    public string name { get; private set; }
+    public int index { get; private set; }
     public Action loadedCallBack { get; private set; }
 
     public LoadSceneMsg()
     {
 
     }
-    public void Change(int sceneIndex = -1, Action loadedCallBack = null)
+    public void Change(int index = -1, Action loadedCallBack = null)
     {
-        this.sceneIndex = sceneIndex;
+        this.index = index;
         this.loadedCallBack = loadedCallBack;
     }
-    public void Change(string sceneName = null, Action loadedCallBack = null)
+    public void Change(string name = null, Action loadedCallBack = null)
     {
-        this.sceneName = sceneName;
+        this.name = name;
         this.loadedCallBack = loadedCallBack;
     }
 }

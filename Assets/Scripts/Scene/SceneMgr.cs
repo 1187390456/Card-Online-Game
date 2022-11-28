@@ -47,10 +47,10 @@ public class SceneMgr : ManagerBase
 
     private void LoodScene(LoadSceneMsg loadSceneMsg)
     {
-        if (loadSceneMsg.sceneIndex != -1)
-            SceneManager.LoadScene(loadSceneMsg.sceneIndex);
-        if (loadSceneMsg.sceneName != null)
-            SceneManager.LoadScene(loadSceneMsg.sceneName);
+        if (loadSceneMsg.index != -1)
+            SceneManager.LoadScene(loadSceneMsg.index);
+        if (loadSceneMsg.name != null)
+            SceneManager.LoadScene(loadSceneMsg.name);
         Temp_LoadedCallBack = loadSceneMsg.loadedCallBack;
 
     }
