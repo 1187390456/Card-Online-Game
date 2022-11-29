@@ -58,16 +58,30 @@ public class MatchHandler : HandlerBase
     private void Leave(UserDto userDto)
     {
         Models.GameModel.MatchRoomDto.Remove(userDto.Id);  //更新本地房间数据 移除该角色
-        Dispatch(AreaCode.UI, UIEvent.User_Leave_Room, userDto.Id); // 先更新UI
+        Dispatch(AreaCode.UI, UIEvent.User_Leave_Room, userDto.Id); // 离开先更新UI
         RerenderUser();
     }
 
-    private void RerenderUser() // 重新渲染用户
+    private void RerenderUser() // 重新渲染用户 
     {
         var matchDto = Models.GameModel.MatchRoomDto;
         matchDto.RefreshOrderList(Models.GameModel.UserDto.Id);
-        if (matchDto.leftUserDto != null) Dispatch(AreaCode.UI, UIEvent.Left_User_Render_Data, matchDto.leftUserDto);
-        if (matchDto.rightUserDto != null) Dispatch(AreaCode.UI, UIEvent.Right_User_Render_Data, matchDto.rightUserDto);
+        if (matchDto.leftUserDto != null)
+        {
+            Dispatch(AreaCode.UI, UIEvent.Left_User_Show, matchDto.leftUserDto); // 显示左侧玩家
+        }
+        else
+        {
+            Dispatch(AreaCode.UI, UIEvent.Left_User_Hide, matchDto.leftUserDto);  // 隐藏左侧玩家
+        }
+        if (matchDto.rightUserDto != null)
+        {
+            Dispatch(AreaCode.UI, UIEvent.Right_User_Show, matchDto.rightUserDto);
+        }
+        else
+        {
+            Dispatch(AreaCode.UI, UIEvent.Right_User_Hide, matchDto.leftUserDto);
+        }
     }
     private void MatchSuccess() // 匹配成功
     {

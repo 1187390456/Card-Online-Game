@@ -68,7 +68,7 @@ public class FightMainArea : UIBase
         switch (eventCode)
         {
             case UIEvent.Match_Success:
-                Invoke(nameof(MatchSuccess), 2.0f);
+                MatchSuccess();
                 break;
 
             default:

@@ -42,5 +42,9 @@ public class FightTopArea : UIBase
     /// <summary>
     /// 点击退出
     /// </summary>
-    private void OnClickExit() => DispatchTools.Load_Scence(Dispatch, 1);
+    private void OnClickExit()
+    {
+        DispatchTools.Match_Leave_Cres(Dispatch);
+        DispatchTools.Load_Scence(Dispatch, 1);
+    }
 }

@@ -21,6 +21,8 @@ public class UIEvent
     public const int User_Leave_Room = 6; // 用户离开房间
     public const int MyPlayer_Leave_Room = 7; // 自己离开房间
 
-    public const int Left_User_Render_Data = 8; // 左侧玩家数据渲染
-    public const int Right_User_Render_Data = 9; //右侧玩家数据渲染
+    public const int Left_User_Show = 8; // 左侧玩家显示
+    public const int Left_User_Hide = 9; // 左侧玩家隐藏
+    public const int Right_User_Show = 10; //右侧玩家显示
+    public const int Right_User_Hide = 11; // 右侧玩家隐藏 
 }
