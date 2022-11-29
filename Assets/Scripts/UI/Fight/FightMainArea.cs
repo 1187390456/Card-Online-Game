@@ -6,6 +6,7 @@ using UnityEngine.UI;
 using System.Linq.Expressions;
 using Protocol.Code;
 using Protocol.Code.SubCode;
+using Protocol.Dto;
 
 public class FightMainArea : UIBase
 {
@@ -60,7 +61,7 @@ public class FightMainArea : UIBase
         leftPlayerReady = transform.Find("ReadyArea/LeftPlayerReady").GetComponent<Text>();
         rightPlayerReady = transform.Find("ReadyArea/RightPlayerReady").GetComponent<Text>();
 
-        Bind(UIEvent.Match_Success);
+        Bind(UIEvent.Match_Success, UIEvent.Check_User_Ready);
     }
 
     public override void Execute(int eventCode, object message)
@@ -69,6 +70,9 @@ public class FightMainArea : UIBase
         {
             case UIEvent.Match_Success:
                 MatchSuccess();
+                break;
+            case UIEvent.Check_User_Ready:
+                CheckReady();
                 break;
 
             default:
@@ -163,6 +167,8 @@ public class FightMainArea : UIBase
         myPlayerReady.gameObject.SetActive(true);
         readyBtn.gameObject.SetActive(false);
         cancelBtn.gameObject.SetActive(true);
+
+        DispatchTools.Match_Ready_Cres(Dispatch);
     }
     /// <summary>
     /// 自己取消准备
@@ -172,6 +178,34 @@ public class FightMainArea : UIBase
         myPlayerReady.gameObject.SetActive(false);
         readyBtn.gameObject.SetActive(true);
         cancelBtn.gameObject.SetActive(false);
+
+        DispatchTools.Match_CancleReady_Cres(Dispatch);
+    }
+    /// <summary>
+    /// 检测准备
+    /// </summary>
+    private void CheckReady()
+    {
+        var leftPlayer = Models.GameModel.MatchRoomDto.leftUserDto;
+        var rightPlayer = Models.GameModel.MatchRoomDto.rightUserDto;
+        var readyList = Models.GameModel.MatchRoomDto.readyList;
+
+        if (leftPlayer != null && readyList.Exists(item => item == leftPlayer.Id))
+        {
+            leftPlayerReady.gameObject.SetActive(true);
+        }
+        else
+        {
+            leftPlayerReady.gameObject.SetActive(false);
+        }
+        if (rightPlayer != null && readyList.Exists(item => item == rightPlayer.Id))
+        {
+            rightPlayerReady.gameObject.SetActive(true);
+        }
+        else
+        {
+            rightPlayerReady.gameObject.SetActive(false);
+        }
     }
 
     /// <summary>

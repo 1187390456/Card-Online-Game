@@ -25,4 +25,6 @@ public class UIEvent
     public const int Left_User_Hide = 9; // 左侧玩家隐藏
     public const int Right_User_Show = 10; //右侧玩家显示
     public const int Right_User_Hide = 11; // 右侧玩家隐藏 
+
+    public const int Check_User_Ready = 12; // 检测该玩家是否准备
 }

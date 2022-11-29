@@ -102,6 +102,23 @@ public static class DispatchTools
         socketMsg.Change(OpCode.Match, MatchCode.Leave_Cres, null);
         Dispatch(AreaCode.NET, 0, socketMsg);
     }
-
+    /// <summary>
+    /// 玩家准备
+    /// </summary>
+    /// <param name="Dispatch"></param>
+    public static void Match_Ready_Cres(Action<int, int, object> Dispatch)
+    {
+        socketMsg.Change(OpCode.Match, MatchCode.Ready_Cres, null);
+        Dispatch(AreaCode.NET, 0, socketMsg);
+    }
+    /// <summary>
+    /// 玩家准备
+    /// </summary>
+    /// <param name="Dispatch"></param>
+    public static void Match_CancleReady_Cres(Action<int, int, object> Dispatch)
+    {
+        socketMsg.Change(OpCode.Match, MatchCode.CancleReady_Cres, null);
+        Dispatch(AreaCode.NET, 0, socketMsg);
+    }
 
 }

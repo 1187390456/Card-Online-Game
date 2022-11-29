@@ -28,7 +28,11 @@ public class SceneMgr : ManagerBase
     /// <param name="arg1">加载模式</param>
     private void SceneManager_Loaded(Scene arg0, LoadSceneMode arg1)
     {
-        if (Temp_LoadedCallBack != null) Temp_LoadedCallBack();
+        if (Temp_LoadedCallBack != null)
+        {
+            Temp_LoadedCallBack();
+            Temp_LoadedCallBack = null;
+        }
     }
 
     public override void Execute(int eventCode, object message)
@@ -52,6 +56,5 @@ public class SceneMgr : ManagerBase
         if (loadSceneMsg.name != null)
             SceneManager.LoadScene(loadSceneMsg.name);
         Temp_LoadedCallBack = loadSceneMsg.loadedCallBack;
-
     }
 }
