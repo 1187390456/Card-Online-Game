@@ -31,10 +31,6 @@ public class FightMainArea : UIBase
 
     private Button readyBtn; // 准备按钮
     private Button cancelBtn; // 取消按钮
-    private Text myPlayerReady; // 自己准备
-    private Text leftPlayerReady; // 左边玩家准备
-    private Text rightPlayerReady; // 右边玩家准备
-
 
     private void Awake()
     {
@@ -57,11 +53,8 @@ public class FightMainArea : UIBase
         cancelBtn = transform.Find("ReadyArea/Cancle").GetComponentInChildren<Button>();
         readyBtn.onClick.AddListener(OnClickReady);
         cancelBtn.onClick.AddListener(OnClickCancel);
-        myPlayerReady = transform.Find("ReadyArea/MyPlayerReady").GetComponent<Text>();
-        leftPlayerReady = transform.Find("ReadyArea/LeftPlayerReady").GetComponent<Text>();
-        rightPlayerReady = transform.Find("ReadyArea/RightPlayerReady").GetComponent<Text>();
 
-        Bind(UIEvent.Match_Success, UIEvent.Check_User_Ready);
+        Bind(UIEvent.Match_Success);
     }
 
     public override void Execute(int eventCode, object message)
@@ -70,9 +63,6 @@ public class FightMainArea : UIBase
         {
             case UIEvent.Match_Success:
                 MatchSuccess();
-                break;
-            case UIEvent.Check_User_Ready:
-                CheckReady();
                 break;
 
             default:
@@ -83,15 +73,7 @@ public class FightMainArea : UIBase
     private void Start()
     {
         SetMathchTipsActive(false);
-        InitReadyText();
         SetReadyAreaActive(false);
-    }
-    // 初始化准备文字
-    private void InitReadyText()
-    {
-        myPlayerReady.gameObject.SetActive(false);
-        leftPlayerReady.gameObject.SetActive(false);
-        rightPlayerReady.gameObject.SetActive(false);
     }
 
     public override void OnDestroy()
@@ -116,7 +98,6 @@ public class FightMainArea : UIBase
         StartAnimation();
 
         DispatchTools.Match_Enter_Cres(Dispatch);
-
     }
 
     /// <summary>
@@ -130,7 +111,6 @@ public class FightMainArea : UIBase
         StartAnimation();
 
         DispatchTools.Match_Enter_Cres(Dispatch);
-
     }
 
     /// <summary>
@@ -145,6 +125,7 @@ public class FightMainArea : UIBase
 
         DispatchTools.Match_Leave_Cres(Dispatch);
     }
+
     /// <summary>
     /// 匹配成功
     /// </summary>
@@ -159,53 +140,27 @@ public class FightMainArea : UIBase
         cancelBtn.gameObject.SetActive(false);
         readyBtn.gameObject.SetActive(true);
     }
+
     /// <summary>
     /// 自己准备
     /// </summary>
     private void OnClickReady()
     {
-        myPlayerReady.gameObject.SetActive(true);
         readyBtn.gameObject.SetActive(false);
         cancelBtn.gameObject.SetActive(true);
 
         DispatchTools.Match_Ready_Cres(Dispatch);
     }
+
     /// <summary>
     /// 自己取消准备
     /// </summary>
     private void OnClickCancel()
     {
-        myPlayerReady.gameObject.SetActive(false);
         readyBtn.gameObject.SetActive(true);
         cancelBtn.gameObject.SetActive(false);
 
         DispatchTools.Match_CancleReady_Cres(Dispatch);
-    }
-    /// <summary>
-    /// 检测准备
-    /// </summary>
-    private void CheckReady()
-    {
-        var leftPlayer = Models.GameModel.MatchRoomDto.leftUserDto;
-        var rightPlayer = Models.GameModel.MatchRoomDto.rightUserDto;
-        var readyList = Models.GameModel.MatchRoomDto.readyList;
-
-        if (leftPlayer != null && readyList.Exists(item => item == leftPlayer.Id))
-        {
-            leftPlayerReady.gameObject.SetActive(true);
-        }
-        else
-        {
-            leftPlayerReady.gameObject.SetActive(false);
-        }
-        if (rightPlayer != null && readyList.Exists(item => item == rightPlayer.Id))
-        {
-            rightPlayerReady.gameObject.SetActive(true);
-        }
-        else
-        {
-            rightPlayerReady.gameObject.SetActive(false);
-        }
     }
 
     /// <summary>

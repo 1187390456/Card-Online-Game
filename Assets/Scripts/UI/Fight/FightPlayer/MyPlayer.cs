@@ -1,3 +1,4 @@
+ï»¿using Protocol.Dto;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -7,14 +8,22 @@ public class MyPlayer : BasePlayer
 {
     public override void Awake()
     {
-        userName = transform.Find("UserInfo/Name").GetComponent<Text>();
-        Bind(UIEvent.User_Leave_Room);
+        base.Awake();
+        beanCount = transform.Find("BeanBox/Count").GetComponent<Text>();
+        Bind(UIEvent.My_User_Render);
     }
-    public override void Start()
+
+    public override void Execute(int eventCode, object message)
     {
-        userDto = Models.GameModel.UserDto;
-        userName.text = userDto.Name;
+        base.Execute(eventCode, message);
+        switch (eventCode)
+        {
+            case UIEvent.My_User_Render:
+                RenderShow((UserDto)message);
+                break;
+
+            default:
+                break;
+        }
     }
-    // ×Ô¼ºÀë¿ª
-    public override void OtherLeave() => Dispatch(AreaCode.UI, UIEvent.MyPlayer_Leave_Room, null);
 }
