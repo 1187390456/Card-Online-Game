@@ -1,18 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using UnityEngine;
-using System.Linq;
-using System.Text;
-using Protocol.Code;
-using Protocol.Code.SubCode;
+﻿using Protocol.Code;
 using Protocol.Dto;
+using System;
+using UnityEngine;
 
 /// <summary>
 /// 消息分发工具
 /// </summary>
 public static class DispatchTools
 {
-
     private static PromptMsg promptMsg = new PromptMsg();
     private static SocketMsg socketMsg = new SocketMsg();
     private static LoadSceneMsg loadSceneMsg = new LoadSceneMsg();
@@ -62,7 +57,6 @@ public static class DispatchTools
         Dispatch(AreaCode.NET, 0, socketMsg);
     }
 
-
     /// <summary>
     /// 创建角色
     /// </summary>
@@ -84,7 +78,7 @@ public static class DispatchTools
     }
 
     /// <summary>
-    /// 开始匹配 
+    /// 开始匹配
     /// </summary>
     /// <param name="Dispatch"></param>
     public static void Match_Enter_Cres(Action<int, int, object> Dispatch)
@@ -94,7 +88,7 @@ public static class DispatchTools
     }
 
     /// <summary>
-    /// 取消匹配 
+    /// 取消匹配
     /// </summary>
     /// <param name="Dispatch"></param>
     public static void Match_Leave_Cres(Action<int, int, object> Dispatch)
@@ -102,6 +96,7 @@ public static class DispatchTools
         socketMsg.Change(OpCode.Match, MatchCode.Leave_Cres, null);
         Dispatch(AreaCode.NET, 0, socketMsg);
     }
+
     /// <summary>
     /// 玩家准备
     /// </summary>
@@ -111,6 +106,7 @@ public static class DispatchTools
         socketMsg.Change(OpCode.Match, MatchCode.Ready_Cres, null);
         Dispatch(AreaCode.NET, 0, socketMsg);
     }
+
     /// <summary>
     /// 玩家准备
     /// </summary>
@@ -121,4 +117,36 @@ public static class DispatchTools
         Dispatch(AreaCode.NET, 0, socketMsg);
     }
 
+    /// <summary>
+    /// 玩家发送快捷消息
+    /// </summary>
+    /// <param name="Dispatch"></param>
+    /// <param name="index"></param>
+    public static void Chat_Send_Quick_Cres(Action<int, int, object> Dispatch, int index)
+    {
+        socketMsg.Change(OpCode.Chat, ChatCode.Send_Quick_Cres, index);
+        Dispatch(AreaCode.NET, 0, socketMsg);
+    }
+
+    /// <summary>
+    /// 玩家发送表情
+    /// </summary>
+    /// <param name="Dispatch"></param>
+    /// <param name="index"></param>
+    public static void Chat_Send_Emoji_Cres(Action<int, int, object> Dispatch, int index)
+    {
+        socketMsg.Change(OpCode.Chat, ChatCode.Send_Emoji_Cres, index);
+        Dispatch(AreaCode.NET, 0, socketMsg);
+    }
+
+    /// <summary>
+    /// 玩家发送自定义消息
+    /// </summary>
+    /// <param name="Dispatch"></param>
+    /// <param name="index"></param>
+    public static void Chat_Send_ZiDingYi_Cres(Action<int, int, object> Dispatch, string text)
+    {
+        socketMsg.Change(OpCode.Chat, ChatCode.Send_ZiDingYi_Cres, text);
+        Dispatch(AreaCode.NET, 0, socketMsg);
+    }
 }

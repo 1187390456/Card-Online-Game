@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-/// <summary>
+﻿/// <summary>
 /// 存储所有UI事件码
 /// </summary>
 public class UIEvent
@@ -20,4 +14,9 @@ public class UIEvent
     public const int Left_User_Leave = 7; // 左侧玩家离开
     public const int Right_User_Render = 8; //右侧玩家渲染
     public const int Right_User_Leave = 9; // 右侧玩家离开
+
+    public const int Chat_Panel_Active = 10; // 聊天面板
+    public const int Send_Quick_Chat = 11;     // 有人发送快捷消息
+    public const int Send_ZiDingYi_Chat = 12; // 有人自定义发送
+    public const int Send_Emoji_Chat = 13; // 有人发送表情
 }

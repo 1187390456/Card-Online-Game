@@ -71,6 +71,7 @@
     <Compile Include="Assets\Modules\Spine\Runtime\spine-csharp\SkeletonData.cs" />
     <Compile Include="Assets\Scripts\UI\Main\SettingArea.cs" />
     <Compile Include="Assets\Modules\Spine\Runtime\spine-unity\Modules\SkeletonUtility Modules\SkeletonUtilityKinematicShadow.cs" />
+    <Compile Include="Assets\Scripts\Net\Impl\ChatHandler.cs" />
     <Compile Include="Assets\Modules\Spine\Runtime\spine-csharp\EventData.cs" />
     <Compile Include="Assets\Modules\Spine\Runtime\spine-csharp\TransformConstraintData.cs" />
     <Compile Include="Assets\Modules\Spine\Runtime\spine-unity\Asset Types\SpineAtlasAsset.cs" />
@@ -122,6 +123,7 @@
     <Compile Include="Assets\Scripts\UI\Msg\PromptMsg.cs" />
     <Compile Include="Assets\Modules\Spine\Runtime\spine-csharp\Attachments\VertexAttachment.cs" />
     <Compile Include="Assets\Scripts\UI\Create\CreateArea.cs" />
+    <Compile Include="Assets\Scripts\UI\Fight\FightPlayer\RoleBox.cs" />
     <Compile Include="Assets\Scripts\Scene\SceneEvent.cs" />
     <Compile Include="Assets\Modules\Spine\Runtime\spine-unity\SpineAttributes.cs" />
     <Compile Include="Assets\Scripts\Audio\AudioManager.cs" />
@@ -145,6 +147,7 @@
     <Compile Include="Assets\Modules\Spine\Runtime\spine-csharp\IkConstraint.cs" />
     <Compile Include="Assets\Modules\Spine\Runtime\spine-unity\Modules\SkeletonGraphic\SkeletonGraphic.cs" />
     <Compile Include="Assets\Scripts\Framework\ManagerBase.cs" />
+    <Compile Include="Assets\Scripts\WrappingAdaptive.cs" />
     <Compile Include="Assets\Modules\Spine\Runtime\spine-unity\Modules\CustomMaterials\SkeletonRendererCustomMaterials.cs" />
     <Compile Include="Assets\Modules\Spine\Runtime\spine-csharp\IUpdatable.cs" />
     <Compile Include="Assets\Scripts\UI\Login\LoginPanel.cs" />
@@ -157,6 +160,7 @@
     <Compile Include="Assets\Modules\Spine\Runtime\spine-unity\Asset Types\BlendModeMaterialsAsset.cs" />
     <Compile Include="Assets\Modules\Spine\Runtime\spine-csharp\Attachments\ClippingAttachment.cs" />
     <Compile Include="Assets\Modules\Spine\Runtime\spine-csharp\BlendMode.cs" />
+    <Compile Include="Assets\Scripts\UI\Fight\FightChat.cs" />
     <Compile Include="Assets\Scripts\Scene\Msg\LoadSceneMsg.cs" />
     <Compile Include="Assets\Modules\Spine\Runtime\spine-csharp\Attachments\MeshAttachment.cs" />
     <Compile Include="Assets\Modules\Spine\Runtime\spine-csharp\TransformConstraint.cs" />
@@ -165,6 +169,7 @@
     <Compile Include="Assets\Scripts\UI\Fight\FightBottomArea.cs" />
     <Compile Include="Assets\Scripts\UI\Fight\FightPlayer\BasePlayer.cs" />
     <Compile Include="Assets\Scripts\UI\Fight\FightPlayer\MyPlayer.cs" />
+    <Compile Include="Assets\Scripts\Tools\Single\SpriteAnimation.cs" />
     <Compile Include="Assets\Scripts\Model\GameModel.cs" />
     <Compile Include="Assets\Modules\Spine\Runtime\spine-csharp\PathConstraintData.cs" />
     <Compile Include="Assets\Scripts\Framework\AreaCode.cs" />
@@ -203,7 +208,6 @@
     <Compile Include="Assets\Modules\Spine\Runtime\spine-unity\Modules\Timeline\SpineSkeletonFlip\SpineSkeletonFlipClip.cs" />
     <Compile Include="Assets\Scripts\Net\HandlerBase.cs" />
     <Compile Include="Assets\Modules\Spine\Runtime\spine-unity\Modules\AttachmentTools\AttachmentTools.cs" />
-    <Compile Include="Assets\Scripts\UI\Fight\FightPlayer\RoleBox.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Modules\DOTween\DOTween.XML" />

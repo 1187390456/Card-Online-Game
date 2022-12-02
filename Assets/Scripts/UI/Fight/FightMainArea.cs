@@ -1,12 +1,7 @@
-﻿using System.Collections;
+﻿using DG.Tweening;
 using System.Collections.Generic;
 using UnityEngine;
-using DG.Tweening;
 using UnityEngine.UI;
-using System.Linq.Expressions;
-using Protocol.Code;
-using Protocol.Code.SubCode;
-using Protocol.Dto;
 
 public class FightMainArea : UIBase
 {

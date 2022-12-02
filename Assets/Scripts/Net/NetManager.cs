@@ -58,6 +58,7 @@ public class NetManager : ManagerBase
     private HandlerBase accountHandler = new AccountHandler(); // 账号处理
     private HandlerBase userHandler = new UserHandler(); // 角色处理
     private HandlerBase matchHandler = new MatchHandler(); // 匹配处理
+    private HandlerBase chatHandler = new ChatHandler(); // 聊天处理
 
     /// <summary>
     /// 处理网络消息
@@ -77,6 +78,10 @@ public class NetManager : ManagerBase
 
             case OpCode.Match:
                 matchHandler.OnReceive(msg.subCode, msg.value);
+                break;
+
+            case OpCode.Chat:
+                chatHandler.OnReceive(msg.subCode, msg.value);
                 break;
 
             default:

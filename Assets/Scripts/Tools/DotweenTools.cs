@@ -1,36 +1,36 @@
-using DG.Tweening;
+ï»¿using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
-/// ¶¯»­¹¤¾ßÀà
+/// åŠ¨ç”»å·¥å…·ç±»
 /// </summary>
 public static class DotweenTools
 {
     /// <summary>
-    /// »ùÓÚRect ´ÓÖ¸¶¨Î»ÖÃµ½Ö¸¶¨Î»ÖÃ
+    /// åŸºäºRect ä»æŒ‡å®šä½ç½®åˆ°æŒ‡å®šä½ç½®
     /// </summary>
-    /// <param name="target">Ä¿±êrect</param>
-    /// <param name="startPos">ÆğÊ¼Î»ÖÃ</param>
-    /// <param name="endPos">ÖÕµãÎ»ÖÃ</param>
-    /// <param name="duration">³ÖĞøÊ±¼ä</param>
+    /// <param name="target">ç›®æ ‡rect</param>
+    /// <param name="startPos">èµ·å§‹ä½ç½®</param>
+    /// <param name="endPos">ç»ˆç‚¹ä½ç½®</param>
+    /// <param name="duration">æŒç»­æ—¶é—´</param>
     public static void DoRectMove(RectTransform targetRect, Vector2 startPos, Vector2 endPos, float duration)
     {
         targetRect.anchoredPosition = startPos;
         DOTween.To(() => targetRect.anchoredPosition, x => targetRect.anchoredPosition = x, endPos, duration);
     }
+
     /// <summary>
-    /// »ùÓÚTran ´ÓÖ¸¶¨´óĞ¡Ëõ·Åµ½Ö¸¶¨´óĞ¡
+    /// åŸºäºTran ä»æŒ‡å®šå¤§å°ç¼©æ”¾åˆ°æŒ‡å®šå¤§å°
     /// </summary>
-    /// <param name="targetTran">Ä¿±êTran</param>
-    /// <param name="startScale">ÆğÊ¼´óĞ¡</param>
-    /// <param name="endScale">ÖÕµã´óĞ¡</param>
-    /// <param name="duration">³ÖĞøÊ±¼ä</param>
-    public static void DoTransScale(Transform targetTrans, Vector3 startScale, Vector3 endScale, float duration)
+    /// <param name="targetTran">ç›®æ ‡Tran</param>
+    /// <param name="startScale">èµ·å§‹å¤§å°</param>
+    /// <param name="endScale">ç»ˆç‚¹å¤§å°</param>
+    /// <param name="duration">æŒç»­æ—¶é—´</param>
+    public static Tween DoTransScale(Transform targetTrans, Vector3 startScale, Vector3 endScale, float duration)
     {
         targetTrans.localScale = startScale;
-        targetTrans.DOScale(endScale, duration);
+        return targetTrans.DOScale(endScale, duration);
     }
-
 }

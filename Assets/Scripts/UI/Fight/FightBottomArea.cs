@@ -1,18 +1,19 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine.UI;
 
-public class FightBottomArea : MonoBehaviour
+public class FightBottomArea : UIBase
 {
-    // Start is called before the first frame update
-    void Start()
+    private Button chatBtn;
+    private bool defaultChatPanelState = false;
+
+    private void Awake()
     {
-        
+        chatBtn = transform.Find("ChatBox").GetComponent<Button>();
+        chatBtn.onClick.AddListener(OnClickChat);
     }
 
-    // Update is called once per frame
-    void Update()
+    private void OnClickChat()
     {
-        
+        Dispatch(AreaCode.UI, UIEvent.Chat_Panel_Active, !defaultChatPanelState);
+        defaultChatPanelState = !defaultChatPanelState;
     }
 }

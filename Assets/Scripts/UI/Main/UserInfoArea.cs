@@ -1,12 +1,6 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using Protocol.Dto;
 using UnityEngine;
 using UnityEngine.UI;
-using DG.Tweening;
-using Protocol.Dto;
-using UnityEngine.Networking;
-using Protocol.Code;
-using Protocol.Code.SubCode;
 
 public class UserInfoArea : UIBase
 {

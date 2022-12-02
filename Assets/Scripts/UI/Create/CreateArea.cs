@@ -1,14 +1,9 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using DG.Tweening;
 using UnityEngine;
 using UnityEngine.UI;
-using DG.Tweening;
-using Protocol.Code;
-using Protocol.Code.SubCode;
 
 public class CreateArea : UIBase
 {
-
     private RectTransform logoRect;
     private Transform panelTrans;
     private Button enterBtn;
