@@ -19,4 +19,7 @@ public class UIEvent
     public const int Send_Quick_Chat = 11;     // 有人发送快捷消息
     public const int Send_ZiDingYi_Chat = 12; // 有人自定义发送
     public const int Send_Emoji_Chat = 13; // 有人发送表情
+
+    public const int Create_Chat_History = 14; // 创建聊天历史
+    public const int Crear_All_History = 15; // 清空聊天历史记录
 }

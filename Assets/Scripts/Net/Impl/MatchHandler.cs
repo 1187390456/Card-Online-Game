@@ -66,6 +66,7 @@ public class MatchHandler : HandlerBase
         if (Models.GameModel.MatchRoomDto.IsReady(userDto.Id)) Models.GameModel.MatchRoomDto.readyList.Remove(userDto.Id);
         if (userDto.Id == Models.GameModel.UserDto.Id)
         {
+            Dispatch(AreaCode.UI, UIEvent.Crear_All_History, null);
             isMatchSuccess = false;
             return;
         }

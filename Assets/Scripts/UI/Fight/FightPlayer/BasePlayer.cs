@@ -3,12 +3,10 @@ using Protocol.Dto;
 using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
-using System;
-using Spine.Unity;
 
 public class BasePlayer : UIBase
 {
-    private bool isDestory = false;
+    public bool isDestory = false;
 
     protected UserDto userDto;
     protected Text userName;
@@ -21,7 +19,6 @@ public class BasePlayer : UIBase
     protected Image chatEmoji;
     protected SpriteAnimation spriteAnimation; // 控制表情帧动画
 
-
     public virtual void Awake()
     {
         userName = transform.Find("UserInfo/NameBox/Name").GetComponent<Text>();
@@ -31,14 +28,11 @@ public class BasePlayer : UIBase
         chatText = chatBox.transform.Find("Text").GetComponent<Text>();
         chatEmoji = chatBox.transform.Find("Emoji").GetComponent<Image>();
         spriteAnimation = chatEmoji.gameObject.GetComponent<SpriteAnimation>();
-
-        Bind(UIEvent.Send_Quick_Chat, UIEvent.Send_ZiDingYi_Chat, UIEvent.Send_Emoji_Chat);
     }
 
     public virtual void Start()
     {
-        readyText.gameObject.SetActive(false);
-        gameObject.SetActive(false);
+        RenderHide();
         chatBox.SetActive(false);
     }
 
@@ -48,27 +42,27 @@ public class BasePlayer : UIBase
         isDestory = true;
     }
 
-    public override void Execute(int eventCode, object message)
+    public override void Execute(int eventCode, object message) // UI事件码在基类绑定会绑定两次
     {
         if (isDestory) return;
         switch (eventCode)
         {
             case UIEvent.Send_Quick_Chat:
                 var chatDto = (ChatDto)message;
-                if (userDto == null || chatDto.id != userDto.Id) return;
+                if (userDto == null || userDto.Id != chatDto.id) return;
                 var text = ChatConstant.GetChatText(chatDto.Index);
                 SendChat(text);
                 break;
 
             case UIEvent.Send_ZiDingYi_Chat:
                 var chatDto1 = (ChatDto)message;
-                if (userDto == null || chatDto1.id != userDto.Id) return;
+                if (userDto == null || userDto.Id != chatDto1.id) return;
                 SendChat(chatDto1.text);
                 break;
 
             case UIEvent.Send_Emoji_Chat:
                 var chatDto2 = (ChatDto)message;
-                if (userDto == null || chatDto2.id != userDto.Id) return;
+                if (userDto == null || userDto.Id != chatDto2.id) return;
                 SendEmoji(chatDto2.text);
                 break;
 
@@ -96,24 +90,37 @@ public class BasePlayer : UIBase
     }
 
     // 发送消息显示动画
-    public void SendChat(string text, Action action = null)
+    public void SendChat(string text)
     {
         chatBox.SetActive(true);
         StartChatAnimation();
-
         chatText.text = text;
-
         SetTypeActive(true);
+
+        CreateChatHistory(text);
     }
+
     // 发送表情显示动画
     public void SendEmoji(string name)
     {
         chatBox.SetActive(true);
         StartChatAnimation();
-
         spriteAnimation.SpriteFrames = Resources.LoadAll<Sprite>($"Image/Chat/Emoji/{name}");
-
         SetTypeActive(false);
+
+        CreateChatHistory(null, name);
+    }
+
+    //  创建聊天历史记录
+    private void CreateChatHistory(string text = null, string emojiName = null)
+    {
+        ChatHistoryDto chatHistoryDto = new ChatHistoryDto
+        {
+            Name = userDto.Name,
+            Chat = text,
+            EmojiName = emojiName
+        };
+        Dispatch(AreaCode.UI, UIEvent.Create_Chat_History, chatHistoryDto);
     }
 
     // 设置消息类型显示
@@ -140,5 +147,4 @@ public class BasePlayer : UIBase
 
     // 消息隐藏
     private void SendQuickChatHide() => chatBox.SetActive(false);
-
 }

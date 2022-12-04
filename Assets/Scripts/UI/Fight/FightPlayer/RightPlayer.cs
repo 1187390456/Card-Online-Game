@@ -1,4 +1,5 @@
-﻿using Protocol.Dto;
+﻿using Protocol.Constant;
+using Protocol.Dto;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -10,7 +11,7 @@ public class RightPlayer : BasePlayer
     {
         base.Awake();
         beanCount = transform.Find("UserInfo/BeanBox/Count").GetComponent<Text>();
-        Bind(UIEvent.Right_User_Render, UIEvent.Right_User_Leave);
+        Bind(UIEvent.Right_User_Render, UIEvent.Right_User_Leave, UIEvent.Send_Quick_Chat, UIEvent.Send_ZiDingYi_Chat, UIEvent.Send_Emoji_Chat);
     }
 
     public override void Execute(int eventCode, object message)

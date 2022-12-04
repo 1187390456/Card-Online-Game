@@ -21,9 +21,16 @@ public class WrappingAdaptive : MonoBehaviour
     {
         if (rectTransform != null && rectTransform.rect.width > WrapWidth)
         {
+            SetParentFitter();
             contentSizeFitter.horizontalFit = ContentSizeFitter.FitMode.Unconstrained;
             rectTransform.sizeDelta = new Vector2(WrapWidth, 0);
             LayoutRebuilder.ForceRebuildLayoutImmediate(rectTransform);
         }
+    }
+
+    private void SetParentFitter()
+    {
+        transform.parent.GetComponent<ContentSizeFitter>().horizontalFit = ContentSizeFitter.FitMode.PreferredSize;
+        transform.parent.GetComponent<ContentSizeFitter>().verticalFit = ContentSizeFitter.FitMode.PreferredSize;
     }
 }
