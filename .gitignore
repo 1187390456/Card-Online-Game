@@ -4,3 +4,5 @@ Temp/
 UserSettings/Layouts/
 Assembly-CSharp.csproj
 Assembly-CSharp-Editor.csproj
+obj/
+Logs/

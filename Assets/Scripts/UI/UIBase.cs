@@ -7,7 +7,7 @@ public class UIBase : MonoBase
     /// <summary>
     /// 自身关心的消息集合
     /// </summary>
-    public List<int> list = new List<int>();
+    private List<int> list = new List<int>();
 
     /// <summary>
     /// 绑定一个或多个消息
