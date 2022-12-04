@@ -12,7 +12,7 @@ public class SpriteAnimation : MonoBehaviour
     private int mCurFrame = 0;
     private float mDelta = 0;
     public float FPS = 5;
-    public List<Sprite> SpriteFrames;
+    public Sprite[] SpriteFrames;
     public bool IsPlaying = false;
     public bool Foward = true;
     public bool AutoPlay = false;
@@ -22,7 +22,7 @@ public class SpriteAnimation : MonoBehaviour
     {
         get
         {
-            return SpriteFrames.Count;
+            return SpriteFrames.Length;
         }
     }
 

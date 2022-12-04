@@ -132,10 +132,10 @@ public static class DispatchTools
     /// 玩家发送表情
     /// </summary>
     /// <param name="Dispatch"></param>
-    /// <param name="index"></param>
-    public static void Chat_Send_Emoji_Cres(Action<int, int, object> Dispatch, int index)
+    /// <param name="name"></param>
+    public static void Chat_Send_Emoji_Cres(Action<int, int, object> Dispatch, string name)
     {
-        socketMsg.Change(OpCode.Chat, ChatCode.Send_Emoji_Cres, index);
+        socketMsg.Change(OpCode.Chat, ChatCode.Send_Emoji_Cres, name);
         Dispatch(AreaCode.NET, 0, socketMsg);
     }
 
@@ -143,7 +143,7 @@ public static class DispatchTools
     /// 玩家发送自定义消息
     /// </summary>
     /// <param name="Dispatch"></param>
-    /// <param name="index"></param>
+    /// <param name="text"></param>
     public static void Chat_Send_ZiDingYi_Cres(Action<int, int, object> Dispatch, string text)
     {
         socketMsg.Change(OpCode.Chat, ChatCode.Send_ZiDingYi_Cres, text);

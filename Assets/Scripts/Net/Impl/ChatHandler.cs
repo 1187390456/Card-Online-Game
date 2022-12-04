@@ -37,5 +37,6 @@ public class ChatHandler : HandlerBase
     // 有人自定义发送
     private void ZiDingYiSend(ChatDto chatDto) => Dispatch(AreaCode.UI, UIEvent.Send_ZiDingYi_Chat, chatDto);
 
+    // 有人发送表情
     private void EmojiSend(ChatDto chatDto) => Dispatch(AreaCode.UI, UIEvent.Send_Emoji_Chat, chatDto);
 }

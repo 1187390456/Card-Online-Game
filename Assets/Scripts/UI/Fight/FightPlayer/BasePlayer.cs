@@ -3,6 +3,8 @@ using Protocol.Dto;
 using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
+using System;
+using Spine.Unity;
 
 public class BasePlayer : UIBase
 {
@@ -17,6 +19,8 @@ public class BasePlayer : UIBase
     protected GameObject chatBox;
     protected Text chatText;
     protected Image chatEmoji;
+    protected SpriteAnimation spriteAnimation; // 控制表情帧动画
+
 
     public virtual void Awake()
     {
@@ -24,8 +28,9 @@ public class BasePlayer : UIBase
         readyText = transform.Find("Ready").GetComponent<Text>();
 
         chatBox = transform.Find("Chat").gameObject;
-        chatText = chatBox.transform.GetComponentInChildren<Text>();
-        chatEmoji = chatBox.transform.GetComponentInChildren<Image>();
+        chatText = chatBox.transform.Find("Text").GetComponent<Text>();
+        chatEmoji = chatBox.transform.Find("Emoji").GetComponent<Image>();
+        spriteAnimation = chatEmoji.gameObject.GetComponent<SpriteAnimation>();
 
         Bind(UIEvent.Send_Quick_Chat, UIEvent.Send_ZiDingYi_Chat, UIEvent.Send_Emoji_Chat);
     }
@@ -64,7 +69,7 @@ public class BasePlayer : UIBase
             case UIEvent.Send_Emoji_Chat:
                 var chatDto2 = (ChatDto)message;
                 if (userDto == null || chatDto2.id != userDto.Id) return;
-                SendEmoji(chatDto2.Index);
+                SendEmoji(chatDto2.text);
                 break;
 
             default:
@@ -91,55 +96,49 @@ public class BasePlayer : UIBase
     }
 
     // 发送消息显示动画
-    public void SendChat(string text)
+    public void SendChat(string text, Action action = null)
     {
-        if (chatTween != null)
-        {
-            chatTween.Kill();
-            CancelInvoke(nameof(SendQuickChatHide));
-        }
-        ShowMessage(text);
+        chatBox.SetActive(true);
+        StartChatAnimation();
 
-        chatTween = DotweenTools.DoTransScale(chatBox.transform, Vector3.zero, Vector3.one, .2f);
-        chatTween.onComplete = () =>
-        {
-            Invoke(nameof(SendQuickChatHide), 2.0f);
-        };
+        chatText.text = text;
+
+        SetTypeActive(true);
+    }
+    // 发送表情显示动画
+    public void SendEmoji(string name)
+    {
+        chatBox.SetActive(true);
+        StartChatAnimation();
+
+        spriteAnimation.SpriteFrames = Resources.LoadAll<Sprite>($"Image/Chat/Emoji/{name}");
+
+        SetTypeActive(false);
     }
 
-    public void SendEmoji(int index)
+    // 设置消息类型显示
+    public void SetTypeActive(bool chatActive)
+    {
+        chatText.gameObject.SetActive(chatActive);
+        chatEmoji.gameObject.SetActive(!chatActive);
+    }
+
+    // 聊天动画
+    private void StartChatAnimation()
     {
         if (chatTween != null)
         {
             chatTween.Kill();
             CancelInvoke(nameof(SendQuickChatHide));
         }
-        ShowEmoji();
-
         chatTween = DotweenTools.DoTransScale(chatBox.transform, Vector3.zero, Vector3.one, .2f);
         chatTween.onComplete = () =>
         {
-            Invoke(nameof(SendQuickChatHide), 2.0f);
+            Invoke(nameof(SendQuickChatHide), 3.0f);
         };
     }
 
     // 消息隐藏
     private void SendQuickChatHide() => chatBox.SetActive(false);
 
-    // 展示消息
-    private void ShowMessage(string text)
-    {
-        chatText.text = text;
-        chatBox.SetActive(true);
-        chatText.gameObject.SetActive(true);
-        chatEmoji.gameObject.SetActive(false);
-    }
-
-    // 展示表情
-    private void ShowEmoji()
-    {
-        chatBox.SetActive(true);
-        chatText.gameObject.SetActive(false);
-        chatEmoji.gameObject.SetActive(true);
-    }
 }

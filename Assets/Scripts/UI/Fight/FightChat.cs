@@ -73,7 +73,8 @@ public class FightChat : UIBase
         {
             var temp = i;
             emojiBtns[temp] = emojiContent.GetChild(temp).GetComponent<Button>();
-            emojiBtns[temp].onClick.AddListener(() => OnEmojiBtnClick(temp));
+            var name = emojiBtns[temp].gameObject.name;
+            emojiBtns[temp].onClick.AddListener(() => OnEmojiBtnClick(name));
         }
     }
 
@@ -98,7 +99,7 @@ public class FightChat : UIBase
         DispatchTools.Chat_Send_Quick_Cres(Dispatch, index);
     }
 
-    private void OnEmojiBtnClick(int index) => DispatchTools.Chat_Send_Emoji_Cres(Dispatch, index);
+    private void OnEmojiBtnClick(string name) => DispatchTools.Chat_Send_Emoji_Cres(Dispatch, name);
 
     private void OnClickZiDingYiSend()
     {
