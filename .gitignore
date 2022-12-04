@@ -1,3 +1,6 @@
 Library/
 Temp/
 .vs/
+UserSettings/Layouts/
+Assembly-CSharp.csproj
+Assembly-CSharp-Editor.csproj
