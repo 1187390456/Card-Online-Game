@@ -8,12 +8,21 @@ using System.Threading.Tasks;
 using UnityEngine;
 
 /// <summary>
+/// IP管理
+/// </summary>
+public static class IpAddress
+{
+    public static string WAN = "xuchenming.cn";
+    public static string LocalAreaNet = "127.0.0.1";
+}
+
+/// <summary>
 /// 网络模块
 /// </summary>
 public class NetManager : ManagerBase
 {
     public static NetManager Instance = null;
-    private ClientPeer client = new ClientPeer("xuchenming.cn", 6666);
+    private ClientPeer client = new ClientPeer(IpAddress.LocalAreaNet, 6666);
 
     private void Start()
     {

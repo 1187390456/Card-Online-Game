@@ -31,7 +31,7 @@ public class RegistPanel : UIBase
         SetPanelActive(false);
 
         // 测试账号
-        //   TestCount();
+        TestCount();
     }
 
     private void TestCount()
