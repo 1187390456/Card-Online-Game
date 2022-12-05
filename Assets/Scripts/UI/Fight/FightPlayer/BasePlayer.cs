@@ -51,13 +51,14 @@ public class BasePlayer : UIBase
                 var chatDto = (ChatDto)message;
                 if (userDto == null || userDto.Id != chatDto.id) return;
                 var text = ChatConstant.GetChatText(chatDto.Index);
+                Dispatch(AreaCode.AUDIO, AudioEvent.Play_Effect_Audio, chatDto.Index); // 播放音效
                 SendChat(text);
-                Dispatch(AreaCode.AUDIO, AudioEvent.Play_Effect_Audio, chatDto.Index); // 发送播放音效文件 按钮索引
                 break;
 
             case UIEvent.Send_ZiDingYi_Chat:
                 var chatDto1 = (ChatDto)message;
                 if (userDto == null || userDto.Id != chatDto1.id) return;
+                Dispatch(AreaCode.AUDIO, AudioEvent.Start_Speak_Text, chatDto1.text); // 朗读文本
                 SendChat(chatDto1.text);
                 break;
 
@@ -99,6 +100,7 @@ public class BasePlayer : UIBase
         SetTypeActive(true);
 
         CreateChatHistory(text);
+        Dispatch(AreaCode.UI, UIEvent.Render_Chat_ScrollView, null); // 刷新滚动视图
     }
 
     // 发送表情显示动画
@@ -110,6 +112,7 @@ public class BasePlayer : UIBase
         SetTypeActive(false);
 
         CreateChatHistory(null, name);
+        Dispatch(AreaCode.UI, UIEvent.Render_Chat_ScrollView, null); // 刷新滚动视图
     }
 
     //  创建聊天历史记录

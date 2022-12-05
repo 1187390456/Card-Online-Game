@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DG.Tweening;
+using System;
 using System.Reflection;
 using UnityEngine;
 using UnityEngine.UI;
@@ -54,7 +55,7 @@ public class FightChat : UIBase
 
         chatHistory = Resources.Load<GameObject>("Perfabs/Chat/ChatHistory");
 
-        Bind(UIEvent.Chat_Panel_Active, UIEvent.Create_Chat_History, UIEvent.Crear_All_History);
+        Bind(UIEvent.Chat_Panel_Active, UIEvent.Create_Chat_History, UIEvent.Crear_All_History, UIEvent.Render_Chat_ScrollView);
     }
 
     private void Start()
@@ -80,6 +81,10 @@ public class FightChat : UIBase
                 ClearAllChatHistory();
                 break;
 
+            case UIEvent.Render_Chat_ScrollView:
+                RenderScrollView();
+                break;
+
             default:
                 break;
         }
@@ -102,6 +107,13 @@ public class FightChat : UIBase
             var temp = i;
             Destroy(recordContent.GetChild(temp).gameObject);
         }
+    }
+
+    // 刷新历史记录滚动视图
+    private void RenderScrollView()
+    {
+        var scrollRect = recordScroll.GetComponent<ScrollRect>();
+        DOTween.To(() => scrollRect.verticalNormalizedPosition, x => scrollRect.verticalNormalizedPosition = x, 0, .2f).SetEase(Ease.InElastic);
     }
 
     // 添加监听

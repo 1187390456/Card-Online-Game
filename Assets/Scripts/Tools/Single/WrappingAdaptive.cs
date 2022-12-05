@@ -15,13 +15,14 @@ public class WrappingAdaptive : MonoBehaviour
     {
         contentSizeFitter = GetComponent<ContentSizeFitter>();
         rectTransform = GetComponent<RectTransform>();
+
+        SetParentFitter();
     }
 
     private void OnRectTransformDimensionsChange()
     {
         if (rectTransform != null && rectTransform.rect.width > WrapWidth)
         {
-            SetParentFitter();
             contentSizeFitter.horizontalFit = ContentSizeFitter.FitMode.Unconstrained;
             rectTransform.sizeDelta = new Vector2(WrapWidth, 0);
             LayoutRebuilder.ForceRebuildLayoutImmediate(rectTransform);

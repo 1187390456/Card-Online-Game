@@ -19,6 +19,9 @@ public class ModelArea : UIBase
     private void Start()
     {
         StartAnimation();
+
+        //TODO 标记测试账号2
+        OnClickClassifyModel();
     }
 
     public override void OnDestroy()

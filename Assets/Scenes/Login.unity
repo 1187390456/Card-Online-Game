@@ -1128,7 +1128,7 @@ GameObject:
   - component: {fileID: 335674631}
   - component: {fileID: 335674632}
   m_Layer: 0
-  m_Name: Game Center
+  m_Name: Msg Center
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1884,8 +1884,12 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 0}
     - target: {fileID: 11459578, guid: 838a370d14941054e875306241cf079d, type: 3}
+      propertyPath: Source
+      value: 
+      objectReference: {fileID: 1578156978}
+    - target: {fileID: 11459578, guid: 838a370d14941054e875306241cf079d, type: 3}
       propertyPath: Culture
-      value: zh-Cn
+      value: zh-CN
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_AddedGameObjects: []
@@ -3361,6 +3365,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1378685395}
+  - component: {fileID: 1378685396}
   m_Layer: 0
   m_Name: RTVoice
   m_TagString: Untagged
@@ -3385,6 +3390,18 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1378685396
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1378685394}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6aeece347a6aeac4c831edf569e8899a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1403589548
 GameObject:
   m_ObjectHideFlags: 0
