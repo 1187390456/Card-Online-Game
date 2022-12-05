@@ -24,7 +24,6 @@ public class ChatHistory : MonoBehaviour
 
         SetActive(true);
 
-        Debug.Log(emojiName);
         Name.text = $"{name}: ";
         spriteAnimation.SpriteFrames = Resources.LoadAll<Sprite>($"Image/Chat/Emoji/{emojiName}");
     }

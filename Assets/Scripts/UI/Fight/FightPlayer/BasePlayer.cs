@@ -52,6 +52,7 @@ public class BasePlayer : UIBase
                 if (userDto == null || userDto.Id != chatDto.id) return;
                 var text = ChatConstant.GetChatText(chatDto.Index);
                 SendChat(text);
+                Dispatch(AreaCode.AUDIO, AudioEvent.Play_Effect_Audio, chatDto.Index); // 发送播放音效文件 按钮索引
                 break;
 
             case UIEvent.Send_ZiDingYi_Chat:
@@ -141,7 +142,7 @@ public class BasePlayer : UIBase
         chatTween = DotweenTools.DoTransScale(chatBox.transform, Vector3.zero, Vector3.one, .2f);
         chatTween.onComplete = () =>
         {
-            Invoke(nameof(SendQuickChatHide), 3.0f);
+            Invoke(nameof(SendQuickChatHide), 5.0f);
         };
     }
 
