@@ -2,22 +2,32 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EffectAudio : AudioBase
+public enum BackGroundMuscicType
+{
+    Exciting,
+    Lose,
+    Normal,
+    Normal2,
+    Welcome,
+    Win
+}
+
+public class BackGroundAudio : AudioBase
 {
     private AudioSource audioSource;
 
     private void Awake()
     {
         audioSource = GetComponent<AudioSource>();
-        Bind(AudioEvent.Play_Effect_Audio);
+        Bind(AudioEvent.Play_Music_Audio);
     }
 
     public override void Execute(int eventCode, object message)
     {
         switch (eventCode)
         {
-            case AudioEvent.Play_Effect_Audio:
-                PlayEffect(message.ToString());
+            case AudioEvent.Play_Music_Audio:
+                SetBackGroundMuscic((string)message);
                 break;
 
             default:
@@ -25,11 +35,9 @@ public class EffectAudio : AudioBase
         }
     }
 
-    // 播放音效
-    private void PlayEffect(string index)
+    private void SetBackGroundMuscic(string type)
     {
-        var roleGender = "woman";
-        AudioClip ac = Resources.Load<AudioClip>($"Sound/{roleGender}/Chat_{index}"); // 音效文件
+        AudioClip ac = Resources.Load<AudioClip>($"Sound/MusicEx/MusicEx_{type}");
         audioSource.clip = ac;
         audioSource.Play();
     }

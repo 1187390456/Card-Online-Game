@@ -22,9 +22,6 @@ public class CreateArea : UIBase
     private void Start()
     {
         StartAnimation();
-
-        //TODO 标记测试账号1
-        DispatchTools.User_Create_Cres(Dispatch, "测试账号");
     }
 
     public override void OnDestroy()

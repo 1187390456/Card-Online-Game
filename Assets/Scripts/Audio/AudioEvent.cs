@@ -14,7 +14,7 @@ public class AudioEvent
 
     // 音乐
 
-    public const int Pause_Music_Audio = 2;
+    public const int Play_Music_Audio = 2;
     public const int Stop_Music_Audio = 3;
 
     // 朗读
