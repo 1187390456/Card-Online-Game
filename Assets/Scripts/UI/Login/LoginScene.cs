@@ -8,7 +8,7 @@ public class LoginScene : UIBase
     private void Start()
     {
         //TODO 标记测试账号0
-        TestCount();
+        // TestCount();
         Dispatch(AreaCode.AUDIO, AudioEvent.Play_Music_Audio, BackGroundMuscicType.Welcome.ToString()); // 播放背景音乐
     }
 

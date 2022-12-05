@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
+  m_IndirectSpecularColor: {r: 0, g: 0, b: 0, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &4
 LightmapSettings:
@@ -1463,7 +1463,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1978517985}
-        m_TargetAssemblyTypeName: Crosstales.RTVoice.Demo.GUIDialog, Assembly-CSharp
+        m_TargetAssemblyTypeName: 
         m_MethodName: ChangeRateB
         m_Mode: 0
         m_Arguments:
@@ -1726,7 +1726,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1978517985}
-        m_TargetAssemblyTypeName: Crosstales.RTVoice.Demo.GUIDialog, Assembly-CSharp
+        m_TargetAssemblyTypeName: 
         m_MethodName: ChangeVolumeA
         m_Mode: 0
         m_Arguments:
@@ -2013,7 +2013,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1978517985}
-        m_TargetAssemblyTypeName: Crosstales.RTVoice.Demo.GUIDialog, Assembly-CSharp
+        m_TargetAssemblyTypeName: 
         m_MethodName: ChangeRateA
         m_Mode: 0
         m_Arguments:
@@ -4256,10 +4256,6 @@ PrefabInstance:
       propertyPath: MaryTTSMode
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 11493764, guid: 966d2b798e0a0e044876ba6826f06a5b, type: 3}
-      propertyPath: cleanUpTimer
-      value: 3.4520977
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_AddedGameObjects: []
   m_SourcePrefab: {fileID: 100100000, guid: 966d2b798e0a0e044876ba6826f06a5b, type: 3}
@@ -4524,7 +4520,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1978517985}
-        m_TargetAssemblyTypeName: Crosstales.RTVoice.Demo.GUIDialog, Assembly-CSharp
+        m_TargetAssemblyTypeName: 
         m_MethodName: ChangeVolumeB
         m_Mode: 0
         m_Arguments:
