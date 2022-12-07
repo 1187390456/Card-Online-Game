@@ -7,7 +7,7 @@ public class FightMainArea : UIBase
 {
     private SocketMsg socketMsg = new SocketMsg();
 
-    public List<Sprite> imageList = new List<Sprite>(); // 0-9 的图片资源 非动态载入 不清除
+    private Sprite[] imageList; // 0-9 的图片资源 非动态载入 不清除
 
     private GameObject MatchTips; // 匹配提示
     private GameObject StartBtn; // 开始按钮
@@ -49,6 +49,8 @@ public class FightMainArea : UIBase
         readyBtn.onClick.AddListener(OnClickReady);
         cancelBtn.onClick.AddListener(OnClickCancel);
 
+        AddTipsRes();
+
         Bind(UIEvent.Match_Success);
     }
 
@@ -81,6 +83,11 @@ public class FightMainArea : UIBase
 
         DOTween.KillAll();
     }
+    /// <summary>
+    /// 添加匹配提示资源
+    /// </summary>
+    private void AddTipsRes() => imageList = Resources.LoadAll<Sprite>("Image/Scence/Fight/MatchTips");
+
 
     /// <summary>
     /// 明牌开始

@@ -17481,20 +17481,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 2026798277}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3c32b301552c9be4b96d7100c075cbe1, type: 3}
+  m_Script: {fileID: 11500000, guid: 16f289931035f9c49938e4f55c4b6f35, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  imageList:
-  - {fileID: -283596482, guid: 2e34dc4f577ce644e8eeefe11cc5d595, type: 3}
-  - {fileID: 292969600, guid: 2e34dc4f577ce644e8eeefe11cc5d595, type: 3}
-  - {fileID: -243440949, guid: 2e34dc4f577ce644e8eeefe11cc5d595, type: 3}
-  - {fileID: -128361593, guid: 2e34dc4f577ce644e8eeefe11cc5d595, type: 3}
-  - {fileID: -398674314, guid: 2e34dc4f577ce644e8eeefe11cc5d595, type: 3}
-  - {fileID: 2070403472, guid: 2e34dc4f577ce644e8eeefe11cc5d595, type: 3}
-  - {fileID: -522811435, guid: 2e34dc4f577ce644e8eeefe11cc5d595, type: 3}
-  - {fileID: -2021548700, guid: 2e34dc4f577ce644e8eeefe11cc5d595, type: 3}
-  - {fileID: -38632449, guid: 2e34dc4f577ce644e8eeefe11cc5d595, type: 3}
-  - {fileID: -1210046790, guid: 2e34dc4f577ce644e8eeefe11cc5d595, type: 3}
 --- !u!1 &2033034677
 GameObject:
   m_ObjectHideFlags: 0
