@@ -86,7 +86,7 @@ public class BasePlayer : UIBase
     {
         this.userDto = userDto;
         userName.text = userDto.Name;
-        beanCount.text = userDto.BeanCount;
+        beanCount.text = userDto.BeanCount.ToString();
         readyText.gameObject.SetActive(Models.GameModel.MatchRoomDto.readyList.Exists(item => item == userDto.Id));
         gameObject.SetActive(true);
     }

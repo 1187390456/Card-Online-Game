@@ -32,6 +32,7 @@ public class MatchHandler : HandlerBase
                 break;
 
             case MatchCode.Start_Bro:
+                Debug.Log("开始战斗了");
                 break;
         }
     }

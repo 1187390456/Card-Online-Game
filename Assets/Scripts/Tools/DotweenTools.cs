@@ -15,10 +15,11 @@ public static class DotweenTools
     /// <param name="startPos">起始位置</param>
     /// <param name="endPos">终点位置</param>
     /// <param name="duration">持续时间</param>
-    public static void DoRectMove(RectTransform targetRect, Vector2 startPos, Vector2 endPos, float duration)
+    public static Tween DoRectMove(RectTransform targetRect, Vector2 startPos, Vector2 endPos, float duration, string name = null)
     {
         targetRect.anchoredPosition = startPos;
-        DOTween.To(() => targetRect.anchoredPosition, x => targetRect.anchoredPosition = x, endPos, duration);
+        Tween tween = DOTween.To(() => targetRect.anchoredPosition, x => targetRect.anchoredPosition = x, endPos, duration).SetId(name);
+        return tween;
     }
 
     /// <summary>

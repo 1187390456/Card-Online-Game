@@ -23,4 +23,6 @@ public class UIEvent
     public const int Create_Chat_History = 14; // 创建聊天历史
     public const int Crear_All_History = 15; // 清空聊天历史记录
     public const int Render_Chat_ScrollView = 16; // 刷新聊天滚动视图
+
+    public const int Dispatch_Card = 17; // 分发玩家手牌
 }

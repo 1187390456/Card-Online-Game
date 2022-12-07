@@ -22,7 +22,7 @@ public static class IpAddress
 public class NetManager : ManagerBase
 {
     public static NetManager Instance = null;
-    private ClientPeer client = new ClientPeer(IpAddress.WAN, 6666);
+    private ClientPeer client = new ClientPeer(IpAddress.LocalAreaNet, 6666);
 
     private void Start()
     {
@@ -68,6 +68,7 @@ public class NetManager : ManagerBase
     private HandlerBase userHandler = new UserHandler(); // 角色处理
     private HandlerBase matchHandler = new MatchHandler(); // 匹配处理
     private HandlerBase chatHandler = new ChatHandler(); // 聊天处理
+    private HandlerBase fightHandler = new FightHandler(); // 战斗处理
 
     /// <summary>
     /// 处理网络消息
@@ -91,6 +92,10 @@ public class NetManager : ManagerBase
 
             case OpCode.Chat:
                 chatHandler.OnReceive(msg.subCode, msg.value);
+                break;
+
+            case OpCode.Fight:
+                fightHandler.OnReceive(msg.subCode, msg.value);
                 break;
 
             default:
