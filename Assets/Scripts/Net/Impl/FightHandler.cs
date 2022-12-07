@@ -30,7 +30,7 @@ public class FightHandler : HandlerBase
     private void GetCards(List<CardDto> cardList)
     {
         // 分发手牌
-        Debug.Log("开始发牌");
+        Dispatch(AreaCode.UI, UIEvent.Dispatch_Card, cardList);
     }
 
     // 广播开始抢地主
