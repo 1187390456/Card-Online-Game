@@ -29,6 +29,7 @@ public class FightMainArea : UIBase
 
     private void Awake()
     {
+
         StartBtn = transform.Find("StartBtn").gameObject;
 
         mingPaiStart = StartBtn.transform.Find("MingPaiStart").GetComponent<Button>();
@@ -49,7 +50,7 @@ public class FightMainArea : UIBase
         readyBtn.onClick.AddListener(OnClickReady);
         cancelBtn.onClick.AddListener(OnClickCancel);
 
-        AddTipsRes();
+        imageList = Resources.LoadAll<Sprite>("Image/Scence/Fight/MatchTips");
 
         Bind(UIEvent.Match_Success);
     }
@@ -83,10 +84,6 @@ public class FightMainArea : UIBase
 
         DOTween.KillAll();
     }
-    /// <summary>
-    /// 添加匹配提示资源
-    /// </summary>
-    private void AddTipsRes() => imageList = Resources.LoadAll<Sprite>("Image/Scence/Fight/MatchTips");
 
 
     /// <summary>
