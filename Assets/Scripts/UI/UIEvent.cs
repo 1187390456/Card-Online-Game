@@ -25,4 +25,7 @@ public class UIEvent
     public const int Render_Chat_ScrollView = 16; // 刷新聊天滚动视图
 
     public const int Dispatch_Card = 17; // 分发玩家手牌
+
+    // 测试用
+    public const int Account_Already_Login = 99; // 账号已登录
 }

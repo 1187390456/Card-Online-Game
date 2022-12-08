@@ -19,6 +19,11 @@ public class BasePlayer : UIBase
     protected Image chatEmoji;
     protected SpriteAnimation spriteAnimation; // 控制表情帧动画
 
+    // 左右玩家的
+
+    protected Text cardAmout; // 手牌
+    protected int count = 0; // 手牌数量
+
     public virtual void Awake()
     {
         userName = transform.Find("UserInfo/NameBox/Name").GetComponent<Text>();
@@ -74,7 +79,7 @@ public class BasePlayer : UIBase
     }
 
     // 渲染隐藏
-    public void RenderHide()
+    protected void RenderHide()
     {
         userDto = null;
         gameObject.SetActive(false);
@@ -82,7 +87,7 @@ public class BasePlayer : UIBase
     }
 
     // 渲染显示
-    public void RenderShow(UserDto userDto)
+    protected void RenderShow(UserDto userDto)
     {
         this.userDto = userDto;
         userName.text = userDto.Name;
@@ -91,8 +96,17 @@ public class BasePlayer : UIBase
         gameObject.SetActive(true);
     }
 
+    // 卡牌计数动画
+    protected void StartCountAnimation()
+    {
+        if (count >= 17) return;
+        count++;
+        cardAmout.text = count.ToString();
+        Invoke(nameof(StartCountAnimation), .2f);
+    }
+
     // 发送消息显示动画
-    public void SendChat(string text)
+    private void SendChat(string text)
     {
         chatBox.SetActive(true);
         StartChatAnimation();
@@ -104,7 +118,7 @@ public class BasePlayer : UIBase
     }
 
     // 发送表情显示动画
-    public void SendEmoji(string name)
+    private void SendEmoji(string name)
     {
         chatBox.SetActive(true);
         StartChatAnimation();
@@ -128,7 +142,7 @@ public class BasePlayer : UIBase
     }
 
     // 设置消息类型显示
-    public void SetTypeActive(bool chatActive)
+    private void SetTypeActive(bool chatActive)
     {
         chatText.gameObject.SetActive(chatActive);
         chatEmoji.gameObject.SetActive(!chatActive);

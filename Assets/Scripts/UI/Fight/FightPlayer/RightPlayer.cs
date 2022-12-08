@@ -11,7 +11,8 @@ public class RightPlayer : BasePlayer
     {
         base.Awake();
         beanCount = transform.Find("UserInfo/BeanBox/Count").GetComponent<Text>();
-        Bind(UIEvent.Right_User_Render, UIEvent.Right_User_Leave, UIEvent.Send_Quick_Chat, UIEvent.Send_ZiDingYi_Chat, UIEvent.Send_Emoji_Chat);
+        cardAmout = transform.Find("CardStack/Amount").GetComponent<Text>();
+        Bind(UIEvent.Right_User_Render, UIEvent.Right_User_Leave, UIEvent.Send_Quick_Chat, UIEvent.Send_ZiDingYi_Chat, UIEvent.Send_Emoji_Chat, UIEvent.Dispatch_Card);
     }
 
     public override void Execute(int eventCode, object message)
@@ -25,6 +26,10 @@ public class RightPlayer : BasePlayer
 
             case UIEvent.Right_User_Leave:
                 RenderHide();
+                break;
+
+            case UIEvent.Dispatch_Card:
+                StartCountAnimation();
                 break;
 
             default:

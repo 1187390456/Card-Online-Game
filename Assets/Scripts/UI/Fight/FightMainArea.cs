@@ -29,7 +29,6 @@ public class FightMainArea : UIBase
 
     private void Awake()
     {
-
         StartBtn = transform.Find("StartBtn").gameObject;
 
         mingPaiStart = StartBtn.transform.Find("MingPaiStart").GetComponent<Button>();
@@ -53,6 +52,9 @@ public class FightMainArea : UIBase
         imageList = Resources.LoadAll<Sprite>("Image/Scence/Fight/MatchTips");
 
         Bind(UIEvent.Match_Success);
+
+        //TODO 测试用
+        OnClickDefaultStart();
     }
 
     public override void Execute(int eventCode, object message)
@@ -84,7 +86,6 @@ public class FightMainArea : UIBase
 
         DOTween.KillAll();
     }
-
 
     /// <summary>
     /// 明牌开始
@@ -138,6 +139,9 @@ public class FightMainArea : UIBase
 
         cancelBtn.gameObject.SetActive(false);
         readyBtn.gameObject.SetActive(true);
+
+        //TODO 测试用
+        OnClickReady();
     }
 
     /// <summary>

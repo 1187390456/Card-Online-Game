@@ -1,6 +1,7 @@
 ﻿using DG.Tweening;
 using Protocol.Constant;
 using Protocol.Dto;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -9,12 +10,14 @@ using UnityEngine.UI;
 public class MyPlayer : BasePlayer
 {
     private Transform CardStack; // 卡牌盒子
-    private GameObject CardRes; // 卡牌资源
 
     private int index = 0; // 卡片动画索引
     private float cardSpace = 55.0f; // 卡牌间距
 
     private List<CardDto> cardList = new List<CardDto>(); // 玩家手牌
+
+    private GameObject CardRes; // 卡牌资源
+    private Sprite[] JokerSprite; // 大小王精灵
 
     public override void Awake()
     {
@@ -24,6 +27,7 @@ public class MyPlayer : BasePlayer
 
         CardStack = transform.Find("CardStack");
         CardRes = Resources.Load<GameObject>("Perfabs/Card");
+        JokerSprite = Resources.LoadAll<Sprite>("Image/Card");
     }
 
     public override void Execute(int eventCode, object message)
@@ -45,15 +49,47 @@ public class MyPlayer : BasePlayer
         }
     }
 
+    #region 卡牌区域
+
     // 创建卡牌动画
     private void CrateCardAnimation()
     {
-        if (CardStack.childCount == cardList.Count) return;
-
-        float preXPos;
+        if (CardStack.childCount == 17) return;
 
         var card = Instantiate(CardRes, CardStack);
+        card.name = $"card{index}";
         var rt = card.GetComponent<RectTransform>();
+
+        SetCard(rt);
+
+        StartAnimation(rt);
+    }
+
+    // 设置卡牌信息
+    private void SetCard(RectTransform rt)
+    {
+        var script = rt.GetComponent<Card>();
+        var weight = cardList[index].Weight;
+        var color = cardList[index].Color;
+
+        if (color != CardColor.None) // 不是大小王
+        {
+            var resColor = (color == CardColor.Heart || color == CardColor.Square) ? "Red" : "Black"; // 区分文件颜色
+
+            var bigWeightSprite = Resources.Load<Sprite>($"Image/Card/Weight/{resColor}/Big/{weight}"); // 权重精灵
+            var hugeColorSprite = Resources.Load<Sprite>($"Image/Card/Color/Huge/{color}"); // 权重颜色 巨大
+            var bigColorSprite = Resources.Load<Sprite>($"Image/Card/Color/Big/{color}"); // 权重颜色 大
+
+            script.SetCard(bigWeightSprite, hugeColorSprite, bigColorSprite); // 设置卡牌
+        }
+        else if (weight == CardWeight.SJoker) script.SetCard(JokerSprite[0], JokerSprite[3]);
+        else if (weight == CardWeight.LJoker) script.SetCard(JokerSprite[1], JokerSprite[2], null, true);
+    }
+
+    // 开始卡牌动画
+    private void StartAnimation(RectTransform rt)
+    {
+        float preXPos;
 
         if (index == 0)
         {
@@ -62,7 +98,7 @@ public class MyPlayer : BasePlayer
         }
         else
         {
-            preXPos = CardStack.GetChild(index).GetComponent<RectTransform>().anchoredPosition.x;
+            preXPos = CardStack.Find($"card{index - 1}").GetComponent<RectTransform>().anchoredPosition.x;
             cardSpace = 55.0f;
         }
 
@@ -72,16 +108,15 @@ public class MyPlayer : BasePlayer
 
         var tween = DotweenTools.DoRectMove(rt, startPos, endPos, .2f, "CardMove");
 
-        FixParentPos();
-
         tween.onComplete = () =>
         {
-            index = rt.GetSiblingIndex();
+            index++;
             CrateCardAnimation();
+            FixParentPos();
         };
     }
 
-    // 修复卡牌位置
+    // 修复卡牌位置 出牌后修复
     private void FixCardPos()
     {
         for (int i = 0; i < CardStack.childCount; i++)
@@ -94,7 +129,7 @@ public class MyPlayer : BasePlayer
         FixParentPos();
     }
 
-    // 修复盒子位置
+    // 修复盒子位置 父级盒子初始值为577.5
     private void FixParentPos()
     {
         var rt = CardStack.GetComponent<RectTransform>();
@@ -102,4 +137,6 @@ public class MyPlayer : BasePlayer
         var endPos = new Vector2((20 - CardStack.childCount) * cardSpace / 2 + cardSpace, aurPos.y); // 多加个左边距为卡牌间距
         DotweenTools.DoRectMove(rt, rt.anchoredPosition, endPos, .2f, "CardMove");
     }
+
+    #endregion 卡牌区域
 }
