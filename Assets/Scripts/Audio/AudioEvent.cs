@@ -7,10 +7,10 @@ using UnityEngine;
 /// </summary>
 public class AudioEvent
 {
-    // 音效
+    // 聊天音效
 
-    public const int Play_Effect_Audio = 0;
-    public const int Stop_Effect_Audio = 1;
+    public const int Play_ChatEffect_Audio = 0;
+    public const int Stop_ChatEffect_Audio = 1;
 
     // 音乐
 
@@ -21,4 +21,9 @@ public class AudioEvent
 
     public const int Start_Speak_Text = 4;
     public const int Stop_Speak_Text = 5;
+
+    // 特别音效
+
+    public const int Play_SpecialEffect_Audio = 6;
+    public const int Stop_SpecialEffect_Audio = 7;
 }

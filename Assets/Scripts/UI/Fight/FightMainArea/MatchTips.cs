@@ -26,7 +26,7 @@ public class MatchTips : UIBase
 
         cancleMatch.onClick.AddListener(OnClickCancleMatch);
 
-        Bind(UIEvent.Set_MatchTips_Active);
+        Bind(UIEvent.Set_MatchTips_Active, UIEvent.Match_Success);
     }
 
     private void Start() => SetMatchTipsActive(false);

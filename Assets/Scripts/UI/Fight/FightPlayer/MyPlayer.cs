@@ -5,7 +5,9 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using static UnityEditor.Progress;
 
 public class MyPlayer : BasePlayer
 {
@@ -18,6 +20,8 @@ public class MyPlayer : BasePlayer
 
     private GameObject CardRes; // 卡牌资源
     private Sprite[] JokerSprite; // 大小王精灵
+
+    private List<GameObject> rayList = new List<GameObject>(); // 触摸的游戏对象列表
 
     public override void Awake()
     {
@@ -41,6 +45,7 @@ public class MyPlayer : BasePlayer
 
             case UIEvent.Dispatch_Card:
                 cardList = (List<CardDto>)message;
+                Dispatch(AreaCode.AUDIO, AudioEvent.Play_SpecialEffect_Audio, "Dispatch");  // 播放发牌音效
                 CrateCardAnimation();
                 break;
 
@@ -49,12 +54,61 @@ public class MyPlayer : BasePlayer
         }
     }
 
+    private void Update()
+    {
+        RayCast();
+    }
+
+    private void RayCast()
+    {
+        if (Input.GetMouseButton(0))
+        {
+            var gobj = GetFirstPickGameObject(Input.mousePosition);
+            if (gobj != null && gobj.CompareTag("Card") && !rayList.Exists(item => gobj == item))
+            {
+                rayList.Add(gobj);
+            }
+        }
+        if (Input.GetMouseButtonUp(0))
+        {
+            foreach (var item in rayList)
+            {
+                var cardScript = item.GetComponent<Card>();
+                cardScript.Move();
+            }
+
+            rayList.Clear();
+        }
+    }
+
+    /// <summary>
+    /// 点击屏幕坐标
+    /// </summary>
+    /// <param name="position"></param>
+    /// <returns></returns>
+    public GameObject GetFirstPickGameObject(Vector2 position)
+    {
+        EventSystem eventSystem = EventSystem.current;
+        PointerEventData pointerEventData = new PointerEventData(eventSystem);
+        pointerEventData.position = position;
+        //射线检测ui
+        List<RaycastResult> uiRaycastResultCache = new List<RaycastResult>();
+        eventSystem.RaycastAll(pointerEventData, uiRaycastResultCache);
+        if (uiRaycastResultCache.Count > 0)
+            return uiRaycastResultCache[0].gameObject;
+        return null;
+    }
+
     #region 卡牌区域
 
     // 创建卡牌动画
     private void CrateCardAnimation()
     {
-        if (CardStack.childCount == 17) return;
+        if (CardStack.childCount == 17)
+        {
+            Dispatch(AreaCode.AUDIO, AudioEvent.Stop_SpecialEffect_Audio, null); // 停止发牌音效
+            return;
+        }
 
         var card = Instantiate(CardRes, CardStack);
         card.name = $"card{index}";

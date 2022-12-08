@@ -10,8 +10,8 @@ public class ReadyBtn : UIBase
 
     private void Awake()
     {
-        readyBtn = transform.Find("Ready").GetComponentInChildren<Button>();
-        cancelBtn = transform.Find("Cancle").GetComponentInChildren<Button>();
+        readyBtn = transform.Find("Ready").GetComponent<Button>();
+        cancelBtn = transform.Find("Cancle").GetComponent<Button>();
 
         readyBtn.onClick.AddListener(OnClickReady);
         cancelBtn.onClick.AddListener(OnClickCancelReady);
@@ -30,8 +30,11 @@ public class ReadyBtn : UIBase
                 break;
 
             case UIEvent.Match_Success:
-                SetActive(false);
                 SetReadyBtnActive(true);
+                SetActive(false);
+
+                //TODO 测试用
+                OnClickReady();
                 break;
 
             default:

@@ -56,7 +56,7 @@ public class BasePlayer : UIBase
                 var chatDto = (ChatDto)message;
                 if (userDto == null || userDto.Id != chatDto.id) return;
                 var text = ChatConstant.GetChatText(chatDto.Index);
-                Dispatch(AreaCode.AUDIO, AudioEvent.Play_Effect_Audio, chatDto.Index); // 播放音效
+                Dispatch(AreaCode.AUDIO, AudioEvent.Play_ChatEffect_Audio, chatDto.Index); // 播放音效
                 SendChat(text);
                 break;
 

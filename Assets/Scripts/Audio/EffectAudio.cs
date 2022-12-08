@@ -9,15 +9,23 @@ public class EffectAudio : AudioBase
     private void Awake()
     {
         audioSource = GetComponent<AudioSource>();
-        Bind(AudioEvent.Play_Effect_Audio);
+        Bind(AudioEvent.Play_ChatEffect_Audio, AudioEvent.Play_SpecialEffect_Audio, AudioEvent.Stop_SpecialEffect_Audio);
     }
 
     public override void Execute(int eventCode, object message)
     {
         switch (eventCode)
         {
-            case AudioEvent.Play_Effect_Audio:
-                PlayEffect(message.ToString());
+            case AudioEvent.Play_ChatEffect_Audio:
+                PlayChatEffect(message.ToString());
+                break;
+
+            case AudioEvent.Play_SpecialEffect_Audio:
+                PlaySpecialEffect(message.ToString());
+                break;
+
+            case AudioEvent.Stop_SpecialEffect_Audio:
+                audioSource.Stop();
                 break;
 
             default:
@@ -25,11 +33,19 @@ public class EffectAudio : AudioBase
         }
     }
 
-    // 播放音效
-    private void PlayEffect(string index)
+    // 播放角色聊天音效
+    private void PlayChatEffect(string index)
     {
         var roleGender = "woman";
         AudioClip ac = Resources.Load<AudioClip>($"Sound/{roleGender}/Chat_{index}"); // 音效文件
+        audioSource.clip = ac;
+        audioSource.Play();
+    }
+
+    // 播放特别音效
+    private void PlaySpecialEffect(string name)
+    {
+        AudioClip ac = Resources.Load<AudioClip>($"Sound/Special/Special_{name}"); // 音效文件
         audioSource.clip = ac;
         audioSource.Play();
     }
