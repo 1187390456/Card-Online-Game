@@ -26,6 +26,10 @@ public class UIEvent
 
     public const int Dispatch_Card = 17; // 分发玩家手牌
 
+    public const int Set_MatchTips_Active = 18; // 设置匹配提示显示
+    public const int Set_StartBtn_Active = 19; // 设置开始按钮显示
+    public const int Set_ReadyBtn_Active = 20; // 设置准备按钮显示
+
     // 测试用
     public const int Account_Already_Login = 99; // 账号已登录
 }

@@ -953,6 +953,7 @@ GameObject:
   - component: {fileID: 141601257}
   - component: {fileID: 141601259}
   - component: {fileID: 141601258}
+  - component: {fileID: 141601260}
   m_Layer: 5
   m_Name: StartBtn
   m_TagString: Untagged
@@ -1016,6 +1017,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 141601256}
   m_CullTransparentMesh: 1
+--- !u!114 &141601260
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 141601256}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c7046d1b53d498740a995b4e5512d289, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &158072824
 GameObject:
   m_ObjectHideFlags: 0
@@ -10794,7 +10807,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 168, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1083049781
@@ -13585,6 +13598,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1594030487}
   - component: {fileID: 1594030488}
+  - component: {fileID: 1594030489}
   m_Layer: 5
   m_Name: MatchTips
   m_TagString: Untagged
@@ -13623,6 +13637,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1594030486}
   m_CullTransparentMesh: 1
+--- !u!114 &1594030489
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1594030486}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ed40ed335d1db1e47a038fc0a5458024, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1594902648
 GameObject:
   m_ObjectHideFlags: 0
@@ -14277,7 +14303,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1626192926}
   - component: {fileID: 1626192927}
-  - component: {fileID: 1626192928}
   m_Layer: 5
   m_Name: FightMainArea
   m_TagString: Untagged
@@ -14316,18 +14341,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1626192925}
   m_CullTransparentMesh: 1
---- !u!114 &1626192928
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1626192925}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3c32b301552c9be4b96d7100c075cbe1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1632348949
 GameObject:
   m_ObjectHideFlags: 0
@@ -14784,7 +14797,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 100, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1730956092
@@ -16329,8 +16342,9 @@ GameObject:
   m_Component:
   - component: {fileID: 1902169476}
   - component: {fileID: 1902169477}
+  - component: {fileID: 1902169478}
   m_Layer: 5
-  m_Name: ReadyArea
+  m_Name: ReadyBtn
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -16366,6 +16380,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1902169475}
   m_CullTransparentMesh: 1
+--- !u!114 &1902169478
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1902169475}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0705788080717ce4fbe89dcbc39b1bc0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1905676978
 GameObject:
   m_ObjectHideFlags: 0
