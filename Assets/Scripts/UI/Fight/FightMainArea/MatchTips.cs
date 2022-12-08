@@ -115,11 +115,10 @@ public class MatchTips : UIBase
         Sequence sequence = DOTween.Sequence();
         var startPos = rectTrans.anchoredPosition;
         var endPos = new Vector2(rectTrans.anchoredPosition.x, rectTrans.anchoredPosition.y + 12.0f);
-        Tween t1 = DotweenTools.DoRectMove(rectTrans, startPos, endPos, .2f);
-        Tween t2 = DotweenTools.DoRectMove(rectTrans, endPos, startPos, .2f);
-        sequence
-            .Append(t1).SetEase(Ease.InFlash)
-            .Append(t2).SetEase(Ease.InFlash);
+        Tween t1 = DotweenTools.DoRectMove(rectTrans, endPos, .2f);
+        Tween t2 = DotweenTools.DoRectMove(rectTrans, startPos, .2f);
+        sequence.Append(t1).Append(t2);
+        sequence.SetEase(Ease.Flash);
         sequence.onKill = () => rectTrans.anchoredPosition = startPos; // 被杀了就重置位置
     }
 

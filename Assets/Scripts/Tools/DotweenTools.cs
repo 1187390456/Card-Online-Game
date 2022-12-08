@@ -23,6 +23,20 @@ public static class DotweenTools
     }
 
     /// <summary>
+    /// 基于Rect 指定终点
+    /// </summary>
+    /// <param name="targetRect"></param>
+    /// <param name="endPos"></param>
+    /// <param name="duration"></param>
+    /// <param name="name"></param>
+    /// <returns></returns>
+    public static Tween DoRectMove(RectTransform targetRect, Vector2 endPos, float duration, string name = null)
+    {
+        Tween tween = DOTween.To(() => targetRect.anchoredPosition, x => targetRect.anchoredPosition = x, endPos, duration).SetId(name);
+        return tween;
+    }
+
+    /// <summary>
     /// 基于Tran 从指定大小缩放到指定大小
     /// </summary>
     /// <param name="targetTran">目标Tran</param>
