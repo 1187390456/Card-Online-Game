@@ -98,6 +98,16 @@ public static class DispatchTools
     }
 
     /// <summary>
+    /// 离开战斗房间
+    /// </summary>
+    /// <param name="Dispatch"></param>
+    public static void Fight_Leave_Cres(Action<int, int, object> Dispatch)
+    {
+        socketMsg.Change(OpCode.Fight, FightCode.Leave_Cres, null);
+        Dispatch(AreaCode.NET, 0, socketMsg);
+    }
+
+    /// <summary>
     /// 玩家准备
     /// </summary>
     /// <param name="Dispatch"></param>

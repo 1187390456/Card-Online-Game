@@ -22,7 +22,7 @@ public class StartBtn : UIBase
     private void Start()
     {
         //TODO 测试用
-        OnClickDefaultStart();
+        //   OnClickDefaultStart();
     }
 
     public override void OnDestroy()
