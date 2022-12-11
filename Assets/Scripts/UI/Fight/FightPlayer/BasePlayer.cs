@@ -4,6 +4,11 @@ using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
 
+public class Operate
+{
+    public const int Ming_Pai = 1;
+}
+
 public class BasePlayer : UIBase
 {
     public bool isDestory = false;
@@ -24,6 +29,15 @@ public class BasePlayer : UIBase
     protected Text cardAmout; // 手牌
     protected int count = 0; // 手牌数量
 
+    // 操作
+
+    protected GameObject operate;
+    protected Transform dontCall;
+    protected Transform dontDeal;
+    protected Transform mingPai;
+    protected Transform callLandowner;
+    protected Transform grabLandowner;
+
     public virtual void Awake()
     {
         userName = transform.Find("UserInfo/NameBox/Name").GetComponent<Text>();
@@ -33,12 +47,21 @@ public class BasePlayer : UIBase
         chatText = chatBox.transform.Find("Text").GetComponent<Text>();
         chatEmoji = chatBox.transform.Find("Emoji").GetComponent<Image>();
         spriteAnimation = chatEmoji.gameObject.GetComponent<SpriteAnimation>();
+
+        operate = transform.Find("Operate").gameObject;
+        dontCall = transform.Find("Operate/DontCall");
+        dontDeal = transform.Find("Operate/DontDeal");
+        mingPai = transform.Find("Operate/MingPai");
+        callLandowner = transform.Find("Operate/CallLandowner");
+        grabLandowner = transform.Find("Operate/GrabLandowner");
     }
 
     public virtual void Start()
     {
         RenderHide();
-        chatBox.SetActive(false);
+
+        HideChatBox();
+        HideOperate();
     }
 
     public override void OnDestroy()
@@ -105,6 +128,8 @@ public class BasePlayer : UIBase
         Invoke(nameof(StartCountAnimation), .2f);
     }
 
+    #region 聊天消息相关
+
     // 发送消息显示动画
     private void SendChat(string text)
     {
@@ -154,15 +179,37 @@ public class BasePlayer : UIBase
         if (chatTween != null)
         {
             chatTween.Kill();
-            CancelInvoke(nameof(SendQuickChatHide));
+            CancelInvoke(nameof(HideChatBox));
         }
         chatTween = DotweenTools.DoTransScale(chatBox.transform, Vector3.zero, Vector3.one, .2f);
         chatTween.onComplete = () =>
         {
-            Invoke(nameof(SendQuickChatHide), 5.0f);
+            Invoke(nameof(HideChatBox), 5.0f);
         };
     }
 
     // 消息隐藏
-    private void SendQuickChatHide() => chatBox.SetActive(false);
+    private void HideChatBox() => chatBox.SetActive(false);
+
+    #endregion 聊天消息相关
+
+    #region 操作
+
+    // 操作隐藏
+    private void HideOperate()
+    {
+        for (int i = 0; i < operate.transform.childCount; i++)
+        {
+            operate.transform.GetChild(i).gameObject.SetActive(false);
+        }
+    }
+
+    // 明牌
+    public void MingPai()
+    {
+        HideOperate();
+        mingPai.gameObject.SetActive(true);
+    }
+
+    #endregion 操作
 }

@@ -45,7 +45,8 @@ public class MyPlayer : BasePlayer
             case UIEvent.Dispatch_Card:
                 cardList = (List<CardDto>)message;
                 Dispatch(AreaCode.AUDIO, AudioEvent.Play_SpecialEffect_Audio, "Dispatch");  // 播放发牌音效
-                CrateCardAnimation();
+                Dispatch(AreaCode.UI, UIEvent.Set_MingPaiBtn_Active, true);  // 显示明牌
+                CrateCardAnimation(); // 创建卡牌
                 break;
 
             default:
@@ -58,6 +59,7 @@ public class MyPlayer : BasePlayer
         RayCast();
     }
 
+    // 监听手指点击
     private void RayCast()
     {
         if (Input.GetMouseButton(0))
@@ -106,6 +108,7 @@ public class MyPlayer : BasePlayer
         if (CardStack.childCount == 17)
         {
             Dispatch(AreaCode.AUDIO, AudioEvent.Stop_SpecialEffect_Audio, null); // 停止发牌音效
+            Dispatch(AreaCode.UI, UIEvent.Set_MingPaiBtn_Active, false);  // 隐藏明牌
             return;
         }
 

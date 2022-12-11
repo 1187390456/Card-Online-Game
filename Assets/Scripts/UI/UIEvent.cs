@@ -30,6 +30,8 @@ public class UIEvent
     public const int Set_StartBtn_Active = 19; // 设置开始按钮显示
     public const int Set_ReadyBtn_Active = 20; // 设置准备按钮显示
 
+    public const int Set_MingPaiBtn_Active = 21; // 显示明牌按钮
+
     // 测试用
     public const int Account_Already_Login = 99; // 账号已登录
 }
