@@ -70,17 +70,24 @@ public class MyPlayer : BasePlayer
             case UIEvent.GrabLandowner_Success:
                 GrabDto grabDto = (GrabDto)message;
                 HideOperate();
+                Dispatch(AreaCode.UI, UIEvent.Show_TableCard, grabDto.TableCardList); // 显示底牌
                 if (grabDto.Uid == userDto.Id)
                 {
-                    cardList.AddRange(grabDto.TableCardList);
+                    StartCoroutine(DestoryAllCard());
 
-                    for (var i = 0; i < grabDto.TableCardList.Count; i++)
+                    cardList = grabDto.PlayerCardList;
+                    index = 0;
+
+                    for (var i = 0; i < cardList.Count; i++)
                     {
                         var card = Instantiate(CardRes, cardStack);
                         var rt = card.GetComponent<RectTransform>();
+                        card.name = $"card{index}";
                         SetCard(rt);
+                        SetPos(rt);
                     }
-                    FixCardPos();
+
+                    FixParentPos(true);
                 }
                 break;
 
@@ -178,6 +185,25 @@ public class MyPlayer : BasePlayer
         else if (weight == CardWeight.LJoker) script.SetCard(JokerSprite[1], JokerSprite[2], null, true);
     }
 
+    // 设置卡片位置 抢地主后增加底牌用
+    private void SetPos(RectTransform rt)
+    {
+        float preXPos;
+
+        if (index == 0)
+        {
+            preXPos = 0;
+            cardSpace = 0;
+        }
+        else
+        {
+            preXPos = cardStack.Find($"card{index - 1}").GetComponent<RectTransform>().anchoredPosition.x;
+            cardSpace = 55.0f;
+        }
+        rt.anchoredPosition = new Vector2(cardSpace + preXPos, rt.anchoredPosition.y);
+        index++;
+    }
+
     // 开始卡牌动画
     private void StartAnimation(RectTransform rt)
     {
@@ -208,6 +234,7 @@ public class MyPlayer : BasePlayer
         };
     }
 
+
     // 修复卡牌位置 出牌后修复
     private void FixCardPos()
     {
@@ -222,13 +249,32 @@ public class MyPlayer : BasePlayer
     }
 
     // 修复盒子位置 父级盒子初始值为577.5
-    private void FixParentPos()
+    private void FixParentPos(bool is20 = false) // is20代表抢地主后的修复
     {
+        int count;
         var rt = cardStack.GetComponent<RectTransform>();
         var aurPos = rt.anchoredPosition;
-        var endPos = new Vector2((20 - cardStack.childCount) * cardSpace / 2 + cardSpace, aurPos.y); // 多加个左边距为卡牌间距
+
+        if (is20)
+        {
+            count = 20;
+        }
+        else
+        {
+            count = cardStack.childCount;
+        }
+
+        var endPos = new Vector2((20 - count) * cardSpace / 2 + cardSpace, aurPos.y); // 多加个左边距为卡牌间距
         DotweenTools.DoRectMove(rt, rt.anchoredPosition, endPos, .2f, "CardMove");
     }
 
+    // 清除所有卡牌
+    private IEnumerator DestoryAllCard()
+    {
+        List<GameObject> gobjList = new List<GameObject>();
+        for (var i = 0; i < cardStack.childCount; i++) gobjList.Add(cardStack.GetChild(i).gameObject);
+        for (var i = 0; i < gobjList.Count; i++) Destroy(gobjList[i]);
+        yield return new WaitForEndOfFrame();
+    }
     #endregion 卡牌区域
 }

@@ -33,6 +33,7 @@ public class MatchHandler : HandlerBase
 
             case MatchCode.Start_Bro:
                 Models.GameModel.MatchRoomDto.readyList.Clear(); // 清空准备列表
+                Dispatch(AreaCode.UI, UIEvent.Set_TableCard_Active, true); // 显示底牌盒子
                 RerenderUser();
                 break;
         }

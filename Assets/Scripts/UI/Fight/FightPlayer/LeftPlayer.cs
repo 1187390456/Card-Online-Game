@@ -54,6 +54,7 @@ public class LeftPlayer : BasePlayer
             case UIEvent.GrabLandowner_Success:
                 GrabDto grabDto = (GrabDto)message;
                 HideOperate();
+                Dispatch(AreaCode.UI, UIEvent.Show_TableCard, grabDto.TableCardList); // 显示底牌
                 if (grabDto.Uid == userDto.Id) cardAmout.text = "20";
                 break;
 

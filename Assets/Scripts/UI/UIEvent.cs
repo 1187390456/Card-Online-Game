@@ -36,6 +36,9 @@ public class UIEvent
     public const int Turn_GrabLandowner = 24; // 转换抢地主
     public const int GrabLandowner_Success = 25; // 抢地主成功
 
+    public const int Set_TableCard_Active = 26; // 显示底牌盒子
+    public const int Show_TableCard = 27; // 显示底牌
+
     // 测试用
     public const int Account_Already_Login = 99; // 账号已登录
 }
