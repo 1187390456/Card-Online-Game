@@ -98,16 +98,6 @@ public static class DispatchTools
     }
 
     /// <summary>
-    /// 离开战斗房间
-    /// </summary>
-    /// <param name="Dispatch"></param>
-    public static void Fight_Leave_Cres(Action<int, int, object> Dispatch)
-    {
-        socketMsg.Change(OpCode.Fight, FightCode.Leave_Cres, null);
-        Dispatch(AreaCode.NET, 0, socketMsg);
-    }
-
-    /// <summary>
     /// 玩家准备
     /// </summary>
     /// <param name="Dispatch"></param>
@@ -157,6 +147,27 @@ public static class DispatchTools
     public static void Chat_Send_ZiDingYi_Cres(Action<int, int, object> Dispatch, string text)
     {
         socketMsg.Change(OpCode.Chat, ChatCode.Send_ZiDingYi_Cres, text);
+        Dispatch(AreaCode.NET, 0, socketMsg);
+    }
+
+    /// <summary>
+    /// 离开战斗房间
+    /// </summary>
+    /// <param name="Dispatch"></param>
+    public static void Fight_Leave_Cres(Action<int, int, object> Dispatch)
+    {
+        socketMsg.Change(OpCode.Fight, FightCode.Leave_Cres, null);
+        Dispatch(AreaCode.NET, 0, socketMsg);
+    }
+
+    /// <summary>
+    /// 玩家抢地主
+    /// </summary>
+    /// <param name="Dispatch"></param>
+    /// <param name="text"></param>
+    public static void Fight_Grab_Landowner_Cres(Action<int, int, object> Dispatch, bool isGrabe)
+    {
+        socketMsg.Change(OpCode.Fight, FightCode.Grab_Landowner_Cres, isGrabe);
         Dispatch(AreaCode.NET, 0, socketMsg);
     }
 }

@@ -3,6 +3,7 @@ using Protocol.Dto;
 using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
+using System;
 
 public class Operate
 {
@@ -26,6 +27,7 @@ public class BasePlayer : UIBase
 
     // 左右玩家的
 
+    protected Transform timer; // 闹钟
     protected Text cardAmout; // 手牌
     protected int count = 0; // 手牌数量
 
@@ -34,9 +36,16 @@ public class BasePlayer : UIBase
     protected GameObject operate;
     protected Transform dontCall;
     protected Transform dontDeal;
+    protected Transform dontGrab;
     protected Transform mingPai;
     protected Transform callLandowner;
     protected Transform grabLandowner;
+
+
+    protected int grabTurnCount = 0; // 抢地主轮换次数
+
+    // 委托
+    protected Action StartGrabLandowner; // 开始抢地主
 
     public virtual void Awake()
     {
@@ -51,6 +60,7 @@ public class BasePlayer : UIBase
         operate = transform.Find("Operate").gameObject;
         dontCall = transform.Find("Operate/DontCall");
         dontDeal = transform.Find("Operate/DontDeal");
+        dontGrab = transform.Find("Operate/DontGrab");
         mingPai = transform.Find("Operate/MingPai");
         callLandowner = transform.Find("Operate/CallLandowner");
         grabLandowner = transform.Find("Operate/GrabLandowner");
@@ -122,7 +132,11 @@ public class BasePlayer : UIBase
     // 卡牌计数动画
     protected void StartCountAnimation()
     {
-        if (count >= 17) return;
+        if (count >= 17)
+        {
+            if (StartGrabLandowner != null) StartGrabLandowner();
+            return;
+        }
         count++;
         cardAmout.text = count.ToString();
         Invoke(nameof(StartCountAnimation), .2f);
@@ -195,8 +209,8 @@ public class BasePlayer : UIBase
 
     #region 操作
 
-    // 操作隐藏
-    private void HideOperate()
+    // 隐藏所有操作
+    public void HideOperate()
     {
         for (int i = 0; i < operate.transform.childCount; i++)
         {
@@ -204,12 +218,33 @@ public class BasePlayer : UIBase
         }
     }
 
-    // 明牌
+    // 明牌 所有
     public void MingPai()
     {
         HideOperate();
         mingPai.gameObject.SetActive(true);
     }
+    // 显示抢地主 自己
+
+    public void Show_GrabLandowner()
+    {
+        HideOperate();
+        grabLandowner.gameObject.SetActive(true);
+    }
+    // 显示闹钟 左右玩家
+    public void Show_Timer()
+    {
+        HideOperate();
+        timer.gameObject.SetActive(true);
+    }
+    // 显示不抢 
+    public void Show_DontGrabe()
+    {
+        HideOperate();
+        dontGrab.gameObject.SetActive(true);
+    }
+    // 隐藏不抢
+    public void Hide_DontGrabe() => dontGrab.gameObject.SetActive(false);
 
     #endregion 操作
 }

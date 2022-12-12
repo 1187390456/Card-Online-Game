@@ -31,6 +31,10 @@ public class UIEvent
     public const int Set_ReadyBtn_Active = 20; // 设置准备按钮显示
 
     public const int Set_MingPaiBtn_Active = 21; // 显示明牌按钮
+    public const int Start_Fight = 22; // 开始战斗
+    public const int Set_GrabLandownerBtn_Active = 23; //  设置 开始抢地主 按钮 
+    public const int Turn_GrabLandowner = 24; // 转换抢地主
+    public const int GrabLandowner_Success = 25; // 抢地主成功
 
     // 测试用
     public const int Account_Already_Login = 99; // 账号已登录

@@ -4,33 +4,41 @@ using Protocol.Dto;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 public class MyPlayer : BasePlayer
 {
-    private Transform CardStack; // 卡牌盒子
-
     private int index = 0; // 卡片动画索引
+    private Transform cardStack; // 卡牌盒子
     private float cardSpace = 55.0f; // 卡牌间距
 
-    private List<CardDto> cardList = new List<CardDto>(); // 玩家手牌
-
     private GameObject CardRes; // 卡牌资源
-    private Sprite[] JokerSprite; // 大小王精灵
+    private Sprite[] JokerSprite; // 大小王精灵资源
 
+    private List<CardDto> cardList = new List<CardDto>(); // 玩家手牌
     private List<GameObject> rayList = new List<GameObject>(); // 触摸的游戏对象列表
+
 
     public override void Awake()
     {
         base.Awake();
         beanCount = transform.Find("BeanBox/Count").GetComponent<Text>();
-        Bind(UIEvent.My_User_Render, UIEvent.Send_Quick_Chat, UIEvent.Send_ZiDingYi_Chat, UIEvent.Send_Emoji_Chat, UIEvent.Dispatch_Card);
 
-        CardStack = transform.Find("CardStack");
+        cardStack = transform.Find("CardStack");
         CardRes = Resources.Load<GameObject>("Perfabs/Card");
         JokerSprite = Resources.LoadAll<Sprite>("Image/Card");
+
+        Bind(UIEvent.My_User_Render,
+            UIEvent.Dispatch_Card,
+            UIEvent.Turn_GrabLandowner,
+            UIEvent.Send_Quick_Chat,
+            UIEvent.GrabLandowner_Success,
+            UIEvent.Send_ZiDingYi_Chat,
+            UIEvent.Send_Emoji_Chat
+            );
     }
 
     public override void Execute(int eventCode, object message)
@@ -47,6 +55,33 @@ public class MyPlayer : BasePlayer
                 Dispatch(AreaCode.AUDIO, AudioEvent.Play_SpecialEffect_Audio, "Dispatch");  // 播放发牌音效
                 Dispatch(AreaCode.UI, UIEvent.Set_MingPaiBtn_Active, true);  // 显示明牌
                 CrateCardAnimation(); // 创建卡牌
+                break;
+
+            case UIEvent.Turn_GrabLandowner:
+                TurnDto turnDto = (TurnDto)message;
+                if (turnDto.isFirst)
+                {
+                    if (turnDto.currentId == userDto.Id) StartGrabLandowner = () => Dispatch(AreaCode.UI, UIEvent.Set_GrabLandownerBtn_Active, true);
+                }
+                else if (turnDto.currentId == userDto.Id) Show_DontGrabe();
+                else if (turnDto.nextId == userDto.Id) Dispatch(AreaCode.UI, UIEvent.Set_GrabLandownerBtn_Active, true);
+                break;
+
+            case UIEvent.GrabLandowner_Success:
+                GrabDto grabDto = (GrabDto)message;
+                HideOperate();
+                if (grabDto.Uid == userDto.Id)
+                {
+                    cardList.AddRange(grabDto.TableCardList);
+
+                    for (var i = 0; i < grabDto.TableCardList.Count; i++)
+                    {
+                        var card = Instantiate(CardRes, cardStack);
+                        var rt = card.GetComponent<RectTransform>();
+                        SetCard(rt);
+                    }
+                    FixCardPos();
+                }
                 break;
 
             default:
@@ -105,14 +140,15 @@ public class MyPlayer : BasePlayer
     // 创建卡牌动画
     private void CrateCardAnimation()
     {
-        if (CardStack.childCount == 17)
+        if (cardStack.childCount == 17)
         {
             Dispatch(AreaCode.AUDIO, AudioEvent.Stop_SpecialEffect_Audio, null); // 停止发牌音效
             Dispatch(AreaCode.UI, UIEvent.Set_MingPaiBtn_Active, false);  // 隐藏明牌
+            if (StartGrabLandowner != null) StartGrabLandowner(); // 开始抢地主
             return;
         }
 
-        var card = Instantiate(CardRes, CardStack);
+        var card = Instantiate(CardRes, cardStack);
         card.name = $"card{index}";
         var rt = card.GetComponent<RectTransform>();
 
@@ -154,7 +190,7 @@ public class MyPlayer : BasePlayer
         }
         else
         {
-            preXPos = CardStack.Find($"card{index - 1}").GetComponent<RectTransform>().anchoredPosition.x;
+            preXPos = cardStack.Find($"card{index - 1}").GetComponent<RectTransform>().anchoredPosition.x;
             cardSpace = 55.0f;
         }
 
@@ -175,9 +211,9 @@ public class MyPlayer : BasePlayer
     // 修复卡牌位置 出牌后修复
     private void FixCardPos()
     {
-        for (int i = 0; i < CardStack.childCount; i++)
+        for (int i = 0; i < cardStack.childCount; i++)
         {
-            var rt = CardStack.GetChild(i).GetComponent<RectTransform>();
+            var rt = cardStack.GetChild(i).GetComponent<RectTransform>();
             var aurPos = rt.anchoredPosition;
             var endPos = new Vector2(cardSpace * i, aurPos.y);
             DotweenTools.DoRectMove(rt, rt.anchoredPosition, endPos, .2f, "CardMove");
@@ -188,9 +224,9 @@ public class MyPlayer : BasePlayer
     // 修复盒子位置 父级盒子初始值为577.5
     private void FixParentPos()
     {
-        var rt = CardStack.GetComponent<RectTransform>();
+        var rt = cardStack.GetComponent<RectTransform>();
         var aurPos = rt.anchoredPosition;
-        var endPos = new Vector2((20 - CardStack.childCount) * cardSpace / 2 + cardSpace, aurPos.y); // 多加个左边距为卡牌间距
+        var endPos = new Vector2((20 - cardStack.childCount) * cardSpace / 2 + cardSpace, aurPos.y); // 多加个左边距为卡牌间距
         DotweenTools.DoRectMove(rt, rt.anchoredPosition, endPos, .2f, "CardMove");
     }
 
