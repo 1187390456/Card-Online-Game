@@ -37,7 +37,8 @@ public class MyPlayer : BasePlayer
             UIEvent.Send_Quick_Chat,
             UIEvent.GrabLandowner_Success,
             UIEvent.Send_ZiDingYi_Chat,
-            UIEvent.Send_Emoji_Chat
+            UIEvent.Send_Emoji_Chat,
+            UIEvent.Turn_Deal
             );
     }
 
@@ -90,6 +91,11 @@ public class MyPlayer : BasePlayer
                     FixParentPos(true);
                 }
                 break;
+
+            case UIEvent.Turn_Deal:
+                if ((int)message == userDto.Id) Dispatch(AreaCode.UI, UIEvent.Set_TurnPanel_Active, true);
+                break;
+
 
             default:
                 break;

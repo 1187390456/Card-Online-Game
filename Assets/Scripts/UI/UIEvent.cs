@@ -39,6 +39,10 @@ public class UIEvent
     public const int Set_TableCard_Active = 26; // 显示底牌盒子
     public const int Show_TableCard = 27; // 显示底牌
 
+    public const int Turn_Deal = 28; //轮换出牌
+    public const int Set_TurnPanel_Active = 29; // 设置出牌轮换面板
+
+
     // 测试用
     public const int Account_Already_Login = 99; // 账号已登录
 }

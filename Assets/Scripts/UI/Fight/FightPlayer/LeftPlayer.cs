@@ -20,7 +20,8 @@ public class LeftPlayer : BasePlayer
             UIEvent.GrabLandowner_Success,
             UIEvent.Send_Quick_Chat,
             UIEvent.Send_ZiDingYi_Chat,
-            UIEvent.Send_Emoji_Chat
+            UIEvent.Send_Emoji_Chat,
+            UIEvent.Turn_Deal
           );
     }
 
@@ -58,6 +59,9 @@ public class LeftPlayer : BasePlayer
                 if (grabDto.Uid == userDto.Id) cardAmout.text = "20";
                 break;
 
+            case UIEvent.Turn_Deal:
+                if ((int)message == userDto.Id) Show_Timer();
+                break;
 
             default:
                 break;

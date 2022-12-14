@@ -23,6 +23,9 @@ public class FightHandler : HandlerBase
             case FightCode.Turn_Grad_Bro:
                 TurnGrab((TurnDto)value);
                 break;
+            case FightCode.Turn_Deal_Bro:
+                TurnDeal((int)value);
+                break;
 
             default:
                 break;
@@ -36,13 +39,10 @@ public class FightHandler : HandlerBase
         Dispatch(AreaCode.UI, UIEvent.Set_ReadyBtn_Active, false); // 隐藏准备按钮
     }
     // 抢地主成功
-    private void GrabLandowner(GrabDto grabDto)
-    {
-        Dispatch(AreaCode.UI, UIEvent.GrabLandowner_Success, grabDto); // 下一个开始抢地主
-    }
+    private void GrabLandowner(GrabDto grabDto) => Dispatch(AreaCode.UI, UIEvent.GrabLandowner_Success, grabDto);
     // 转换抢地主
-    private void TurnGrab(TurnDto turnDto)
-    {
-        Dispatch(AreaCode.UI, UIEvent.Turn_GrabLandowner, turnDto); // 下一个开始抢地主
-    }
+    private void TurnGrab(TurnDto turnDto) => Dispatch(AreaCode.UI, UIEvent.Turn_GrabLandowner, turnDto);
+
+    // 轮换出牌
+    private void TurnDeal(int uid) => Dispatch(AreaCode.UI, UIEvent.Turn_Deal, uid);
 }
