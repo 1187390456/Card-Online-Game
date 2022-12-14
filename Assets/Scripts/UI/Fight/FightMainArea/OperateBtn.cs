@@ -12,6 +12,7 @@ public class OperateBtn : UIBase
     private Button mingPaiBtn;
     private Button grabLandownerBtn;
     private Button dontGrabBtn;
+    private Button dealCard;
 
     private void Awake()
     {
@@ -21,7 +22,9 @@ public class OperateBtn : UIBase
         mingPaiBtn = transform.Find("MingPai").GetComponent<Button>();
         grabLandownerBtn = transform.Find("GrabLandowner/GrabLandowner").GetComponent<Button>();
         dontGrabBtn = transform.Find("GrabLandowner/DontGrab").GetComponent<Button>();
+        dealCard = transform.Find("DealPanel/DealCard").GetComponent<Button>();
 
+        dealCard.onClick.AddListener(OnClickDealCard);
         grabLandownerBtn.onClick.AddListener(OnClickGrabLandowner);
         dontGrabBtn.onClick.AddListener(OnClickDontGrab);
 
@@ -79,5 +82,11 @@ public class OperateBtn : UIBase
         HideOperate();
         DispatchTools.Fight_Grab_Landowner_Cres(Dispatch, false);
     }
+
+    private void OnClickDealCard()
+    {
+        //   HideOperate();
+        Dispatch(AreaCode.UI, UIEvent.Deal_Card, null);
+    } // 出牌
     #endregion
 }

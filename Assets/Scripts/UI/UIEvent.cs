@@ -41,6 +41,7 @@ public class UIEvent
 
     public const int Turn_Deal = 28; //轮换出牌
     public const int Set_TurnPanel_Active = 29; // 设置出牌轮换面板
+    public const int Deal_Card = 30; // 出牌
 
 
     // 测试用

@@ -38,7 +38,8 @@ public class MyPlayer : BasePlayer
             UIEvent.GrabLandowner_Success,
             UIEvent.Send_ZiDingYi_Chat,
             UIEvent.Send_Emoji_Chat,
-            UIEvent.Turn_Deal
+            UIEvent.Turn_Deal,
+            UIEvent.Deal_Card
             );
     }
 
@@ -88,7 +89,7 @@ public class MyPlayer : BasePlayer
                         SetPos(rt);
                     }
 
-                    FixParentPos(true);
+                    StartCoroutine(FixCardPos());
                 }
                 break;
 
@@ -96,6 +97,9 @@ public class MyPlayer : BasePlayer
                 if ((int)message == userDto.Id) Dispatch(AreaCode.UI, UIEvent.Set_TurnPanel_Active, true);
                 break;
 
+            case UIEvent.Deal_Card:
+                RemoveCard();
+                break;
 
             default:
                 break;
@@ -122,7 +126,7 @@ public class MyPlayer : BasePlayer
         {
             foreach (var item in rayList)
             {
-                var cardScript = item.GetComponent<Card>();
+                var cardScript = item.GetComponent<Card>() == null ? item.GetComponentInParent<Card>() : item.GetComponent<Card>();
                 cardScript.Move();
             }
 
@@ -130,6 +134,24 @@ public class MyPlayer : BasePlayer
         }
     }
 
+
+    // 移除指定手牌 
+    private void RemoveCard()
+    {
+        List<Card> removeList = new List<Card>();
+
+        for (var i = 0; i < cardStack.childCount; i++)
+        {
+            var card = cardStack.GetChild(i).GetComponent<Card>();
+            if (card.isActive) removeList.Add(card);
+        }
+
+        for (var i = 0; i < removeList.Count; i++)
+        {
+            Destroy(removeList[i].gameObject);
+        }
+        StartCoroutine(FixCardPos());
+    }
     /// <summary>
     /// 点击屏幕坐标
     /// </summary>
@@ -242,8 +264,9 @@ public class MyPlayer : BasePlayer
 
 
     // 修复卡牌位置 出牌后修复
-    private void FixCardPos()
+    private IEnumerator FixCardPos()
     {
+        yield return new WaitForEndOfFrame();
         for (int i = 0; i < cardStack.childCount; i++)
         {
             var rt = cardStack.GetChild(i).GetComponent<RectTransform>();
@@ -253,24 +276,12 @@ public class MyPlayer : BasePlayer
         }
         FixParentPos();
     }
-
-    // 修复盒子位置 父级盒子初始值为577.5
-    private void FixParentPos(bool is20 = false) // is20代表抢地主后的修复
+    // 修复父级盒子 初始动画修复
+    private void FixParentPos()
     {
-        int count;
         var rt = cardStack.GetComponent<RectTransform>();
         var aurPos = rt.anchoredPosition;
-
-        if (is20)
-        {
-            count = 20;
-        }
-        else
-        {
-            count = cardStack.childCount;
-        }
-
-        var endPos = new Vector2((20 - count) * cardSpace / 2 + cardSpace, aurPos.y); // 多加个左边距为卡牌间距
+        var endPos = new Vector2((20 - cardStack.childCount) * cardSpace / 2 + cardSpace, aurPos.y); // 多加个左边距为卡牌间距
         DotweenTools.DoRectMove(rt, rt.anchoredPosition, endPos, .2f, "CardMove");
     }
 
