@@ -1,4 +1,5 @@
 ﻿using DG.Tweening;
+using Protocol.Dto;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -8,6 +9,7 @@ using UnityEngine.UI;
 public class Card : MonoBehaviour
 {
     public bool isActive; // 是否激活
+    public CardDto cardDto; // 卡牌传输
 
     private RectTransform rect;
 
@@ -20,6 +22,7 @@ public class Card : MonoBehaviour
     private float yPos; // 记录初始Y位置
     private Tween t1 = null;
     private Tween t2 = null;
+
 
 
     private void Awake()
@@ -52,6 +55,8 @@ public class Card : MonoBehaviour
         BigColor.SetNativeSize();
         HugeColor.SetNativeSize();
     }
+
+    public void SetCardDto(CardDto cardDto) => this.cardDto = cardDto;
 
     public void Move() // 卡牌移动
     {

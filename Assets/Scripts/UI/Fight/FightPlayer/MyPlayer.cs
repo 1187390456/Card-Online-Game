@@ -139,11 +139,16 @@ public class MyPlayer : BasePlayer
     private void RemoveCard()
     {
         List<Card> removeList = new List<Card>();
+        List<CardDto> cardDtos = new List<CardDto>();
 
         for (var i = 0; i < cardStack.childCount; i++)
         {
             var card = cardStack.GetChild(i).GetComponent<Card>();
-            if (card.isActive) removeList.Add(card);
+            if (card.isActive)
+            {
+                removeList.Add(card);
+                cardDtos.Add(card.cardDto);
+            }
         }
 
         for (var i = 0; i < removeList.Count; i++)
@@ -151,6 +156,8 @@ public class MyPlayer : BasePlayer
             Destroy(removeList[i].gameObject);
         }
         StartCoroutine(FixCardPos());
+
+        CreateDealArea(cardDtos);
     }
     /// <summary>
     /// 点击屏幕坐标
@@ -198,6 +205,8 @@ public class MyPlayer : BasePlayer
         var script = rt.GetComponent<Card>();
         var weight = cardList[index].Weight;
         var color = cardList[index].Color;
+
+        script.SetCardDto(new CardDto($"{weight}{color}", color, weight));
 
         if (color != CardColor.None) // 不是大小王
         {

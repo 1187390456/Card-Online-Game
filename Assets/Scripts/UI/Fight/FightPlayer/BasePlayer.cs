@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
 using System;
+using System.Collections.Generic;
 
 public class Operate
 {
@@ -47,6 +48,10 @@ public class BasePlayer : UIBase
     // 委托
     protected Action StartGrabLandowner; // 开始抢地主
 
+
+    protected Transform dealArea; // 出牌区域
+    protected GameObject cardDeal; //  出牌卡资源
+
     public virtual void Awake()
     {
         userName = transform.Find("UserInfo/NameBox/Name").GetComponent<Text>();
@@ -64,6 +69,9 @@ public class BasePlayer : UIBase
         mingPai = transform.Find("Operate/MingPai");
         callLandowner = transform.Find("Operate/CallLandowner");
         grabLandowner = transform.Find("Operate/GrabLandowner");
+
+        dealArea = transform.Find("DealArea");
+        cardDeal = Resources.Load<GameObject>("Perfabs/CardDeal");
     }
 
     public virtual void Start()
@@ -141,6 +149,24 @@ public class BasePlayer : UIBase
         cardAmout.text = count.ToString();
         Invoke(nameof(StartCountAnimation), .2f);
     }
+
+
+    #region 出牌
+    // 创建出牌
+    protected void CreateDealArea(List<CardDto> cardDtos)
+    {
+        for (var i = 0; i < cardDtos.Count; i++)
+        {
+            var card = Instantiate(cardDeal, dealArea);
+            card.name = $"card{i}";
+            var rt = card.GetComponent<RectTransform>();
+            var lastIndex = i - 1 < 0 ? 0 : i - 1;
+            var lastPos = dealArea.Find($"card{lastIndex}").GetComponent<RectTransform>().anchoredPosition;
+            rt.anchoredPosition = new Vector2(lastPos.x + 30.0f, lastPos.y);
+        }
+    }
+
+    #endregion
 
     #region 聊天消息相关
 
