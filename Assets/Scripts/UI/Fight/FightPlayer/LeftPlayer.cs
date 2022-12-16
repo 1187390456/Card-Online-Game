@@ -21,7 +21,8 @@ public class LeftPlayer : BasePlayer
             UIEvent.Send_Quick_Chat,
             UIEvent.Send_ZiDingYi_Chat,
             UIEvent.Send_Emoji_Chat,
-            UIEvent.Turn_Deal
+            UIEvent.Turn_Deal,
+            UIEvent.Deal_Card_Sucess
           );
     }
 
@@ -61,6 +62,14 @@ public class LeftPlayer : BasePlayer
 
             case UIEvent.Turn_Deal:
                 if ((int)message == userDto.Id) Show_Timer();
+                break;
+
+            case UIEvent.Deal_Card_Sucess:
+                var dealDtos = (DealDto)message;
+                HideOperate();
+                if (dealDtos.Uid != userDto.Id) return;
+                count -= dealDtos.SelectCardList.Count;
+                cardAmout.text = count.ToString();
                 break;
 
             default:

@@ -26,6 +26,10 @@ public class FightHandler : HandlerBase
             case FightCode.Turn_Deal_Bro:
                 TurnDeal((int)value);
                 break;
+            case FightCode.Deal_Bro:
+                if (value == null) DispatchTools.Prompt_Msg(Dispatch, "您出的牌不符合规则!", Color.red);
+                else Dispatch(AreaCode.UI, UIEvent.Deal_Card_Sucess, (DealDto)value);
+                break;
 
             default:
                 break;
@@ -45,4 +49,5 @@ public class FightHandler : HandlerBase
 
     // 轮换出牌
     private void TurnDeal(int uid) => Dispatch(AreaCode.UI, UIEvent.Turn_Deal, uid);
+
 }

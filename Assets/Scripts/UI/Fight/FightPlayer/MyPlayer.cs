@@ -39,7 +39,8 @@ public class MyPlayer : BasePlayer
             UIEvent.Send_ZiDingYi_Chat,
             UIEvent.Send_Emoji_Chat,
             UIEvent.Turn_Deal,
-            UIEvent.Deal_Card
+            UIEvent.Deal_Card,
+            UIEvent.Deal_Card_Sucess
             );
     }
 
@@ -98,7 +99,17 @@ public class MyPlayer : BasePlayer
                 break;
 
             case UIEvent.Deal_Card:
+                var cardDtoList = GetCardDtoList();
+                DealDto dealDto = new DealDto(cardDtoList, userDto.Id);
+                DispatchTools.Fight_Deal_Cres(Dispatch, dealDto);
+
+                break;
+
+            case UIEvent.Deal_Card_Sucess:
+                var dealDtos = (DealDto)message;
+                if (dealDtos.Uid != userDto.Id) return;
                 RemoveCard();
+                Dispatch(AreaCode.UI, UIEvent.Hide_Self_Operate, null);
                 break;
 
             default:
@@ -134,28 +145,33 @@ public class MyPlayer : BasePlayer
         }
     }
 
+    // 获取选中手牌传输数据
+    private List<CardDto> GetCardDtoList()
+    {
+        List<CardDto> cardDtos = new List<CardDto>();
+        for (var i = 0; i < cardStack.childCount; i++)
+        {
+            var card = cardStack.GetChild(i).GetComponent<Card>();
+            if (card.isActive) cardDtos.Add(card.cardDto);
+        }
+        return cardDtos;
+    }
 
     // 移除指定手牌 
     private void RemoveCard()
     {
         List<Card> removeList = new List<Card>();
-        List<CardDto> cardDtos = new List<CardDto>();
-
         for (var i = 0; i < cardStack.childCount; i++)
         {
             var card = cardStack.GetChild(i).GetComponent<Card>();
-            if (card.isActive)
-            {
-                removeList.Add(card);
-                cardDtos.Add(card.cardDto);
-            }
+            if (card.isActive) removeList.Add(card);
         }
 
-        for (var i = 0; i < removeList.Count; i++)
-        {
-            Destroy(removeList[i].gameObject);
-        }
+        for (var i = 0; i < removeList.Count; i++) Destroy(removeList[i].gameObject);
+
         StartCoroutine(FixCardPos());
+
+        var cardDtos = GetCardDtoList();
 
         CreateDealArea(cardDtos);
     }
@@ -206,7 +222,7 @@ public class MyPlayer : BasePlayer
         var weight = cardList[index].Weight;
         var color = cardList[index].Color;
 
-        script.SetCardDto(new CardDto($"{weight}{color}", color, weight));
+        script.SetCardDto(cardList[index]);
 
         if (color != CardColor.None) // 不是大小王
         {

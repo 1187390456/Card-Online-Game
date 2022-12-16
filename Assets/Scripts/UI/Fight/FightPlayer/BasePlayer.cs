@@ -155,6 +155,7 @@ public class BasePlayer : UIBase
     // 创建出牌
     protected void CreateDealArea(List<CardDto> cardDtos)
     {
+        float space = 35.0f;
         for (var i = 0; i < cardDtos.Count; i++)
         {
             var card = Instantiate(cardDeal, dealArea);
@@ -162,8 +163,12 @@ public class BasePlayer : UIBase
             var rt = card.GetComponent<RectTransform>();
             var lastIndex = i - 1 < 0 ? 0 : i - 1;
             var lastPos = dealArea.Find($"card{lastIndex}").GetComponent<RectTransform>().anchoredPosition;
-            rt.anchoredPosition = new Vector2(lastPos.x + 30.0f, lastPos.y);
+            rt.anchoredPosition = new Vector2(lastPos.x + space, lastPos.y);
         }
+
+        var dealRt = dealArea.GetComponent<RectTransform>();
+        var aurPos = dealRt.anchoredPosition;
+        dealRt.anchoredPosition = new Vector2(-(dealArea.childCount * space / 2), aurPos.y);
     }
 
     #endregion

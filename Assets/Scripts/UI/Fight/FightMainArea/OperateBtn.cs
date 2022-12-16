@@ -28,7 +28,7 @@ public class OperateBtn : UIBase
         grabLandownerBtn.onClick.AddListener(OnClickGrabLandowner);
         dontGrabBtn.onClick.AddListener(OnClickDontGrab);
 
-        Bind(UIEvent.Set_MingPaiBtn_Active, UIEvent.Set_GrabLandownerBtn_Active, UIEvent.Set_TurnPanel_Active);
+        Bind(UIEvent.Set_MingPaiBtn_Active, UIEvent.Set_GrabLandownerBtn_Active, UIEvent.Set_TurnPanel_Active, UIEvent.Hide_Self_Operate);
     }
 
     private void Start() => HideOperate();
@@ -48,6 +48,10 @@ public class OperateBtn : UIBase
 
             case UIEvent.Set_TurnPanel_Active:
                 SetDealPeneltActive((bool)message);
+                break;
+
+            case UIEvent.Hide_Self_Operate:
+                HideOperate();
                 break;
 
             default:
@@ -83,10 +87,6 @@ public class OperateBtn : UIBase
         DispatchTools.Fight_Grab_Landowner_Cres(Dispatch, false);
     }
 
-    private void OnClickDealCard()
-    {
-        //   HideOperate();
-        Dispatch(AreaCode.UI, UIEvent.Deal_Card, null);
-    } // 出牌
+    private void OnClickDealCard() => Dispatch(AreaCode.UI, UIEvent.Deal_Card, null);  // 出牌
     #endregion
 }
