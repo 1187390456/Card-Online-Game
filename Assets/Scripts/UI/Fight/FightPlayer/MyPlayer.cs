@@ -106,7 +106,12 @@ public class MyPlayer : BasePlayer
                 break;
 
             case UIEvent.Deal_Card_Sucess:
+                // 移除手牌 隐藏操作面板 
                 var dealDtos = (DealDto)message;
+
+                RemoveDealArea();
+                HideOperate();
+
                 if (dealDtos.Uid != userDto.Id) return;
                 RemoveCard();
                 Dispatch(AreaCode.UI, UIEvent.Hide_Self_Operate, null);
@@ -173,7 +178,7 @@ public class MyPlayer : BasePlayer
 
         var cardDtos = GetCardDtoList();
 
-        CreateDealArea(cardDtos);
+        StartCoroutine(CreateDealArea(cardDtos));
     }
     /// <summary>
     /// 点击屏幕坐标

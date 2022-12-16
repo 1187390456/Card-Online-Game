@@ -66,10 +66,14 @@ public class RightPlayer : BasePlayer
 
             case UIEvent.Deal_Card_Sucess:
                 var dealDtos = (DealDto)message;
+                RemoveDealArea();
                 HideOperate();
                 if (dealDtos.Uid != userDto.Id) return;
                 count -= dealDtos.SelectCardList.Count;
                 cardAmout.text = count.ToString();
+
+                StartCoroutine(CreateDealArea(dealDtos, false));
+
                 break;
 
             default:

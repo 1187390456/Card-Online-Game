@@ -5,6 +5,7 @@ using UnityEngine.UI;
 using DG.Tweening;
 using System;
 using System.Collections.Generic;
+using System.Collections;
 
 public class Operate
 {
@@ -152,9 +153,11 @@ public class BasePlayer : UIBase
 
 
     #region 出牌
-    // 创建出牌
-    protected void CreateDealArea(List<CardDto> cardDtos)
+    // 创建出牌 自身
+    protected IEnumerator CreateDealArea(List<CardDto> cardDtos)
     {
+        yield return new WaitForEndOfFrame();
+
         float space = 35.0f;
         for (var i = 0; i < cardDtos.Count; i++)
         {
@@ -169,6 +172,40 @@ public class BasePlayer : UIBase
         var dealRt = dealArea.GetComponent<RectTransform>();
         var aurPos = dealRt.anchoredPosition;
         dealRt.anchoredPosition = new Vector2(-(dealArea.childCount * space / 2), aurPos.y);
+    }
+    // 创建出牌 左右
+    protected IEnumerator CreateDealArea(DealDto dealDtos, bool isLeft = true)
+    {
+        yield return new WaitForEndOfFrame();
+
+        float space = 35.0f;
+        for (var i = 0; i < dealDtos.SelectCardList.Count; i++)
+        {
+            var card = Instantiate(cardDeal, dealArea);
+            card.name = $"card{i}";
+            var rt = card.GetComponent<RectTransform>();
+            var lastIndex = i - 1 < 0 ? 0 : i - 1;
+            var lastPos = dealArea.Find($"card{lastIndex}").GetComponent<RectTransform>().anchoredPosition;
+            rt.anchoredPosition = new Vector2(lastPos.x + space, lastPos.y);
+
+            if (isLeft)
+            {
+                rt.anchorMin = new Vector2(0, .5f);
+                rt.anchorMax = new Vector2(0, .5f);
+            }
+            else
+            {
+                rt.anchorMin = new Vector2(1, .5f);
+                rt.anchorMax = new Vector2(1, .5f);
+            }
+        }
+    }
+    // 移除出牌
+    protected void RemoveDealArea()
+    {
+        List<GameObject> removeList = new List<GameObject>();
+        for (var i = 0; i < dealArea.childCount; i++) removeList.Add(dealArea.GetChild(i).gameObject);
+        for (var i = 0; i < removeList.Count; i++) Destroy(removeList[i]);
     }
 
     #endregion
