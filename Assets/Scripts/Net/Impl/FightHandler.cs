@@ -30,6 +30,19 @@ public class FightHandler : HandlerBase
                 if (value == null) DispatchTools.Prompt_Msg(Dispatch, "您出的牌不符合规则!", Color.red);
                 else Dispatch(AreaCode.UI, UIEvent.Deal_Card_Sucess, (DealDto)value);
                 break;
+            case FightCode.Pass_Bro:
+                if (value == null) DispatchTools.Prompt_Msg(Dispatch, "当前是你的回合不可以不出!", Color.red);
+                else Dispatch(AreaCode.UI, UIEvent.Dont_Deal_Sucess, (int)value);
+                break;
+
+            case FightCode.Pass_Round_Bro:
+                PassRound((int)value);
+                break;
+
+            case FightCode.Over_Bro:
+                OverDto overDto = (OverDto)value;
+                DispatchTools.Prompt_Msg(Dispatch, $"获胜者id是{overDto.WinLists[0]}!", Color.red);
+                break;
 
             default:
                 break;
@@ -49,5 +62,8 @@ public class FightHandler : HandlerBase
 
     // 轮换出牌
     private void TurnDeal(int uid) => Dispatch(AreaCode.UI, UIEvent.Turn_Deal, uid);
+
+    // 轮空 不出两人
+    private void PassRound(int uid) => Dispatch(AreaCode.UI, UIEvent.Pass_Round, uid);
 
 }

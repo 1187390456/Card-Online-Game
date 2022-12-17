@@ -13,6 +13,7 @@ public class OperateBtn : UIBase
     private Button grabLandownerBtn;
     private Button dontGrabBtn;
     private Button dealCard;
+    private Button dontDeal;
 
     private void Awake()
     {
@@ -23,10 +24,12 @@ public class OperateBtn : UIBase
         grabLandownerBtn = transform.Find("GrabLandowner/GrabLandowner").GetComponent<Button>();
         dontGrabBtn = transform.Find("GrabLandowner/DontGrab").GetComponent<Button>();
         dealCard = transform.Find("DealPanel/DealCard").GetComponent<Button>();
+        dontDeal = transform.Find("DealPanel/DontDeal").GetComponent<Button>();
 
         dealCard.onClick.AddListener(OnClickDealCard);
         grabLandownerBtn.onClick.AddListener(OnClickGrabLandowner);
         dontGrabBtn.onClick.AddListener(OnClickDontGrab);
+        dontDeal.onClick.AddListener(OnClickDontDeal);
 
         Bind(UIEvent.Set_MingPaiBtn_Active, UIEvent.Set_GrabLandownerBtn_Active, UIEvent.Set_TurnPanel_Active, UIEvent.Hide_Self_Operate);
     }
@@ -88,5 +91,7 @@ public class OperateBtn : UIBase
     }
 
     private void OnClickDealCard() => Dispatch(AreaCode.UI, UIEvent.Deal_Card, null);  // 出牌
+
+    private void OnClickDontDeal() => DispatchTools.Fight_Pass_Cres(Dispatch); // 不出
     #endregion
 }

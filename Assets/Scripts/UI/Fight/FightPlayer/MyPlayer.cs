@@ -40,7 +40,9 @@ public class MyPlayer : BasePlayer
             UIEvent.Send_Emoji_Chat,
             UIEvent.Turn_Deal,
             UIEvent.Deal_Card,
-            UIEvent.Deal_Card_Sucess
+            UIEvent.Deal_Card_Sucess,
+            UIEvent.Dont_Deal_Sucess,
+            UIEvent.Pass_Round
             );
     }
 
@@ -95,7 +97,12 @@ public class MyPlayer : BasePlayer
                 break;
 
             case UIEvent.Turn_Deal:
-                if ((int)message == userDto.Id) Dispatch(AreaCode.UI, UIEvent.Set_TurnPanel_Active, true);
+                if ((int)message == userDto.Id)
+                {
+                    // 移除自己的上一次出牌区域 显示出牌
+                    RemoveDealArea();
+                    Dispatch(AreaCode.UI, UIEvent.Set_TurnPanel_Active, true);
+                }
                 break;
 
             case UIEvent.Deal_Card:
@@ -106,15 +113,19 @@ public class MyPlayer : BasePlayer
                 break;
 
             case UIEvent.Deal_Card_Sucess:
-                // 移除手牌 隐藏操作面板 
                 var dealDtos = (DealDto)message;
-
                 RemoveDealArea();
                 HideOperate();
-
                 if (dealDtos.Uid != userDto.Id) return;
                 RemoveCard();
                 Dispatch(AreaCode.UI, UIEvent.Hide_Self_Operate, null);
+                break;
+
+            case UIEvent.Dont_Deal_Sucess:
+                var uid = (int)message;
+                if (uid != userDto.Id) return;
+                Dispatch(AreaCode.UI, UIEvent.Hide_Self_Operate, null);
+                Show_DontDeal();
                 break;
 
             default:

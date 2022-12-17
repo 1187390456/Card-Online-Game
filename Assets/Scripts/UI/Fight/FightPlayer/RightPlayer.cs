@@ -22,7 +22,9 @@ public class RightPlayer : BasePlayer
             UIEvent.Send_ZiDingYi_Chat,
             UIEvent.Send_Emoji_Chat,
             UIEvent.Turn_Deal,
-            UIEvent.Deal_Card_Sucess
+            UIEvent.Deal_Card_Sucess,
+            UIEvent.Dont_Deal_Sucess,
+            UIEvent.Pass_Round
             );
     }
 
@@ -74,6 +76,11 @@ public class RightPlayer : BasePlayer
 
                 StartCoroutine(CreateDealArea(dealDtos, false));
 
+                break;
+            case UIEvent.Dont_Deal_Sucess:
+                var uid = (int)message;
+                if (uid != userDto.Id) return;
+                Show_DontDeal();
                 break;
 
             default:

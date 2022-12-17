@@ -182,4 +182,15 @@ public static class DispatchTools
         Dispatch(AreaCode.NET, 0, socketMsg);
     }
 
+    /// <summary>
+    /// 玩家不出
+    /// </summary>
+    /// <param name="Dispatch"></param>
+    /// <param name="dealDto"></param>
+    public static void Fight_Pass_Cres(Action<int, int, object> Dispatch)
+    {
+        socketMsg.Change(OpCode.Fight, FightCode.Pass_Cres, null);
+        Dispatch(AreaCode.NET, 0, socketMsg);
+    }
+
 }

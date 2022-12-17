@@ -115,6 +115,10 @@ public class BasePlayer : UIBase
                 SendEmoji(chatDto2.text);
                 break;
 
+            case UIEvent.Pass_Round:
+                RemoveDealArea();
+                break;
+
             default:
                 break;
         }
@@ -163,6 +167,7 @@ public class BasePlayer : UIBase
         {
             var card = Instantiate(cardDeal, dealArea);
             card.name = $"card{i}";
+            card.GetComponent<CardDeal>().SetCard(cardDtos[i]);
             var rt = card.GetComponent<RectTransform>();
             var lastIndex = i - 1 < 0 ? 0 : i - 1;
             var lastPos = dealArea.Find($"card{lastIndex}").GetComponent<RectTransform>().anchoredPosition;
@@ -183,6 +188,7 @@ public class BasePlayer : UIBase
         {
             var card = Instantiate(cardDeal, dealArea);
             card.name = $"card{i}";
+            card.GetComponent<CardDeal>().SetCard(dealDtos.SelectCardList[i]);
             var rt = card.GetComponent<RectTransform>();
             var lastIndex = i - 1 < 0 ? 0 : i - 1;
             var lastPos = dealArea.Find($"card{lastIndex}").GetComponent<RectTransform>().anchoredPosition;
@@ -313,6 +319,13 @@ public class BasePlayer : UIBase
     }
     // 隐藏不抢
     public void Hide_DontGrabe() => dontGrab.gameObject.SetActive(false);
+
+    // 显示不出
+    public void Show_DontDeal()
+    {
+        HideOperate();
+        dontDeal.gameObject.SetActive(true);
+    }
 
     #endregion 操作
 }

@@ -43,6 +43,8 @@ public class UIEvent
     public const int Set_TurnPanel_Active = 29; // 设置出牌轮换面板
     public const int Deal_Card = 30; // 出牌
     public const int Deal_Card_Sucess = 31; // 出牌成功
+    public const int Dont_Deal_Sucess = 33; // 不出成功
+    public const int Pass_Round = 34; // 不出轮空 两人不出
 
     public const int Hide_Self_Operate = 32; // 隐藏自身操作
 
