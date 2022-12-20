@@ -32,7 +32,7 @@ public class UIEvent
 
     public const int Set_MingPaiBtn_Active = 21; // 显示明牌按钮
     public const int Start_Fight = 22; // 开始战斗
-    public const int Set_GrabLandownerBtn_Active = 23; //  设置 开始抢地主 按钮 
+    public const int Set_GrabLandownerBtn_Active = 23; //  设置 开始抢地主 按钮
     public const int Turn_GrabLandowner = 24; // 转换抢地主
     public const int GrabLandowner_Success = 25; // 抢地主成功
 
@@ -45,6 +45,7 @@ public class UIEvent
     public const int Deal_Card_Sucess = 31; // 出牌成功
     public const int Dont_Deal_Sucess = 33; // 不出成功
     public const int Pass_Round = 34; // 不出轮空 两人不出
+    public const int Game_Over = 35; // 游戏结束
 
     public const int Hide_Self_Operate = 32; // 隐藏自身操作
 

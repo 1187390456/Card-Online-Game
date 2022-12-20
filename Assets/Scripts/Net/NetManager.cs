@@ -22,7 +22,7 @@ public static class IpAddress
 public class NetManager : ManagerBase
 {
     public static NetManager Instance = null;
-    private ClientPeer client = new ClientPeer(IpAddress.WAN, 6666);
+    private ClientPeer client = new ClientPeer(IpAddress.LocalAreaNet, 6666);
 
     private void Start()
     {

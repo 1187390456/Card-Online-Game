@@ -24,12 +24,15 @@ public class FightHandler : HandlerBase
             case FightCode.Grab_Landowner_Bro:
                 GrabLandowner((GrabDto)value);
                 break;
+
             case FightCode.Turn_Grad_Bro:
                 TurnGrab((TurnDto)value);
                 break;
+
             case FightCode.Turn_Deal_Bro:
                 TurnDeal((int)value);
                 break;
+
             case FightCode.Deal_Bro:
                 if (value == null) DispatchTools.Prompt_Msg(Dispatch, "您出的牌不符合规则!", Color.red);
                 else
@@ -39,6 +42,7 @@ public class FightHandler : HandlerBase
                     Dispatch(AreaCode.UI, UIEvent.Deal_Card_Sucess, (DealDto)value);
                 }
                 break;
+
             case FightCode.Pass_Bro:
                 if (value == null) DispatchTools.Prompt_Msg(Dispatch, "当前是你的回合不可以不出!", Color.red);
                 else
@@ -56,7 +60,24 @@ public class FightHandler : HandlerBase
 
             case FightCode.Over_Bro:
                 OverDto overDto = (OverDto)value;
-                DispatchTools.Prompt_Msg(Dispatch, $"获胜者id是{overDto.WinLists[0]}!", Color.red);
+
+                if (overDto.WinLists.Contains(Models.GameModel.UserDto.Id))
+                {
+                    // 获胜 音效
+                    var res = "MusicEx/" + "MusicEx_Win";
+                    Dispatch(AreaCode.AUDIO, AudioEvent.Play_Effect, res);
+                    DispatchTools.Prompt_Msg(Dispatch, "你获胜了!", Color.green);
+                }
+                else
+                {
+                    // 失败 音效
+                    var res = "MusicEx/" + "MusicEx_Lose";
+                    Dispatch(AreaCode.AUDIO, AudioEvent.Play_Effect, res);
+                    DispatchTools.Prompt_Msg(Dispatch, "你失败了!", Color.red);
+                }
+
+                DispatchTools.Load_Scence(Dispatch, 2);
+
                 break;
 
             default:
@@ -70,6 +91,7 @@ public class FightHandler : HandlerBase
         Dispatch(AreaCode.UI, UIEvent.Dispatch_Card, cardList);  // 分发手牌
         Dispatch(AreaCode.UI, UIEvent.Set_ReadyBtn_Active, false); // 隐藏准备按钮
     }
+
     // 抢地主成功
     private void GrabLandowner(GrabDto grabDto)
     {
@@ -77,6 +99,7 @@ public class FightHandler : HandlerBase
         Dispatch(AreaCode.AUDIO, AudioEvent.Play_Effect, res);
         Dispatch(AreaCode.UI, UIEvent.GrabLandowner_Success, grabDto);
     }
+
     // 转换抢地主
     private void TurnGrab(TurnDto turnDto)
     {
@@ -103,37 +126,46 @@ public class FightHandler : HandlerBase
             case CardType.Single:
                 audioName += dealDto.Weight;
                 break;
+
             case CardType.Double:
                 audioName += "dui" + dealDto.Weight / 2;
                 break;
+
             case CardType.Straight:
                 audioName += "shunzi";
                 break;
+
             case CardType.Double_Straight:
                 audioName += "liandui";
                 break;
+
             case CardType.Triple_Straight:
                 audioName += "feiji";
                 break;
+
             case CardType.Three:
                 audioName += "tuple" + dealDto.Weight / 3;
                 break;
+
             case CardType.Three_One:
                 audioName += "sandaiyi";
                 break;
+
             case CardType.Three_Two:
                 audioName += "sandaiyidui";
                 break;
+
             case CardType.Boom:
                 audioName += "zhadan";
                 break;
+
             case CardType.Joker_Boom:
                 audioName += "wangzha";
                 break;
+
             default:
                 break;
         }
         return audioName;
     }
-
 }

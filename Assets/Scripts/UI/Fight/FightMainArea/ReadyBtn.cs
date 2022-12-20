@@ -34,7 +34,7 @@ public class ReadyBtn : UIBase
                 SetActive(false);
 
                 //TODO 测试用
-                // OnClickReady();
+                //  OnClickReady();
                 break;
 
             default:

@@ -43,12 +43,10 @@ public class BasePlayer : UIBase
     protected Transform callLandowner;
     protected Transform grabLandowner;
 
-
     protected int grabTurnCount = 0; // 抢地主轮换次数
 
     // 委托
     protected Action StartGrabLandowner; // 开始抢地主
-
 
     protected Transform dealArea; // 出牌区域
     protected GameObject cardDeal; //  出牌卡资源
@@ -155,8 +153,8 @@ public class BasePlayer : UIBase
         Invoke(nameof(StartCountAnimation), .2f);
     }
 
-
     #region 出牌
+
     // 创建出牌 自身
     protected IEnumerator CreateDealArea(List<CardDto> cardDtos)
     {
@@ -178,6 +176,7 @@ public class BasePlayer : UIBase
         var aurPos = dealRt.anchoredPosition;
         dealRt.anchoredPosition = new Vector2(-(dealArea.childCount * space / 2), aurPos.y);
     }
+
     // 创建出牌 左右
     protected IEnumerator CreateDealArea(DealDto dealDtos, bool isLeft = true)
     {
@@ -206,6 +205,7 @@ public class BasePlayer : UIBase
             }
         }
     }
+
     // 移除出牌
     protected void RemoveDealArea()
     {
@@ -214,7 +214,7 @@ public class BasePlayer : UIBase
         for (var i = 0; i < removeList.Count; i++) Destroy(removeList[i]);
     }
 
-    #endregion
+    #endregion 出牌
 
     #region 聊天消息相关
 
@@ -298,6 +298,7 @@ public class BasePlayer : UIBase
         HideOperate();
         mingPai.gameObject.SetActive(true);
     }
+
     // 显示抢地主 自己
 
     public void Show_GrabLandowner()
@@ -305,18 +306,21 @@ public class BasePlayer : UIBase
         HideOperate();
         grabLandowner.gameObject.SetActive(true);
     }
+
     // 显示闹钟 左右玩家
     public void Show_Timer()
     {
         HideOperate();
         timer.gameObject.SetActive(true);
     }
-    // 显示不抢 
+
+    // 显示不抢
     public void Show_DontGrabe()
     {
         HideOperate();
         dontGrab.gameObject.SetActive(true);
     }
+
     // 隐藏不抢
     public void Hide_DontGrabe() => dontGrab.gameObject.SetActive(false);
 
