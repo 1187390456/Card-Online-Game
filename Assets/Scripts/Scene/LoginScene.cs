@@ -15,7 +15,7 @@ public class LoginScene : UIBase
     private void Start()
     {
         //TODO 测试用
-        TestCount1();
+        //  TestCount1();
         Dispatch(AreaCode.AUDIO, AudioEvent.Play_Music_Audio, BackGroundMuscicType.Welcome.ToString()); // 播放背景音乐
     }
 

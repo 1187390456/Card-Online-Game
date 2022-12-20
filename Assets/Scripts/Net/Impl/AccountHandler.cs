@@ -46,7 +46,7 @@ public class AccountHandler : HandlerBase
             case -2:
                 PromptMsg("账号已登录!", Color.red);
                 // TODO 测试用
-                Dispatch(AreaCode.UI, UIEvent.Account_Already_Login, null);
+                // Dispatch(AreaCode.UI, UIEvent.Account_Already_Login, null);
                 break;
 
             case -3:
