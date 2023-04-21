@@ -45,6 +45,6 @@ public class FightTopArea : UIBase
     private void OnClickExit()
     {
         DispatchTools.Match_Leave_Cres(Dispatch);
-        DispatchTools.Load_Scence(Dispatch, 1);
+        DispatchTools.Load_Scence(Dispatch, 1, () => DispatchTools.Fight_Leave_Cres(Dispatch));
     }
 }

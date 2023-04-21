@@ -83,5 +83,8 @@ public class UserInfoArea : UIBase
     /// <summary>
     /// 退出登录
     /// </summary>
-    private void OnClickExit() => DispatchTools.Load_Scence(Dispatch, 0);
+    private void OnClickExit()
+    {
+        // DispatchTools.Load_Scence(Dispatch, 0);
+    }
 }

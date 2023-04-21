@@ -32,7 +32,9 @@ public class MatchHandler : HandlerBase
                 break;
 
             case MatchCode.Start_Bro:
-                Debug.Log("开始战斗了");
+                Models.GameModel.MatchRoomDto.readyList.Clear(); // 清空准备列表
+                Dispatch(AreaCode.UI, UIEvent.Set_TableCard_Active, true); // 显示底牌盒子
+                RerenderUser();
                 break;
         }
     }
@@ -40,6 +42,7 @@ public class MatchHandler : HandlerBase
     // 自己进入
     private void SelfEnter(MatchRoomDto matchRoomDto)
     {
+        isMatchSuccess = false;
         Models.GameModel.MatchRoomDto = matchRoomDto; // 更新本地
         if (matchRoomDto.uidUserDic.Count > 1 && !isMatchSuccess) MatchSuccess();         // 人数大于1 则匹配成功
         RerenderUser();

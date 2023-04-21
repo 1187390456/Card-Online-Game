@@ -3,6 +3,14 @@ using Protocol.Dto;
 using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
+using System;
+using System.Collections.Generic;
+using System.Collections;
+
+public class Operate
+{
+    public const int Ming_Pai = 1;
+}
 
 public class BasePlayer : UIBase
 {
@@ -21,8 +29,27 @@ public class BasePlayer : UIBase
 
     // 左右玩家的
 
+    protected Transform timer; // 闹钟
     protected Text cardAmout; // 手牌
     protected int count = 0; // 手牌数量
+
+    // 操作
+
+    protected GameObject operate;
+    protected Transform dontCall;
+    protected Transform dontDeal;
+    protected Transform dontGrab;
+    protected Transform mingPai;
+    protected Transform callLandowner;
+    protected Transform grabLandowner;
+
+    protected int grabTurnCount = 0; // 抢地主轮换次数
+
+    // 委托
+    protected Action StartGrabLandowner; // 开始抢地主
+
+    protected Transform dealArea; // 出牌区域
+    protected GameObject cardDeal; //  出牌卡资源
 
     public virtual void Awake()
     {
@@ -33,12 +60,25 @@ public class BasePlayer : UIBase
         chatText = chatBox.transform.Find("Text").GetComponent<Text>();
         chatEmoji = chatBox.transform.Find("Emoji").GetComponent<Image>();
         spriteAnimation = chatEmoji.gameObject.GetComponent<SpriteAnimation>();
+
+        operate = transform.Find("Operate").gameObject;
+        dontCall = transform.Find("Operate/DontCall");
+        dontDeal = transform.Find("Operate/DontDeal");
+        dontGrab = transform.Find("Operate/DontGrab");
+        mingPai = transform.Find("Operate/MingPai");
+        callLandowner = transform.Find("Operate/CallLandowner");
+        grabLandowner = transform.Find("Operate/GrabLandowner");
+
+        dealArea = transform.Find("DealArea");
+        cardDeal = Resources.Load<GameObject>("Perfabs/CardDeal");
     }
 
     public virtual void Start()
     {
         RenderHide();
-        chatBox.SetActive(false);
+
+        HideChatBox();
+        HideOperate();
     }
 
     public override void OnDestroy()
@@ -73,6 +113,10 @@ public class BasePlayer : UIBase
                 SendEmoji(chatDto2.text);
                 break;
 
+            case UIEvent.Pass_Round:
+                RemoveDealArea();
+                break;
+
             default:
                 break;
         }
@@ -99,11 +143,80 @@ public class BasePlayer : UIBase
     // 卡牌计数动画
     protected void StartCountAnimation()
     {
-        if (count >= 17) return;
+        if (count >= 17)
+        {
+            if (StartGrabLandowner != null) StartGrabLandowner();
+            return;
+        }
         count++;
         cardAmout.text = count.ToString();
         Invoke(nameof(StartCountAnimation), .2f);
     }
+
+    #region 出牌
+
+    // 创建出牌 自身
+    protected IEnumerator CreateDealArea(List<CardDto> cardDtos)
+    {
+        yield return new WaitForEndOfFrame();
+
+        float space = 35.0f;
+        for (var i = 0; i < cardDtos.Count; i++)
+        {
+            var card = Instantiate(cardDeal, dealArea);
+            card.name = $"card{i}";
+            card.GetComponent<CardDeal>().SetCard(cardDtos[i]);
+            var rt = card.GetComponent<RectTransform>();
+            var lastIndex = i - 1 < 0 ? 0 : i - 1;
+            var lastPos = dealArea.Find($"card{lastIndex}").GetComponent<RectTransform>().anchoredPosition;
+            rt.anchoredPosition = new Vector2(lastPos.x + space, lastPos.y);
+        }
+
+        var dealRt = dealArea.GetComponent<RectTransform>();
+        var aurPos = dealRt.anchoredPosition;
+        dealRt.anchoredPosition = new Vector2(-(dealArea.childCount * space / 2), aurPos.y);
+    }
+
+    // 创建出牌 左右
+    protected IEnumerator CreateDealArea(DealDto dealDtos, bool isLeft = true)
+    {
+        yield return new WaitForEndOfFrame();
+
+        float space = 35.0f;
+        for (var i = 0; i < dealDtos.SelectCardList.Count; i++)
+        {
+            var card = Instantiate(cardDeal, dealArea);
+            card.name = $"card{i}";
+            card.GetComponent<CardDeal>().SetCard(dealDtos.SelectCardList[i]);
+            var rt = card.GetComponent<RectTransform>();
+            var lastIndex = i - 1 < 0 ? 0 : i - 1;
+            var lastPos = dealArea.Find($"card{lastIndex}").GetComponent<RectTransform>().anchoredPosition;
+            rt.anchoredPosition = new Vector2(lastPos.x + space, lastPos.y);
+
+            if (isLeft)
+            {
+                rt.anchorMin = new Vector2(0, .5f);
+                rt.anchorMax = new Vector2(0, .5f);
+            }
+            else
+            {
+                rt.anchorMin = new Vector2(1, .5f);
+                rt.anchorMax = new Vector2(1, .5f);
+            }
+        }
+    }
+
+    // 移除出牌
+    protected void RemoveDealArea()
+    {
+        List<GameObject> removeList = new List<GameObject>();
+        for (var i = 0; i < dealArea.childCount; i++) removeList.Add(dealArea.GetChild(i).gameObject);
+        for (var i = 0; i < removeList.Count; i++) Destroy(removeList[i]);
+    }
+
+    #endregion 出牌
+
+    #region 聊天消息相关
 
     // 发送消息显示动画
     private void SendChat(string text)
@@ -154,15 +267,69 @@ public class BasePlayer : UIBase
         if (chatTween != null)
         {
             chatTween.Kill();
-            CancelInvoke(nameof(SendQuickChatHide));
+            CancelInvoke(nameof(HideChatBox));
         }
         chatTween = DotweenTools.DoTransScale(chatBox.transform, Vector3.zero, Vector3.one, .2f);
         chatTween.onComplete = () =>
         {
-            Invoke(nameof(SendQuickChatHide), 5.0f);
+            Invoke(nameof(HideChatBox), 5.0f);
         };
     }
 
     // 消息隐藏
-    private void SendQuickChatHide() => chatBox.SetActive(false);
+    private void HideChatBox() => chatBox.SetActive(false);
+
+    #endregion 聊天消息相关
+
+    #region 操作
+
+    // 隐藏所有操作
+    public void HideOperate()
+    {
+        for (int i = 0; i < operate.transform.childCount; i++)
+        {
+            operate.transform.GetChild(i).gameObject.SetActive(false);
+        }
+    }
+
+    // 明牌 所有
+    public void MingPai()
+    {
+        HideOperate();
+        mingPai.gameObject.SetActive(true);
+    }
+
+    // 显示抢地主 自己
+
+    public void Show_GrabLandowner()
+    {
+        HideOperate();
+        grabLandowner.gameObject.SetActive(true);
+    }
+
+    // 显示闹钟 左右玩家
+    public void Show_Timer()
+    {
+        HideOperate();
+        timer.gameObject.SetActive(true);
+    }
+
+    // 显示不抢
+    public void Show_DontGrabe()
+    {
+        HideOperate();
+        dontGrab.gameObject.SetActive(true);
+    }
+
+    // 隐藏不抢
+    public void Hide_DontGrabe() => dontGrab.gameObject.SetActive(false);
+
+    // 显示不出
+    public void Show_DontDeal()
+    {
+        HideOperate();
+        dontDeal.gameObject.SetActive(true);
+    }
+
+    #endregion 操作
 }

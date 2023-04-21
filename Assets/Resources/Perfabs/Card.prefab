@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 8270201016010294913}
   m_Layer: 5
   m_Name: LeftBox
-  m_TagString: Untagged
+  m_TagString: Card
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -238,7 +238,7 @@ GameObject:
   - component: {fileID: 7931047130111130680}
   m_Layer: 5
   m_Name: HugeColor
-  m_TagString: Untagged
+  m_TagString: Card
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -314,7 +314,7 @@ GameObject:
   - component: {fileID: 7931047130449572900}
   m_Layer: 5
   m_Name: BigColor
-  m_TagString: Untagged
+  m_TagString: Card
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -390,7 +390,7 @@ GameObject:
   - component: {fileID: 7931047131056309507}
   m_Layer: 5
   m_Name: BigWeight
-  m_TagString: Untagged
+  m_TagString: Card
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

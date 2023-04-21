@@ -30,6 +30,25 @@ public class UIEvent
     public const int Set_StartBtn_Active = 19; // 设置开始按钮显示
     public const int Set_ReadyBtn_Active = 20; // 设置准备按钮显示
 
+    public const int Set_MingPaiBtn_Active = 21; // 显示明牌按钮
+    public const int Start_Fight = 22; // 开始战斗
+    public const int Set_GrabLandownerBtn_Active = 23; //  设置 开始抢地主 按钮
+    public const int Turn_GrabLandowner = 24; // 转换抢地主
+    public const int GrabLandowner_Success = 25; // 抢地主成功
+
+    public const int Set_TableCard_Active = 26; // 显示底牌盒子
+    public const int Show_TableCard = 27; // 显示底牌
+
+    public const int Turn_Deal = 28; //轮换出牌
+    public const int Set_TurnPanel_Active = 29; // 设置出牌轮换面板
+    public const int Deal_Card = 30; // 出牌
+    public const int Deal_Card_Sucess = 31; // 出牌成功
+    public const int Dont_Deal_Sucess = 33; // 不出成功
+    public const int Pass_Round = 34; // 不出轮空 两人不出
+    public const int Game_Over = 35; // 游戏结束
+
+    public const int Hide_Self_Operate = 32; // 隐藏自身操作
+
     // 测试用
     public const int Account_Already_Login = 99; // 账号已登录
 }

@@ -26,4 +26,7 @@ public class AudioEvent
 
     public const int Play_SpecialEffect_Audio = 6;
     public const int Stop_SpecialEffect_Audio = 7;
+
+    // 播放指定音效
+    public const int Play_Effect = 8;
 }

@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -9,7 +10,11 @@ public class EffectAudio : AudioBase
     private void Awake()
     {
         audioSource = GetComponent<AudioSource>();
-        Bind(AudioEvent.Play_ChatEffect_Audio, AudioEvent.Play_SpecialEffect_Audio, AudioEvent.Stop_SpecialEffect_Audio);
+        Bind(AudioEvent.Play_ChatEffect_Audio,
+            AudioEvent.Play_SpecialEffect_Audio,
+            AudioEvent.Stop_SpecialEffect_Audio,
+            AudioEvent.Play_Effect
+            );
     }
 
     public override void Execute(int eventCode, object message)
@@ -26,6 +31,10 @@ public class EffectAudio : AudioBase
 
             case AudioEvent.Stop_SpecialEffect_Audio:
                 audioSource.Stop();
+                break;
+
+            case AudioEvent.Play_Effect:
+                PlayEffect(message.ToString());
                 break;
 
             default:
@@ -46,6 +55,13 @@ public class EffectAudio : AudioBase
     private void PlaySpecialEffect(string name)
     {
         AudioClip ac = Resources.Load<AudioClip>($"Sound/Special/Special_{name}"); // 音效文件
+        audioSource.clip = ac;
+        audioSource.Play();
+    }
+    // 播放指定路径音效
+    private void PlayEffect(string res)
+    {
+        AudioClip ac = Resources.Load<AudioClip>($"Sound/{res}"); // 音效文件
         audioSource.clip = ac;
         audioSource.Play();
     }
